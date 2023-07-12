@@ -1,8 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-const url = "https://codejeopardy-7116bb4be6a5.herokuapp.com/";
-// const url = '';
+const url = "https://codejeopardy-7116bb4be6a5.herokuapp.com";
 
 export default createStore({
   state() {
@@ -18,7 +17,7 @@ export default createStore({
       value: "",
       answeredClue: "",
       answered: "",
-      url: url
+      url: url,
     };
   },
   getters: {},
