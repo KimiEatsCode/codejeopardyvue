@@ -1,8 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-const url = "https://codejeopardy-7116bb4be6a5.herokuapp.com";
-
 export default createStore({
   state() {
     return {
@@ -48,7 +46,9 @@ export default createStore({
     async updateClue({ commit }, payload) {
       console.log(payload.answeredClue);
       axios
-        .patch(`${this.url}/category-clue/${payload.clueid}&${payload.answeredClue}`)
+        .patch(
+          `${this.url}/category-clue/${payload.clueid}&${payload.answeredClue}`
+        )
         .then((res) => {
           console.log(
             "update clue " + payload.answeredClue + " " + payload.clueid
