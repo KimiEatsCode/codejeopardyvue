@@ -17,14 +17,14 @@ export default createStore({
       value: "",
       answeredClue: "",
       answered: "",
-      url: url,
+      url: "https://codejeopardy-7116bb4be6a5.herokuapp.com",
     };
   },
   getters: {},
   actions: {
     async fetchAllClues({ commit }, categoryid) {
       axios
-        .get(`${url}/category-clues/${categoryid}`)
+        .get(`${this.url}/category-clues/${categoryid}`)
         .then((res) => {
           //  return (this.clues = res.data);
 
@@ -36,7 +36,7 @@ export default createStore({
     },
     async fetchClue({ commit }, clueid) {
       axios
-        .get(`${url}/category-clue/${clueid}`)
+        .get(`${this.url}/category-clue/${clueid}`)
         .then((res) => {
           console.log(res);
           commit("setClue", res.data.rows);
@@ -48,7 +48,7 @@ export default createStore({
     async updateClue({ commit }, payload) {
       console.log(payload.answeredClue);
       axios
-        .patch(`${url}/category-clue/${payload.clueid}&${payload.answeredClue}`)
+        .patch(`${this.url}/category-clue/${payload.clueid}&${payload.answeredClue}`)
         .then((res) => {
           console.log(
             "update clue " + payload.answeredClue + " " + payload.clueid
@@ -62,7 +62,7 @@ export default createStore({
     },
     async resetClues({ commit }) {
       axios
-        .patch(`${url}/category-clue/newgame`)
+        .patch(`${this.url}/category-clue/newgame`)
         .then((res) => {
           console.log("reset game");
           commit("resetAllClues", res);
@@ -74,7 +74,7 @@ export default createStore({
     },
     async refreshClues({ commit }, categoryid) {
       axios
-        .get(`${url}/category-clues/${categoryid}`)
+        .get(`${this.url}/category-clues/${categoryid}`)
         .then((res) => {
           // return (this.clues = res.data);
           commit("refreshAllClues", res);
@@ -87,7 +87,7 @@ export default createStore({
       console.log("action " + state.score);
 
       axios
-        .patch(`${url}/game/1&${state.score}`)
+        .patch(`${this.url}/game/1&${state.score}`)
         .then((res) => {
           commit("confirmScore", res);
         })
