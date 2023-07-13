@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run build",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -13,8 +13,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "core-js": "^3.8.3",
-    "vuex": "^4.0.2",
-    "@vue/cli-service": "~5.0.0"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
