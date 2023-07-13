@@ -38,7 +38,7 @@ export default {
       getResponse: false,
       categories: axios
         // .get(`${this.apiUrl}/game-categories`)
-        .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/game-categories`)
+        .get(`${process.env.apiURL}/game-categories`)
 
         .then((res) => {
           this.getResponse = true;
