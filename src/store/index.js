@@ -25,7 +25,7 @@ export default createStore({
         .get(`${this.state.url}/category-clues/${categoryid}`)
         .then((res) => {
           //  return (this.clues = res.data);
-
+console.log(this.state.url + ' this is from store')
           commit("refreshAllClues", res.data.rows);
         })
         .catch((error) => {
