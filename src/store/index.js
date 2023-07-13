@@ -22,7 +22,7 @@ export default createStore({
   actions: {
     async fetchAllClues({ commit }, categoryid) {
       axios
-        .get(`${this.state.url}/category-clues/${categoryid}`)
+        .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/category-clues/${categoryid}`)
         .then((res) => {
           //  return (this.clues = res.data);
 console.log(this.state.url + ' this is from store')
