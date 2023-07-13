@@ -106,6 +106,7 @@ export default {
       clues: axios
         .get(`${this.apiUrl}/${this.categoryid}`)
         .then((res) => {
+          console.log(res.data)
           return (this.clues = res.data);
         })
         .catch((error) => {
