@@ -15,7 +15,7 @@ export default createStore({
       value: "",
       answeredClue: "",
       answered: "",
-      url: "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/",
+      url: "https://codejeopardy-7116bb4be6a5.herokuapp.com",
     };
   },
   getters: {},
@@ -26,7 +26,7 @@ export default createStore({
           `https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/${categoryid}`
         )
         .then((res) => {
-          console.log(this.state.url + " this is from store");
+          console.log(this.state.url + " this is from for fetch clues in store index js file");
           commit("refreshAllClues", res.data.rows);
         })
         .catch((error) => {
