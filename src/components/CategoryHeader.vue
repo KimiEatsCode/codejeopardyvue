@@ -42,7 +42,7 @@ url() {
         .then((res) => {
           console.log(this.url)
           this.getResponse = true;
-          if(res.data.length > 100) {
+          if(res.data.length === "") {
             console.log('game categories data response is empty ' + this.$store.state.url);
             return;
           } else {
