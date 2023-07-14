@@ -10,6 +10,6 @@
   status = 200
 
   [[redirects]]
-  from = "/api/"
+  from = "/api/game-categories"
   to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories"
   status = 200
