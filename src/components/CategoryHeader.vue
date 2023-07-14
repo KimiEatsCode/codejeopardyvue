@@ -40,8 +40,9 @@ export default {
         // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          if(res.data === "") {
-            console.log('game categories data response is empty')
+          if(res.data.length > 100) {
+            console.log('game categories data response is empty');
+            return;
           } else {
             console.log(`categories res data is ${res.data}`)
             return (this.categories = res.data);
