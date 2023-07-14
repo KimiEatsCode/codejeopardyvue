@@ -44,7 +44,6 @@ url() {
           this.getResponse = true;
           if(res.data.length === "") {
             console.log('game categories data response is empty ' + this.$store.state.url);
-            return;
           } else {
             console.log(`categories res data is ${res.data}`)
             return (this.categories = res.data);

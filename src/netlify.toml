@@ -5,11 +5,11 @@
 
 
 [[redirects]]
-  from = "/*y"
+  from = "/*"
   to = "/index.html"
   status = 200
 
   [[redirects]]
-  from = "https://thunderous-haupia-d8250a.netlify.app/api/game-categories/"
+  from = "/api/*"
   to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories"
   status = 200
