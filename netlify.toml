@@ -8,7 +8,7 @@
   status = 200
 
 [[redirects]]
-  from = "https://thunderous-haupia-d8250a.netlify.app/api/*"
+  from = "/api/*"
   to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/:splat"
   status = 200
 
@@ -16,7 +16,7 @@
 [[redirects]]
   from = "/api/category-clues/"
   to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/"
-  query = {categoryid = ":categoryid"}
+  query = {categoryid = ":categoryid}
   status = 200
 
 
