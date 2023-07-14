@@ -1,8 +1,11 @@
 [build]
   command = "npm run build"
-  functions = "netlify/functions"
   publish = "dist"
 
+[[redirects]]
+  from = "*"
+  to = "index.html"
+  status = 200
 
 [[redirects]]
   from = "/api/*"
@@ -11,6 +14,10 @@
 
 
 [[redirects]]
-  from = "*"
-  to = "index.html"
+  from = "/api/category-clues/"
+  to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues"
+  query = {categoryid = ":categoryid}
   status = 200
+
+
+   
