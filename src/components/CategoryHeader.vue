@@ -37,8 +37,8 @@ url() {
     return {
       getResponse: false,
       categories: axios
-        // .get(`${this.url}/api/game-categories`)
-        .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
+        .get(`${this.url}/api/game-categories`)
+        // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
         .then((res) => {
           console.log(this.url)
           this.getResponse = true;
