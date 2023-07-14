@@ -8,7 +8,7 @@
   status = 200
 
 [[redirects]]
-  from = "/api/*"
+  from = "https://thunderous-haupia-d8250a.netlify.app/api/*"
   to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/:splat"
   status = 200
 
