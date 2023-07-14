@@ -23,7 +23,7 @@ export default createStore({
     async fetchAllClues({ commit }, categoryid) {
       axios
         .get(
-          `https://codejeopardy-7116bb4be6a5.herokuapp.com/category-clues/${categoryid}`
+          `https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/${categoryid}`
         )
         .then((res) => {
           console.log(this.state.url + " this is from store");
@@ -35,7 +35,7 @@ export default createStore({
     },
     async fetchClue({ commit }, clueid) {
       axios
-        .get(`${this.state.url}/category-clue/${clueid}`)
+        .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
           console.log(res);
           commit("setClue", res.data.rows);
@@ -48,7 +48,7 @@ export default createStore({
       console.log(payload.answeredClue);
       axios
         .patch(
-          `${this.state.url}/category-clue/${payload.clueid}&${payload.answeredClue}`
+          `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredClue}`
         )
         .then((res) => {
           console.log(
@@ -63,7 +63,7 @@ export default createStore({
     },
     async resetClues({ commit }) {
       axios
-        .patch(`${this.state.url}/category-clue/newgame`)
+        .patch(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
           console.log("reset game");
           commit("resetAllClues", res);
@@ -75,7 +75,7 @@ export default createStore({
     },
     async refreshClues({ commit }, categoryid) {
       axios
-        .get(`${this.state.url}/category-clues/${categoryid}`)
+        .get(`${this.state.url}/api/category-clues/${categoryid}`)
         .then((res) => {
           // return (this.clues = res.data);
           commit("refreshAllClues", res);
@@ -88,7 +88,7 @@ export default createStore({
       console.log("action " + state.score);
 
       axios
-        .patch(`${this.state.url}/game/1&${state.score}`)
+        .patch(`${this.state.url}/api/game/1&${state.score}`)
         .then((res) => {
           commit("confirmScore", res);
         })

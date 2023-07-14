@@ -5,6 +5,12 @@
 
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"
+  to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api"
+  status = 200
+
+
+[[redirects]]
+  from = "*"
+  to = "index.html"
   status = 200

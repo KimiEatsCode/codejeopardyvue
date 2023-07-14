@@ -37,7 +37,7 @@ export default {
       apiUrl:this.$store.state.url,
       getResponse: false,
       categories: axios
-        .get(`${this.apiUrl}/game-categories`)
+        .get(`${this.apiUrl}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
           return (this.categories = res.data);
