@@ -104,7 +104,8 @@ export default {
         name: "",
       },
       clues: axios
-        .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/${this.categoryid}`)
+        // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/${this.categoryid}`)
+        .get(`${this.$store.url}/${this.categoryid}`)
         .then((res) => {
           console.log(res.data)
           return (this.clues = res.data);
