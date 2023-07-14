@@ -36,11 +36,16 @@ export default {
     return {
       getResponse: false,
       categories: axios
-        // .get(`${this.$store.url}/api/game-categories`)
-        .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
+        .get(`${this.$store.url}/api/game-categories`)
+        // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          return (this.categories = res.data);
+          if(res.data === "") {
+            console.log('game categories data response is empty')
+          } else {
+            console.log(`categories res data is ${res.data}`)
+            return (this.categories = res.data);
+          }
         })
         .catch((error) => {
           console.log(error);
