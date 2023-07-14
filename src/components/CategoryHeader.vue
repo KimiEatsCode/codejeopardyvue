@@ -41,7 +41,7 @@ export default {
         .then((res) => {
           this.getResponse = true;
           if(res.data.length > 100) {
-            console.log('game categories data response is empty');
+            console.log('game categories data response is empty ' + this.$store.state.url);
             return;
           } else {
             console.log(`categories res data is ${res.data}`)

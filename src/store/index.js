@@ -15,7 +15,7 @@ export default createStore({
       value: "",
       answeredClue: "",
       answered: "",
-      url: "https://codejeopardy-7116bb4be6a5.herokuapp.com",
+      url: "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/",
     };
   },
   getters: {},
