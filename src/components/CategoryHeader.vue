@@ -31,7 +31,7 @@ export default {
   },
   computer:{
 url() {
-  this.$store.state.url
+  return this.$store.state.url
   },
   data() {
     return {
@@ -40,6 +40,7 @@ url() {
         .get(`${this.url}/api/game-categories`)
         // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
         .then((res) => {
+          console.log(this.url)
           this.getResponse = true;
           if(res.data.length > 100) {
             console.log('game categories data response is empty ' + this.$store.state.url);
