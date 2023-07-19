@@ -3,6 +3,7 @@
 <h2>Your Score is: {{ $store.state.score }}</h2>
 <p><button @click="newgameReset">Reset</button></p>
   <h3 v-if="!getResponse">Test Sorry Content is not currently available.</h3>
+  {{  categories }}
   <div
     class="grid-container"
     v-for="(category, index) in categories"
