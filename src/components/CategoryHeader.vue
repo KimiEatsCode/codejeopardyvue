@@ -2,7 +2,7 @@
   <h3>Code Jeopardy</h3>
 <h2>Your Score is: {{ $store.state.score }}</h2>
 <p><button @click="newgameReset">Reset</button></p>
-  <h3 v-if="!getResponse">Sorry Content is not currently available.</h3>
+  <h3 v-if="!getResponse">Test Sorry Content is not currently available.</h3>
   <div
     class="grid-container"
     v-for="(category, index) in categories"
