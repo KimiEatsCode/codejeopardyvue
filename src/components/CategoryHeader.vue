@@ -1,9 +1,9 @@
 <template>
   <h3>Code Jeopardy</h3>
-<h2>Your Score is: {{ $store.state.score }}</h2>
+<!-- <h2>Your Score is: {{ $store.state.score }}</h2> -->
 <p><button @click="newgameReset">Reset</button></p>
-  <h3 v-if="!getResponse">Test Sorry Content is not currently available.</h3>
-  {{  categories }}
+  <h3 v-if="!getResponse">Content is not currently available.</h3>
+
   <div
     class="grid-container"
     v-for="(category, index) in categories"
@@ -30,16 +30,16 @@ export default {
   components: {
     ClueColumn,
   },
-  computer:{
+  computed: {
 url() {
   return this.$store.state.url
+  }
   },
   data() {
     return {
       getResponse: false,
       categories: axios
-        // .get(`${this.url}/api/game-categories`)
-        .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
+        .get("https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories")
         .then((res) => {
           console.log(this.url)
           this.getResponse = true;
@@ -56,11 +56,6 @@ url() {
         }),
     };
   },
-  computed: {
-score() {
-  return this.$store.state.score;
-}
-  },
   methods: {
     modalToggle() {
       const body = document.querySelector("body");
@@ -73,7 +68,6 @@ score() {
   //  this.$store.dispatch("resetClues")
   //   }
     }
-},
 }
 </script>
 
