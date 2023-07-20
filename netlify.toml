@@ -20,6 +20,11 @@
   query = {categoryid = ":categoryid"}
   status = 200
 
+[[redirects]]
+  from = "/api/category-clue"
+  to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clue/"
+  query = {clueid = ":clueid"}
+  status = 200
 
 
 
