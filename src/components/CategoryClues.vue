@@ -1,5 +1,4 @@
 <template>
-
   <div v-for="clue in clues" v-bind:key="clue.id">
     <div v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
       <button
@@ -95,7 +94,6 @@ export default {
   },
   data() {
     return {
-      apiUrl: this.$store.state.url,
       showMessage: false,
       selectedItem: null,
       active: "",
@@ -104,21 +102,23 @@ export default {
         name: "",
       },
       clues: axios
-        // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/${this.categoryid}`)
-        .get(`${this.$store.url}/${this.categoryid}`)
+        .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
         .then((res) => {
           console.log(res.data)
-          return (this.clues = res.data);
+          if(res.data.length > 100 || res.data === "") {
+            console.log('game categories data response is empty ' + this.$store.state.url);
+          } else {
+            console.log(`categories res data is ${res.data}`)
+            return (this.clues = res.data);
+          }
         })
         .catch((error) => {
           console.log(error);
-          console.log(this.apiUrl)
         }),
     };
   },
 
 computed: {
-
     clue() {
       return this.$store.state.clue;
     },
@@ -178,7 +178,7 @@ computed: {
 
     refreshClues(categoryid) {
       axios
-        .get(`${this.apiUrl}/category-clues/${categoryid}`)
+        .get(`${this.$store.url}/api/category-clues/${categoryid}`)
         .then((res) => {
           return (this.$store.state.clues = res.data.rows);
         })
@@ -186,9 +186,7 @@ computed: {
           console.log(error);
         });
     },
-    //   console.log('refresh clues function called')
-    //   return this.$store.commit("refreshAllClues")
-    //  },
+
   },
 };
 </script>

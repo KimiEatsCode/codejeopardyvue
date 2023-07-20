@@ -28,26 +28,18 @@ export default {
   components: {
     ClueColumn,
   },
-  computed:{
-url() {
-  return this.$store.state.url
-  }
-},
+
   data() {
     return {
       getResponse: false,
       categories: axios
-        .get(`${this.url}/api/game-categories`)
-        // .get(`https://codejeopardy-7116bb4be6a5.herokuapp.com/api/game-categories`)
+        .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           console.log(this.url)
           this.getResponse = true;
-          if(res.data.length > 100) {
-            console.log('game categories data response is empty ' + this.$store.state.url);
-          } else {
-            console.log(`categories res data is ${res.data}`)
-            return (this.categories = res.data);
-          }
+          console.log(`categories res data is ${res.data}`)
+          return (this.categories = res.data);
+
         })
         .catch((error) => {
           console.log(error);
@@ -67,7 +59,6 @@ url() {
   //  this.$store.dispatch("resetClues")
   //   }
     }
-},
 }
 </script>
 

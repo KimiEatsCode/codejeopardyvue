@@ -1,5 +1,4 @@
 <template><div>test from modal comp</div>
-
    <div
             ref="modal"
             class="modal fade"
@@ -25,8 +24,6 @@
             </div>
             </div>
         </div>
-
-
            <div v-if="active" class="modal-backdrop fade show"></div>
 </template>
 
@@ -39,9 +36,6 @@ export default ({
 props: {
     clue:String
 },
-
-
-
 }
 
 })
