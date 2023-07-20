@@ -55,9 +55,9 @@ export default {
         ? body.classList.add("modal-open")
         : body.classList.remove("modal-open");
     },
-  //   newgameReset() {
-  //  this.$store.dispatch("resetClues")
-  //   }
+    newgameReset() {
+   this.$store.dispatch("resetClues")
+    }
     }
 }
 </script>
