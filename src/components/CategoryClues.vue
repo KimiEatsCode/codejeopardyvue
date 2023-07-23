@@ -48,15 +48,16 @@
             <p></p>
             <form
               v-on:submit.prevent="
-                updateScore(form.name, answer, clueid)
+                updateScore(form.name, clue[0].answer, clue[0].clueid)
               "
-            >
-              <input v-model="form.name" class="input" type="text" />
-              <p></p>
-              <strong
-                ><label class="label">{{ question }} </label></strong
+            >   <strong><label class="label">{{ question }}...  </label></strong
               >
+              <input v-model="form.name" class="input" type="text" />
+
+
               {{ form.name }}
+              <br>
+              <br>
               <button
                 type="button"
                 class="btn btn-secondary"
@@ -104,11 +105,10 @@ export default {
       clues: axios
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
         .then((res) => {
-          console.log(res.data)
-          if(res.data.length > 100 || res.data === "") {
+
+          if(res.data === "") {
             console.log('game categories data response is empty ' + this.$store.state.url);
           } else {
-            console.log(`categories res data is ${res.data}`)
             return (this.clues = res.data);
           }
         })
@@ -137,10 +137,10 @@ computed: {
     },
   },
   methods: {
-    onSelected(clueid) {
-     return document.querySelector(`.button_${clueid}`).disabled = true;
+    // onSelected(clueid) {
+    //  return document.querySelector(`.button_${clueid}`).disabled = true;
 
-    },
+    // },
     getClue(clueid) {
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
@@ -155,8 +155,8 @@ computed: {
 
     },
     updateScore(input, answer, clueid) {
-      document.querySelector(`.button_${clueid}`).disabled = true;
       this.showMessage = true;
+      console.log(input + " vs " + answer)
       if (input === answer) {
         this.$store.commit("setSCORE");
         const score_payload = {
@@ -173,7 +173,8 @@ computed: {
         answeredClue: 1,
       };
       this.$store.dispatch("updateClue", payload);
-      this.refreshClues();
+      // document.querySelector(`.button_${payload.clueid}`).disabled = true;
+      // this.refreshClues();
     },
 
     refreshClues(categoryid) {

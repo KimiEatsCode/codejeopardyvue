@@ -9,22 +9,20 @@ export default createStore({
       question: "",
       answer: "",
       clues: [],
-      categoryid: "",
       clueid: "",
       score: 0,
       value: "",
       answeredClue: "",
       answered: "",
       url: "https://codejeopardy-7116bb4be6a5.herokuapp.com",
+      // url: "http://localhost:3000",
     };
   },
   getters: {},
   actions: {
     async fetchAllClues({ commit }, categoryid) {
       axios
-        .get(
-          `https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/${categoryid}`
-        )
+        .get(`${this.state.url}/api/category-clues/${categoryid}`)
         .then((res) => {
           console.log(
             this.state.url +
@@ -40,29 +38,36 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
-          console.log(res);
+          console.log("This is clueid for fetchClue" + clueid);
+
           commit("setClue", res.data.rows);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    //updateClue trying to do two things patch db and call a mutation method
     async updateClue({ commit }, payload) {
-      console.log(payload.answeredClue);
-      axios
+      console.log("update clue payload " + payload);
+      const answered = payload.answeredClue;
+      const clueID = payload.clueid;
+
+      if(payload.answeredClue === 1) {
+        axios
         .patch(
           `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredClue}`
         )
         .then((res) => {
           console.log(
-            "update clue " + payload.answeredClue + " " + payload.clueid
+            "update clue " + answered + " " + clueID
           );
           commit("answeredClue", res);
-          console.log(res);
         })
         .catch((error) => {
           console.log(error);
         });
+      }
+
     },
     async resetClues({ commit }) {
       axios
@@ -124,15 +129,17 @@ export default createStore({
     },
 
     setClue(state, clue) {
-      let x = clue.find((y) => {
-        return y.clue;
+      let x = clue.find(clue => {
+        return clue;
       });
-      state.clue = x.clue;
-      state.question = x.question;
-      state.answer = x.answer;
-      state.clueid = x.clue_id;
-      state.answered = x.answered;
-      state.value = x.value;
+
+      state.clue = clue;
+      state.question = x["question"];
+      state.answer = clue["answer"];
+      state.clueid = x["clueid"];
+      state.answered = x["answered"];
+      state.value = x["value"];
+      return clue;
     },
   },
 

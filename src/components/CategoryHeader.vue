@@ -1,7 +1,7 @@
 <template>
   <h3>Code Jeopardy</h3>
 <h2>Your Score is: {{ $store.state.score }}</h2>
-<p><button @click="newgameReset">Reset</button></p>
+<!-- <p><button @click="newgameReset">Reset</button></p> -->
   <h3 v-if="!getResponse">Test Sorry Content is not currently available.</h3>
   <div
     class="grid-container"
@@ -35,9 +35,8 @@ export default {
       categories: axios
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
-          console.log(this.url)
           this.getResponse = true;
-          console.log(`categories res data is ${res.data}`)
+          console.log("header categories call " + res.data)
           return (this.categories = res.data);
 
         })
