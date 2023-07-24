@@ -1,6 +1,7 @@
 <template>
+  <div class="container-fluid">
 <CategoryHeader/>
-
+</div>
 </template>
 
 <script>
