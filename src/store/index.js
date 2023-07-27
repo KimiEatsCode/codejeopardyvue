@@ -52,22 +52,19 @@ export default createStore({
       const answered = payload.answeredClue;
       const clueID = payload.clueid;
 
-      if(payload.answeredClue === 1) {
+      if (payload.answeredClue === 1) {
         axios
-        .patch(
-          `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredClue}`
-        )
-        .then((res) => {
-          console.log(
-            "update clue " + answered + " " + clueID
-          );
-          commit("answeredClue", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .patch(
+            `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredClue}`
+          )
+          .then((res) => {
+            console.log("update clue " + answered + " " + clueID);
+            commit("answeredClue", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-
     },
     async resetClues({ commit }) {
       axios
@@ -129,7 +126,7 @@ export default createStore({
     },
 
     setClue(state, clue) {
-      let x = clue.find(clue => {
+      let x = clue.find((clue) => {
         return clue;
       });
 
