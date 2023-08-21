@@ -10,19 +10,19 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/:splat"
+  to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/:splat"
   status = 200
 
 
 [[redirects]]
   from = "/api/category-clues"
-  to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clues/"
+  to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clues/"
   query = {categoryid = ":categoryid"}
   status = 200
 
 [[redirects]]
   from = "/api/category-clue"
-  to = "https://codejeopardy-7116bb4be6a5.herokuapp.com/api/category-clue/"
+  to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clue/"
   query = {clueid = ":clueid"}
   status = 200
 
