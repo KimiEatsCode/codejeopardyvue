@@ -1,19 +1,8 @@
 <template>
   <div v-for="clue in cluesAxios" v-bind:key="clue.id">
     <div  v-for="(clue_info) in clue" v-bind:key="clue_info.clue_id">
-     <!-- <div :style="clue_info.answered == 1  ? 'background-color:green' : 'background-color: red'">
-{{ clue_info.answered }}
-   <button
-       :class="`button_${clue_info.clue_id}`"
-        @click="
-          modalToggle(clue_info.clue_id);
-          getClue(clue_info.clue_id);
-        "
-      >
-        {{ clue_info.value }}
-    </button>
-  </div> -->
-  <div :class="`answeredCorrect_${clue_info.answered}`">
+
+  <div :class="[`buttonbox_${clue_info.clue_id} answeredCorrect_${clue_info.answered}`]">
    <button
        :class="`button_${clue_info.clue_id}`"
         @click="
@@ -58,7 +47,7 @@
             <p></p>
           </div>
           <div v-if="showMessage === false" class="modal-body">
-            {{ clue }}
+            {{ clue[0].clue }}
             <p></p>
             <form
               v-on:submit.prevent="
@@ -174,14 +163,22 @@ computed: {
 
       if(input !== answer) {
         this.answeredCorrect = 0;
-        let clue_payload = {
+
+      document.querySelector(`.button_${clueid}`).disabled = true;
+      document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_1');
+      document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_null');
+      document.querySelector(`.buttonbox_${clueid}`).classList.add('answeredCorrect_0');
+
+      let clue_payload = {
         clueid: clueid,
         answeredCorrect: this.answeredCorrect
       };
-
         this.$store.dispatch("updateClue", clue_payload);
 
       } else if (input === answer) {
+        document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_0');
+        document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_null');
+      document.querySelector(`.buttonbox_${clueid}`).classList.add('answeredCorrect_1');
 
         this.answeredCorrect = 1;
         console.log("this answeredCorrect value is " + this.answeredCorrect)
@@ -199,7 +196,6 @@ computed: {
 
       }
          console.log(input + " vs " + answer + " means answeredCorrect is " + this.answeredCorrect)
-
       // document.querySelector(`.button_${clueid}`).disabled = true;
     },
   },
@@ -210,14 +206,20 @@ computed: {
 </script>
 
 <style>
-.answeredCorrect_1 {
+
+div[class^="buttonbox_"] {
+  border: 1px solid #000;
+}
+div[class^="buttonbox_"].answeredCorrect_1 {
   background-color: greenyellow;
-  color: #fff;
 }
 
-.answeredCorrect_0 {
+div[class^="buttonbox_"].answeredCorrect_0 {
   background-color: rgb(220, 27, 146);
-  color: #fff;
+}
+
+div[class^="buttonbox_"].answeredCorrect_null {
+  background-color: #417dff;
 }
 
 button:disabled,

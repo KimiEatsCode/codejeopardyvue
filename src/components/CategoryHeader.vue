@@ -1,7 +1,9 @@
 <template>
-  <h3>Code Jeopardy</h3>
-<h2>Your Score is: {{ $store.state.score }}</h2>
-<!-- <p><button @click="newgameReset">Reset</button></p> -->
+  <h2>The Game of Code Jeopardy</h2>
+<!-- <h3>Your Score is: {{ $store.state.score }}</h3> -->
+
+<div>
+  <button @click="newGameReset()" class="reset-button">Reset Game</button>
 
   <div
     class="grid-container"
@@ -17,6 +19,7 @@
       <clue-column :categoryid="cat.category_id"/>
     </ul>
   </div>
+</div>
 </template>
 
 <script>
@@ -47,7 +50,6 @@ export default {
 },
   methods: {
    getCategories() {
-
     this.categories = this.$store.dispatch("fetchAllCat");
     console.log('getCat called' + JSON.stringify(this.categories))
     return this.categories;
@@ -64,8 +66,10 @@ export default {
         ? body.classList.add("modal-open")
         : body.classList.remove("modal-open");
     },
-    newgameReset() {
-   this.$store.dispatch("resetClues")
+    newGameReset() {
+   this.$store.dispatch("resetClues");
+ location.reload();
+ this.getCategories();
     }
     },
     beforeMount() {
@@ -103,5 +107,9 @@ export default {
   background-color: rgb(65, 125, 255);
 }
 
-
+.reset-button {
+  width:100%;
+  padding:10px;
+  margin-bottom: 20px;
+}
 </style>
