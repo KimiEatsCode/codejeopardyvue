@@ -1,7 +1,9 @@
 <template>
-  <div v-for="clue in clues" v-bind:key="clue.id">
-    <div v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
-      <button
+  <div v-for="clue in cluesAxios" v-bind:key="clue.id">
+    <div  v-for="(clue_info) in clue" v-bind:key="clue_info.clue_id">
+     <!-- <div :style="clue_info.answered == 1  ? 'background-color:green' : 'background-color: red'">
+{{ clue_info.answered }}
+   <button
        :class="`button_${clue_info.clue_id}`"
         @click="
           modalToggle(clue_info.clue_id);
@@ -10,6 +12,18 @@
       >
         {{ clue_info.value }}
     </button>
+  </div> -->
+  <div :class="`answeredCorrect_${clue_info.answered}`">
+   <button
+       :class="`button_${clue_info.clue_id}`"
+        @click="
+          modalToggle(clue_info.clue_id);
+          getClue(clue_info.clue_id);
+        "
+      >
+        {{ clue_info.value }}
+    </button>
+  </div>
 
     </div>
   </div>
@@ -38,8 +52,8 @@
           </div>
           <p></p>
           <div v-if="showMessage === true">
-            <div v-if="answerCorrect">You are correct!</div>
-            <div v-if="!answerCorrect">No, that is incorrect.</div>
+            <div v-if="answeredCorrect">You are correct!</div>
+            <div v-if="!answeredCorrect">No, that is incorrect.</div>
             <p></p>
             <p></p>
           </div>
@@ -48,14 +62,12 @@
             <p></p>
             <form
               v-on:submit.prevent="
-                updateScore(form.name, clue[0].answer, clue[0].clueid)
+                updateScoreAndClue(form.name, clue[0].answer, clue[0].clue_id)
               "
             >   <strong><label class="label">{{ question }}...  </label></strong
               >
               <input v-model="form.name" class="input" type="text" />
-
-
-              {{ form.name }}
+            {{ form.name }}
               <br>
               <br>
               <button
@@ -83,13 +95,12 @@
 </template>
 
 <script>
-import CategoryCluesModal from "./CategoryCluesModal.vue";
+
 import axios from "axios";
 
 export default {
   name: "CategoryClues",
   emits: ["modalToggle"],
-  components: CategoryCluesModal,
   props: {
     categoryid: Number,
   },
@@ -98,18 +109,18 @@ export default {
       showMessage: false,
       selectedItem: null,
       active: "",
-      isActive: "",
       form: {
-        name: "",
+      name: "",
       },
-      clues: axios
+      cluesAxios: axios
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
         .then((res) => {
 
           if(res.data === "") {
             console.log('game categories data response is empty ' + this.$store.state.url);
           } else {
-            return (this.clues = res.data);
+            this.$store.state.clues = res.data;
+            return (this.cluesAxios = res.data);
           }
         })
         .catch((error) => {
@@ -119,6 +130,9 @@ export default {
   },
 
 computed: {
+  //  clues() {
+  //     return this.$store.state.clues;
+  //   },
     clue() {
       return this.$store.state.clue;
     },
@@ -128,19 +142,18 @@ computed: {
     answer() {
       return this.$store.state.answer;
     },
-
     clueid() {
       return this.$store.state.clueid;
     },
     value() {
       return this.$store.state.value;
-    },
+    }
   },
   methods: {
-    // onSelected(clueid) {
-    //  return document.querySelector(`.button_${clueid}`).disabled = true;
-
-    // },
+    getClues() {
+  console.log('before mounted');
+    this.clues = this.$store.dispatch("fetchAllClues", this.categoryid);
+},
     getClue(clueid) {
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
@@ -154,51 +167,57 @@ computed: {
       this.showMessage = false;
 
     },
-    updateScore(input, answer, clueid) {
+    updateScoreAndClue(input, answer, clueid) {
       this.showMessage = true;
-      console.log(input + " vs " + answer)
-      if (input === answer) {
-        this.$store.commit("setSCORE");
+
+      this.$store.commit("setSCORE");
+
+      if(input !== answer) {
+        this.answeredCorrect = 0;
+        let clue_payload = {
+        clueid: clueid,
+        answeredCorrect: this.answeredCorrect
+      };
+
+        this.$store.dispatch("updateClue", clue_payload);
+
+      } else if (input === answer) {
+
+        this.answeredCorrect = 1;
+        console.log("this answeredCorrect value is " + this.answeredCorrect)
+        let clue_payload = {
+        clueid: clueid,
+        answeredCorrect: this.answeredCorrect,
+      };
+      this.$store.dispatch("updateClue", clue_payload);
         const score_payload = {
           gameid: 1,
           score: this.$store.state.score,
         };
-        this.answerCorrect = true;
+
         this.$store.dispatch("setScore", score_payload);
-      } else {
-        this.answerCorrect = false;
+
       }
-      const payload = {
-        clueid: clueid,
-        answeredClue: 1,
-      };
-      this.$store.dispatch("updateClue", payload);
-      // document.querySelector(`.button_${payload.clueid}`).disabled = true;
-      // this.refreshClues();
-    },
+         console.log(input + " vs " + answer + " means answeredCorrect is " + this.answeredCorrect)
 
-    refreshClues(categoryid) {
-      axios
-        .get(`${this.$store.url}/api/category-clues/${categoryid}`)
-        .then((res) => {
-          return (this.$store.state.clues = res.data.rows);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // document.querySelector(`.button_${clueid}`).disabled = true;
     },
-
   },
+  beforeMount() {
+    this.getClues()
+  }
 };
 </script>
 
 <style>
-.test {
-  border: 2px solid yellow;
+.answeredCorrect_1 {
+  background-color: greenyellow;
+  color: #fff;
 }
 
-.test2 {
-  border:2px solid fuchsia;
+.answeredCorrect_0 {
+  background-color: rgb(220, 27, 146);
+  color: #fff;
 }
 
 button:disabled,

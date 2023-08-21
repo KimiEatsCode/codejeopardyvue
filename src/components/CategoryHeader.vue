@@ -2,19 +2,19 @@
   <h3>Code Jeopardy</h3>
 <h2>Your Score is: {{ $store.state.score }}</h2>
 <!-- <p><button @click="newgameReset">Reset</button></p> -->
-  <h3 v-if="!getResponse">Test Sorry Content is not currently available.</h3>
+
   <div
     class="grid-container"
     v-for="(category, index) in categories"
     v-bind:key="index"
   >
-  <div v-for="info in category" v-bind:key="info.id">
+  <div v-for="cat in category" v-bind:key="cat.id">
       <div class="grid-container-categories">
-        {{ info.name }}
+        {{ cat.name }}
       </div>
     </div>
-    <ul class="cluecolumn" v-for="info in category" v-bind:key="info.id">
-      <ClueColumn :categoryid="info.category_id" />
+    <ul class="cluecolumn" v-for="cat in category" v-bind:key="cat.id">
+      <clue-column :categoryid="cat.category_id"/>
     </ul>
   </div>
 </template>
@@ -22,15 +22,14 @@
 <script>
 import axios from "axios";
 import ClueColumn from "./CategoryClues.vue";
-
 export default {
   name: "CategoryHeader",
   components: {
-    ClueColumn,
+    'clue-column':ClueColumn,
   },
 
   data() {
-    return {
+  return {
       getResponse: false,
       categories: axios
         .get(`${this.$store.state.url}/api/game-categories`)
@@ -45,8 +44,19 @@ export default {
           this.getResponse = false;
         }),
     };
-  },
+},
   methods: {
+   getCategories() {
+
+    this.categories = this.$store.dispatch("fetchAllCat");
+    console.log('getCat called' + JSON.stringify(this.categories))
+    return this.categories;
+
+    },
+    getClues() {
+  console.log('before mounted');
+    this.clues = this.$store.dispatch("fetchAllClues", 2);
+},
     modalToggle() {
       const body = document.querySelector("body");
       this.active = !this.active;
@@ -57,6 +67,10 @@ export default {
     newgameReset() {
    this.$store.dispatch("resetClues")
     }
+    },
+    beforeMount() {
+      this.getCategories();
+      this.getClues();
     }
 }
 </script>

@@ -4,6 +4,7 @@ import axios from "axios";
 export default createStore({
   state() {
     return {
+      categories: [],
       gameid: "1",
       clue: [],
       question: "",
@@ -12,14 +13,27 @@ export default createStore({
       clueid: "",
       score: 0,
       value: "",
-      answeredClue: "",
-      answered: "",
-      url: "https://codejeopardy-7116bb4be6a5.herokuapp.com",
-      // url: "http://localhost:3000",
+      answeredCorrect: 0,
+      //url: "https://codejeopardy-7116bb4be6a5.herokuapp.com",
+      url: "http://localhost:3306",
+      getResponse: true,
     };
   },
   getters: {},
   actions: {
+    async fetchAllCat({ commit }) {
+      axios
+        .get(`${this.state.url}/api/game-categories`)
+        .then((res) => {
+          console.log("header categories call " + JSON.stringify(res.data));
+          // this.categories = res.data;
+
+          commit("fetchCategories", res.data);
+        })
+        .catch((error) => {
+          console.log(error + " fetch cat error");
+        });
+    },
     async fetchAllClues({ commit }, categoryid) {
       axios
         .get(`${this.state.url}/api/category-clues/${categoryid}`)
@@ -28,7 +42,7 @@ export default createStore({
             this.state.url +
               " this is from for fetch clues in store index js file"
           );
-          commit("refreshAllClues", res.data.rows);
+          commit("setClues", res);
         })
         .catch((error) => {
           console.log(error);
@@ -46,25 +60,24 @@ export default createStore({
           console.log(error);
         });
     },
-    //updateClue trying to do two things patch db and call a mutation method
+    //updateClue trying to do 2 things patch db and call a mutation method
     async updateClue({ commit }, payload) {
-      console.log("update clue payload " + payload);
-      const answered = payload.answeredClue;
-      const clueID = payload.clueid;
-
-      if (payload.answeredClue === 1) {
-        axios
-          .patch(
-            `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredClue}`
-          )
-          .then((res) => {
-            console.log("update clue " + answered + " " + clueID);
-            commit("answeredClue", res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      console.log("update clue payload " + JSON.stringify(payload));
+      axios
+        .patch(
+          `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredCorrect}`
+        )
+        .then((res) => {
+          console.log(
+            "update clue " + payload.answeredCorrect + " " + payload.clueid
+          );
+          return res;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      commit("answeredCorrect", payload);
+      commit("refreshClues");
     },
     async resetClues({ commit }) {
       axios
@@ -103,14 +116,15 @@ export default createStore({
     },
   },
   mutations: {
-    refreshAllClues(state) {
-      return state.clues;
+    fetchCategories(state, payload) {
+      state.categories = payload;
+      console.log("categories " + state.categories);
+      return state.categories;
     },
-    resetAllClues(state) {
-      return state.clues;
-    },
-    answeredClue(state) {
-      return state.answeredClue;
+    answeredCorrect(state, payload) {
+      console.log("commit answeredCorrect " + payload.answeredCorrect);
+      state.answeredCorrect = payload.answeredCorrect;
+      return state.answeredCorrect;
     },
     confirmScore(state) {
       return state.score;
@@ -120,11 +134,11 @@ export default createStore({
       console.log("setSCORE " + state.score);
       return state.score;
     },
-    setClues(state, clues) {
-      console.log("From mutation clues ", clues);
-      state.clues = clues;
+    setClues(state, payload) {
+      console.log("From mutation clues ", payload);
+      state.clues = payload;
+      state.getResponse = true;
     },
-
     setClue(state, clue) {
       let x = clue.find((clue) => {
         return clue;
@@ -134,7 +148,7 @@ export default createStore({
       state.question = x["question"];
       state.answer = clue["answer"];
       state.clueid = x["clueid"];
-      state.answered = x["answered"];
+      state.answeredCorrect = x["answered"];
       state.value = x["value"];
       return clue;
     },
