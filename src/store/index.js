@@ -14,7 +14,7 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: 0,
-      url: "https://codejeopardy-2399c55e116b.herokuapp.com/",
+      url: "https://codejeopardy-2399c55e116b.herokuapp.com",
       // url: "http://localhost:3306",
       getResponse: true,
     };
