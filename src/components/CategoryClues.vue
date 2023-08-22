@@ -7,7 +7,8 @@
        :class="`button_${clue_info.clue_id}`"
         @click="
           modalToggle(clue_info.clue_id);
-          getClue(clue_info.clue_id);
+          // getClue(clue_info.clue_id);
+          getClue(7);
         "
       >
         {{ clue_info.value }}
@@ -140,10 +141,11 @@ computed: {
   },
   methods: {
     getClues() {
-  console.log('before mounted');
+  console.log('getClues method in CatClues file');
     this.clues = this.$store.dispatch("fetchAllClues", this.categoryid);
 },
     getClue(clueid) {
+      console.log('getClue method in CatClues file');
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
     modalToggle() {
