@@ -140,9 +140,9 @@ computed: {
     }
   },
   methods: {
-    getClues() {
+    getClues(catid) {
   console.log('getClues method in CatClues file');
-    this.clues = this.$store.dispatch("fetchAllClues", this.categoryid);
+    this.clues = this.$store.dispatch("fetchAllClues", catid);
 },
     getClue(clueid) {
       console.log('getClue method in CatClues file');
@@ -201,9 +201,9 @@ computed: {
       // document.querySelector(`.button_${clueid}`).disabled = true;
     },
   },
-  beforeMount() {
-    this.getClues()
-  }
+  // beforeMount() {
+  //   this.getClues()
+  // }
 };
 </script>
 
