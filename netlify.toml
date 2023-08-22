@@ -9,19 +9,19 @@
 
 
 [[redirects]]
-  from = "/api/*"
+  from = "https://thunderous-haupia-d8250a.netlify.app/"
   to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/:splat"
   status = 200
 
 
 [[redirects]]
-  from = "/api/category-clues/*"
+  from = "https://thunderous-haupia-d8250a.netlify.app/api/category-clues/"
   to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clues/"
   query = {categoryid = ":categoryid"}
   status = 200
 
 [[redirects]]
-  from = "/api/category-clue/*"
+  from = "https://thunderous-haupia-d8250a.netlify.app/api/category-clue/"
   to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clue/"
   query = {clueid = ":clueid"}
   status = 200
