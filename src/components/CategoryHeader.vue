@@ -9,7 +9,7 @@
     class="grid-container"
     v-for="(category, index) in categories"
     v-bind:key="index"
-  >
+  >cone on
   <div v-for="cat in category" v-bind:key="cat.id">
       <div class="grid-container-categories">
         {{ cat.name }}
