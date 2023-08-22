@@ -7,8 +7,7 @@
        :class="`button_${clue_info.clue_id}`"
         @click="
           modalToggle(clue_info.clue_id);
-          // getClue(clue_info.clue_id);
-          getClue(7);
+          getClue(clue_info.clue_id);
         "
       >
         {{ clue_info.value }}
@@ -102,7 +101,7 @@ export default {
       form: {
       name: "",
       },
-      cluesAxios: axios
+      clues: axios
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
         .then((res) => {
 
@@ -201,9 +200,9 @@ computed: {
       // document.querySelector(`.button_${clueid}`).disabled = true;
     },
   },
-  // beforeMount() {
-  //   this.getClues()
-  // }
+  beforeMount() {
+    this.clues;
+  }
 };
 </script>
 
