@@ -55,9 +55,9 @@ export default {
     return this.categories;
 
     },
-//     getClues() {
+//     getClues(catid=2) {
 //   console.log('before mounted');
-//     this.clues = this.$store.dispatch("fetchAllClues", this.category_id);
+//     this.clues = this.$store.dispatch("fetchAllClues", catid);
 // },
     modalToggle() {
       const body = document.querySelector("body");
