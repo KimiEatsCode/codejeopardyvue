@@ -55,10 +55,10 @@ export default {
     return this.categories;
 
     },
-    getClues() {
-  console.log('before mounted');
-    this.clues = this.$store.dispatch("fetchAllClues", 2);
-},
+//     getClues() {
+//   console.log('before mounted');
+//     this.clues = this.$store.dispatch("fetchAllClues", this.category_id);
+// },
     modalToggle() {
       const body = document.querySelector("body");
       this.active = !this.active;
@@ -72,10 +72,10 @@ export default {
  this.getCategories();
     }
     },
-    beforeMount() {
-      this.getCategories();
-      this.getClues();
-    }
+    // beforeMount() {
+    //   this.getCategories();
+    //   this.getClues();
+    // }
 }
 </script>
 
