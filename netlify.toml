@@ -15,13 +15,13 @@
 
 
 [[redirects]]
-  from = "/api/category-clues"
+  from = "/api/category-clues/*"
   to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clues/"
   query = {categoryid = ":categoryid"}
   status = 200
 
 [[redirects]]
-  from = "/api/category-clue"
+  from = "/api/category-clue/*"
   to = "https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clue/"
   query = {clueid = ":clueid"}
   status = 200
