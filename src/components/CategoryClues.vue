@@ -102,8 +102,7 @@ export default {
       name: "",
       },
       cluesAxios: axios
-        // .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
-        .get(`https://codejeopardy-2399c55e116b.herokuapp.com/api/category-clues//api/category-clues/${this.categoryid}`)
+        .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
         .then((res) => {
 
           if(res.data === "") {
