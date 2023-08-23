@@ -15,9 +15,11 @@
         {{ cat.name }}
       </div>
     </div>
-    <ul class="cluecolumn" v-for="cat in category" v-bind:key="cat.id">
+    <ul>
+    <li class="cluecolumn" v-for="cat in category" v-bind:key="cat.id">
       <clue-column :categoryid="cat.category_id"/>
-    </ul>
+    </li>
+  </ul>
   </div>
 </div>
 </template>

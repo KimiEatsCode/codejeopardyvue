@@ -48,7 +48,7 @@
             <p></p>
           </div>
           <div v-if="showMessage === false" class="modal-body">
-            {{ clue[0].clue }}
+            {{ clue}}
             <p></p>
             <form
               v-on:submit.prevent="
