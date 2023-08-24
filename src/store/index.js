@@ -27,7 +27,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
-          console.log("header categories call " + res.data.rows);
+          console.log("header categories call " + res.data);
           // this.categories = res.data;
 
           commit("fetchCategories", res.data);
