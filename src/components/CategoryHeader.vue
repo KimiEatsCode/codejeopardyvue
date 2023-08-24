@@ -1,26 +1,25 @@
 <template>
-  <h2>The Game of Code Jeopardy</h2>
+  <div class="grid-body">
+  <h2>Code Jeopardy</h2>
 <!-- <h3>Your Score is: {{ $store.state.score }}</h3> -->
 
-<div>
   <button @click="newGameReset()" class="reset-button">Reset Game</button>
 
-  <div
-    class="grid-container"
+  <div class="grid-headings"
     v-for="(category, index) in categories"
     v-bind:key="index"
-  >cone on
+  >
   <div v-for="cat in category" v-bind:key="cat.id">
-      <div class="grid-container-categories">
         {{ cat.name }}
-      </div>
     </div>
-    <ul>
-    <li class="cluecolumn" v-for="cat in category" v-bind:key="cat.id">
-      <clue-column :categoryid="cat.category_id"/>
-    </li>
-  </ul>
   </div>
+
+  <!--using categories from data below instead of having it be part of the headings categories loop so that css grid can work and not repeat clue column as many categories there are -->
+  <!-- doh there's two data words in json that is why I could not get the category_id to pass to cluecolumn to get clues -->
+    <div  v-for="cat,index in categories" v-bind:key="cat.id" v-bind:index =index>
+      <clue-column :categoryid="cat.category_id"/>
+  </div>
+  <footer>Created by Kimi Rettig</footer>
 </div>
 </template>
 
@@ -40,8 +39,19 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("header categories call " + res.data)
-          return (this.categories = res.data);
+          console.log("header categories call " + res.data.data)
+          return (this.categories = res.data).data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.getResponse = false;
+        }),
+        clues: axios
+        .get(`${this.$store.state.url}/api/allclues`)
+        .then((res) => {
+          this.getResponse = true;
+          console.log("getting all clues " + JSON.stringify(res.data))
+          return (this.clues = res.data);
 
         })
         .catch((error) => {
@@ -57,10 +67,7 @@ export default {
     return this.categories;
 
     },
-//     getClues(catid=2) {
-//   console.log('before mounted');
-//     this.clues = this.$store.dispatch("fetchAllClues", catid);
-// },
+
     modalToggle() {
       const body = document.querySelector("body");
       this.active = !this.active;
@@ -71,38 +78,34 @@ export default {
     newGameReset() {
    this.$store.dispatch("resetClues");
  location.reload();
- this.getCategories();
+//  this.getCategories();
     }
     },
-    // beforeMount() {
-    //   this.getCategories();
-    //   this.getClues();
-    // }
+    beforeMount() {
+
+    }
 }
 </script>
 
 <style>
-.grid-container {
+
+.grid-body {
+  display:grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1,1fr);
+}
+
+.grid-headings {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+  background-color:lightseagreen;
+  font-size:1.2em;
 }
-.grid-container-categories {
+
+.grid-clues {
   display: grid;
-  grid-template-columns: repeat(1);
-  grid-template-rows: repeat(1);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  background-color: orchid;
-}
-.grid-container-clues {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  background-color: #2196f3;
-  padding: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  font-size:1.2em;
 }
 
 .cluecolumn {
@@ -113,5 +116,14 @@ export default {
   width:100%;
   padding:10px;
   margin-bottom: 20px;
+}
+
+footer {
+  grid-column: 1, 1fr;
+  padding-top:20px;
+  font-size: 1.2em;
+  color: rgb(65, 125, 255);
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing:0.5px;
 }
 </style>

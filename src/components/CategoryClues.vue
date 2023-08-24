@@ -1,7 +1,8 @@
 <template>
- Cmoe one {{  categoryid  }}
-  <div v-for="clue in clues" v-bind:key="clue.id">
-    <div  v-for="(clue_info) in clue" v-bind:key="clue_info.clue_id">
+
+  <div class="grid-clues" v-for="clue in clues" v-bind:key="clue.id">
+
+    <div  v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
 
   <div :class="[`buttonbox_${clue_info.clue_id} answeredCorrect_${clue_info.answered}`]">
    <button
@@ -48,7 +49,7 @@
             <p></p>
           </div>
           <div v-if="showMessage === false" class="modal-body">
-            {{ clue}}
+
             <p></p>
             <form
               v-on:submit.prevent="
@@ -79,9 +80,6 @@
     </div>
     <div v-if="active" class="modal-backdrop fade show"></div>
   </div>
-
-  <!--cant use javascript of bootstrap with vue?-->
-  <!--https://stackoverflow.com/questions/65547199/using-bootstrap-5-with-vue-3-->
 </template>
 
 <script>
@@ -110,7 +108,7 @@ export default {
             console.log('game categories data response is empty ' + this.$store.state.url);
           } else {
             this.$store.state.clues = res.data;
-            return (this.cluesAxios = res.data);
+            return (this.clues = res.data);
           }
         })
         .catch((error) => {
