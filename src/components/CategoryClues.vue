@@ -105,7 +105,7 @@ export default {
         .then((res) => {
 
           if(res.data === "") {
-            console.log('game categories data response is empty ' + this.$store.state.url);
+            console.log('game clues data response is empty ' + this.$store.state.url);
           } else {
             this.$store.state.clues = res.data;
             return (this.clues = res.data);

@@ -15,7 +15,7 @@
   </div>
 
   <!--using categories from data below instead of having it be part of the headings categories loop so that css grid can work and not repeat clue column as many categories there are -->
-  <!-- doh there's two data words in json that is why I could not get the category_id to pass to cluecolumn to get clues -->
+
     <div  v-for="cat,index in categories" v-bind:key="cat.id" v-bind:index =index>
       <clue-column :categoryid="cat.category_id"/>
   </div>
@@ -39,7 +39,7 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("header categories call " + res.data)
+          console.log("header categories call " + JSON.stringfy(res.data))
           return this.categories = res.data;
         })
         .catch((error) => {
