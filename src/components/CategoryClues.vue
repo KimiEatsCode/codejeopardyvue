@@ -147,37 +147,43 @@ computed: {
 
     },
     updateScoreAndClue(input, answer, clueid) {
-      this.showMessage = true;
 
-      this.$store.commit("setSCORE");
+      this.showMessage = true;
+      let buttonbox = document.querySelector(`.buttonbox_${clueid}`);
 
       if(input !== answer) {
+
         this.answeredCorrect = 0;
 
-      document.querySelector(`.button_${clueid}`).disabled = true;
-      document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_1');
-      document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_null');
-      document.querySelector(`.buttonbox_${clueid}`).classList.add('answeredCorrect_0');
+        buttonbox.classList.remove('answeredCorrect_1');
+        buttonbox.classList.remove('answeredCorrect_null');
+        buttonbox.classList.add('answeredCorrect_0');
+        buttonbox.disabled = true;
 
       let clue_payload = {
         clueid: clueid,
-        answeredCorrect: this.answeredCorrect
+        answeredCorrect:this.answeredCorrect
       };
         this.$store.dispatch("updateClue", clue_payload);
 
       } else if (input === answer) {
-        document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_0');
-        document.querySelector(`.buttonbox_${clueid}`).classList.remove('answeredCorrect_null');
-      document.querySelector(`.buttonbox_${clueid}`).classList.add('answeredCorrect_1');
 
         this.answeredCorrect = 1;
-        console.log("this answeredCorrect value is " + this.answeredCorrect)
+        
+          buttonbox.classList.remove('answeredCorrect_0');
+          buttonbox.classList.remove('answeredCorrect_null');
+          buttonbox.style.backgroundColor = 'greenyellow';
+
+      //update clue answered value and answeredCorrect state
         let clue_payload = {
         clueid: clueid,
         answeredCorrect: this.answeredCorrect,
       };
+
       this.$store.dispatch("updateClue", clue_payload);
-        const score_payload = {
+
+      //update score on db and in state
+       const score_payload = {
           gameid: 1,
           score: this.$store.state.score,
         };
@@ -185,8 +191,9 @@ computed: {
         this.$store.dispatch("setScore", score_payload);
 
       }
-         console.log(input + " vs " + answer + " means answeredCorrect is " + this.answeredCorrect)
-      document.querySelector(`.button_${clueid}`).disabled = true;
+
+      console.log(input + " vs " + answer + " means answeredCorrect is " + this.answeredCorrect)
+
     },
   },
   beforeMount() {
@@ -202,10 +209,9 @@ div[class^="buttonbox_"] {
 }
 div[class^="buttonbox_"] {
   border: 1px solid #000;
-  background-color: #86a8f0;
 }
 div[class^="buttonbox_"].answeredCorrect_1 {
-  background-color: greenyellow;
+  background-color: greenyellow!important;
 }
 
 div[class^="buttonbox_"].answeredCorrect_0 {
@@ -232,6 +238,7 @@ button:hover {
 button:disabled,
 button[disabled] {
   background-color: rgb(220, 27, 146);
+  color:#999;
   border: none;
 }
 

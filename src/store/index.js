@@ -14,10 +14,10 @@ export default createStore({
       clueid: "",
       score: 0,
       value: "",
-      answeredCorrect: 0,
+      answeredCorrect: null,
       url: "https://codejeopardy-2399c55e116b.herokuapp.com",
       // url: "http://localhost:3306",
-      //mock url 3001
+      //mock url 3001 to help with too many connection issue
       // url: "http://localhost:3001",
       getResponse: true,
     };
@@ -43,7 +43,7 @@ export default createStore({
         .then((res) => {
           console.log(
             this.state.url +
-              " this is from for fetch clues in store index js file"
+              "fetch clues in store index js file"
           );
           commit("setClues", res);
         })
@@ -95,24 +95,12 @@ export default createStore({
           console.log(error);
         });
     },
-    // async refreshClues({ commit }, categoryid) {
-    //   axios
-    //     .get(`${this.state.url}/api/category-clues/${categoryid}`)
-    //     .then((res) => {
-    //       // return (this.clues = res.data);
-    //       commit("refreshAllClues", res);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
     async setScore({ commit }, state) {
-      console.log("action " + state.score);
-
       axios
         .patch(`${this.state.url}/api/game/1&${state.score}`)
         .then((res) => {
-          commit("confirmScore", res);
+          commit("setScore", res);
+          console.log("state score is " + state.score);
         })
         .catch((error) => {
           console.log(error);
@@ -134,9 +122,9 @@ export default createStore({
     confirmScore(state) {
       return state.score;
     },
-    setSCORE(state) {
+    setScore(state) {
       state.score = state.score + state.value;
-      console.log("setSCORE " + state.score);
+      console.log("setScore total = " + state.score);
       return state.score;
     },
     setClues(state, payload) {

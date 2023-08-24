@@ -122,7 +122,7 @@ export default {
 footer {
   grid-column: 1, 1fr;
   padding-top: 20px;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .scorebox {
