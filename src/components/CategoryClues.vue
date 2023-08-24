@@ -31,7 +31,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title"></h5>
-            <button
+            <div
               type="button"
               class="close"
               data-dismiss="modal"
@@ -39,7 +39,7 @@
               @click="modalToggle"
             >
               <span aria-hidden="true">&times;</span>
-            </button>
+          </div>
           </div>
           <p></p>
           <div v-if="showMessage === true">
@@ -49,27 +49,17 @@
             <p></p>
           </div>
           <div v-if="showMessage === false" class="modal-body">
-{{ clueText }}
+          {{ clueText }}
             <p></p>
             <form
               v-on:submit.prevent="
                 updateScoreAndClue(form.name, clue[0].answer, clue[0].clue_id)
               "
-            >   <strong><label class="label">{{ question }}...  </label></strong
-              >
+            >   <label class="label">{{ question }}...</label>
               <input v-model="form.name" class="input" type="text" />
-            {{ form.name }}
               <br>
               <br>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                @click="modalToggle"
-              >
-                Close
-              </button>
+
               <button type="submit" class="btn btn-primary" value="form.name">
                 submit
               </button>
@@ -118,9 +108,10 @@ export default {
   },
 
 computed: {
-  //  clues() {
-  //     return this.$store.state.clues;
-  //   },
+//need clue vs using question or answer in submit funciton for some reason
+  clue() {
+      return this.$store.state.clue;
+    },
     clueText() {
       return this.$store.state.clueText;
     },
@@ -143,7 +134,6 @@ computed: {
     this.clues = this.$store.dispatch("fetchAllClues", catid);
 },
     getClue(clueid) {
-      console.log('getClue method in CatClues file');
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
     modalToggle() {
@@ -210,6 +200,10 @@ computed: {
 div[class^="buttonbox_"] {
   border: 1px solid #000;
 }
+div[class^="buttonbox_"] {
+  border: 1px solid #000;
+  background-color: #86a8f0;
+}
 div[class^="buttonbox_"].answeredCorrect_1 {
   background-color: greenyellow;
 }
@@ -222,10 +216,38 @@ div[class^="buttonbox_"].answeredCorrect_null {
   background-color: #417dff;
 }
 
+button {
+  background-color: #417dff;
+  border: none;
+  padding:5%;
+  width:100%;
+}
+
+button:hover {
+  background-color: #86a8f0;
+  width:100%;
+}
+
 button:disabled,
 button[disabled] {
-  border: 1px solid #cb3333;
-  background-color: #cccccc;
-  color: #666666;
+  background-color: rgb(220, 27, 146);
+  border: none;
+}
+
+input {
+  padding:3px 10px;
+}
+
+label {
+  font-weight:bold;
+  margin-right:5px;
+}
+
+.close {
+  font-size:40px;
+}
+
+.modal-header {
+    padding: 0 20px!important;
 }
 </style>

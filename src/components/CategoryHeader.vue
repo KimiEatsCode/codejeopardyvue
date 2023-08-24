@@ -1,7 +1,7 @@
 <template>
   <div class="grid-body">
     <h2>Code Jeopardy</h2>
-    <!-- <h3>Your Score is: {{ $store.state.score }}</h3> -->
+    <div class="scorebox">Score: {{ $store.state.score }}</div>
 
     <button @click="newGameReset()" class="reset-button">Reset Game</button>
 
@@ -53,7 +53,7 @@ export default {
         .get(`${this.$store.state.url}/api/allclues`)
         .then((res) => {
           this.getResponse = true;
-          console.log("getting all clues " + JSON.stringify(res.data));
+          // console.log("getting all clues " + JSON.stringify(res.data));
           return (this.clues = res.data);
         })
         .catch((error) => {
@@ -111,14 +111,25 @@ export default {
 }
 
 .reset-button {
+  text-decoration: underline;
+  font-size:1.2em;
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
+  border:2px solid rgb(241, 221, 69);
 }
 
 footer {
   grid-column: 1, 1fr;
   padding-top: 20px;
   font-size: 1.2em;
+}
+
+.scorebox {
+  font-weight: bold;
+  font-size:1.3em;
+  background-color:rgb(255, 214, 112);
+  padding:5px;
+  margin-bottom:5px;
 }
 </style>

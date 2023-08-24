@@ -80,7 +80,7 @@ export default createStore({
           console.log(error);
         });
       commit("answeredCorrect", payload);
-      commit("refreshClues");
+      // commit("refreshClues");
     },
     async resetClues({ commit }) {
       axios
@@ -95,17 +95,17 @@ export default createStore({
           console.log(error);
         });
     },
-    async refreshClues({ commit }, categoryid) {
-      axios
-        .get(`${this.state.url}/api/category-clues/${categoryid}`)
-        .then((res) => {
-          // return (this.clues = res.data);
-          commit("refreshAllClues", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // async refreshClues({ commit }, categoryid) {
+    //   axios
+    //     .get(`${this.state.url}/api/category-clues/${categoryid}`)
+    //     .then((res) => {
+    //       // return (this.clues = res.data);
+    //       commit("refreshAllClues", res);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     async setScore({ commit }, state) {
       console.log("action " + state.score);
 
