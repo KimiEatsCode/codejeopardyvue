@@ -1,6 +1,6 @@
 <template>
 
-  <div class="grid-clues" v-for="clue in clues" v-bind:key="clue.id">
+  <div v-for="clue in clues" v-bind:key="clue.id">
 
     <div  v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
 
