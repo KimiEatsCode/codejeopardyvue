@@ -6,7 +6,8 @@ export default createStore({
     return {
       categories: [],
       gameid: "1",
-      clue: [],
+      clue: "",
+      clueText: "",
       question: "",
       answer: "",
       clues: [],
@@ -14,8 +15,8 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: 0,
-      // url: "https://codejeopardy-2399c55e116b.herokuapp.com",
-      url: "http://localhost:3306",
+      url: "https://codejeopardy-2399c55e116b.herokuapp.com",
+      // url: "http://localhost:3306",
       //mock url 3001
       // url: "http://localhost:3001",
       getResponse: true,
@@ -148,9 +149,11 @@ export default createStore({
         return clue;
       });
 
-      state.clue = clue;
+      state.clue = clue; //this is the whole object not just the clue text
+     let clueText = x["clue"];
+     state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
-      state.answer = clue["answer"];
+      state.answer = x["answer"];
       state.clueid = x["clueid"];
       state.answeredCorrect = x["answered"];
       state.value = x["value"];

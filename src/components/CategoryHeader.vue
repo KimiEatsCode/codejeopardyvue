@@ -120,8 +120,5 @@ footer {
   grid-column: 1, 1fr;
   padding-top: 20px;
   font-size: 1.2em;
-  color: rgb(65, 125, 255);
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  letter-spacing: 0.5px;
 }
 </style>

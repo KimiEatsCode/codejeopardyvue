@@ -49,7 +49,7 @@
             <p></p>
           </div>
           <div v-if="showMessage === false" class="modal-body">
-
+{{ clueText }}
             <p></p>
             <form
               v-on:submit.prevent="
@@ -121,8 +121,8 @@ computed: {
   //  clues() {
   //     return this.$store.state.clues;
   //   },
-    clue() {
-      return this.$store.state.clue;
+    clueText() {
+      return this.$store.state.clueText;
     },
     question() {
       return this.$store.state.question;
@@ -196,7 +196,7 @@ computed: {
 
       }
          console.log(input + " vs " + answer + " means answeredCorrect is " + this.answeredCorrect)
-      // document.querySelector(`.button_${clueid}`).disabled = true;
+      document.querySelector(`.button_${clueid}`).disabled = true;
     },
   },
   beforeMount() {
