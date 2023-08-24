@@ -217,6 +217,7 @@ div[class^="buttonbox_"].answeredCorrect_null {
 }
 
 button {
+  color:#000;
   background-color: #417dff;
   border: none;
   padding:5%;
@@ -250,4 +251,15 @@ label {
 .modal-header {
     padding: 0 20px!important;
 }
+
+.modal.show .modal-dialog {
+margin-top:10%;
+}
+
+@media screen and (max-width: 767px) {
+  .modal.show .modal-dialog {
+    margin-top:15%;
+}
+}
+
 </style>
