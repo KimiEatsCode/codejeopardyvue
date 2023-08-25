@@ -12,11 +12,12 @@ export default createStore({
       answer: "",
       clues: [],
       clueid: "",
+      currClueId:"",
       score: 0,
       value: "",
       answeredCorrect: null,
-      url: "https://codejeopardy-2399c55e116b.herokuapp.com",
-      // url: "http://localhost:3306",
+      // url: "https://codejeopardy-2399c55e116b.herokuapp.com",
+      url: "http://localhost:3306",
       //mock url 3001 to help with too many connection issue
       // url: "http://localhost:3001",
       getResponse: true,
@@ -55,7 +56,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
-          console.log("This is clueid for fetchClue" + clueid);
+          console.log("This is clueid for fetchClue is " + clueid);
 
           commit("setClue", res.data.rows);
         })
@@ -107,6 +108,7 @@ export default createStore({
         });
     },
 
+
   },
   mutations: {
     fetchCategories(state, payload) {
@@ -139,7 +141,7 @@ export default createStore({
 
       state.clue = clue; //this is the whole object not just the clue text
      let clueText = x["clue"];
-     state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
+      state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
       state.answer = x["answer"];
       state.clueid = x["clueid"];
@@ -147,6 +149,10 @@ export default createStore({
       state.value = x["value"];
       return clue;
     },
+    showModalMutation(state, payload) {
+      state.currClueId = payload.clueid;
+     return state.currClueId;
+    }
   },
 
   modules: {},

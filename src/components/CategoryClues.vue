@@ -1,21 +1,26 @@
 <template>
-
   <div v-for="clue in clues" v-bind:key="clue.id">
-
-    <div  v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
-
-  <div :class="[`buttonbox_${clue_info.clue_id} answeredCorrect_${clue_info.answered}`]">
-   <button
-       :class="`button_${clue_info.clue_id}`"
-        @click="
-          modalToggle(clue_info.clue_id);
-          getClue(clue_info.clue_id);
-        "
+    <div v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
+      <!-- <div
+        :class="[
+          `buttonbox_${clue_info.clue_id} answeredCorrect_${clue_info.answered}`
+        ]"
+      > -->
+      <div
+        :class="[
+          `buttonbox_${clue_info.clue_id}`
+        ]"
       >
-        {{ clue_info.value }}
-    </button>
-  </div>
-
+        <button
+          :class="`button_${clue_info.clue_id}`"
+          @click="
+            modalToggle(clue_info.clue_id);
+            getClue(clue_info.clue_id);
+          "
+        >
+          {{ clue_info.value }}
+        </button>
+      </div>
     </div>
   </div>
 
@@ -39,7 +44,7 @@
               @click="modalToggle"
             >
               <span aria-hidden="true">&times;</span>
-          </div>
+            </div>
           </div>
           <p></p>
           <div v-if="showMessage === true">
@@ -49,17 +54,20 @@
             <p></p>
           </div>
           <div v-if="showMessage === false" class="modal-body">
-          {{ clueText }}
+            {{ clueText }}
             <p></p>
             <form
-              v-on:submit.prevent="
-                updateScoreAndClue(form.name, clue[0].answer, clue[0].clue_id)
-              "
-            >   <label class="label">{{ question }}...</label>
-              <input v-model="form.name" class="input" type="text" />
-              <br>
-              <br>
-
+              v-on:submit.prevent="updateScoreAndClue(form.name, answer, clue[0].clue_id)"
+            >
+              <label class="label">{{ question }}...</label>
+              <input
+                id="modalInput"
+                v-model="form.name"
+                class="input"
+                type="text"
+              />
+              <br />
+              <br />
               <button type="submit" class="btn btn-primary" value="form.name">
                 submit
               </button>
@@ -73,7 +81,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
@@ -88,14 +95,15 @@ export default {
       selectedItem: null,
       active: "",
       form: {
-      name: "",
+        name: "",
       },
       clues: axios
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
         .then((res) => {
-
-          if(res.data === "") {
-            console.log('game clues data response is empty ' + this.$store.state.url);
+          if (res.data === "") {
+            console.log(
+              "game clues data response is empty " + this.$store.state.url
+            );
           } else {
             this.$store.state.clues = res.data;
             return (this.clues = res.data);
@@ -107,9 +115,9 @@ export default {
     };
   },
 
-computed: {
-//need clue vs using question or answer in submit funciton for some reason
-  clue() {
+  computed: {
+
+    clue() {
       return this.$store.state.clue;
     },
     clueText() {
@@ -126,13 +134,13 @@ computed: {
     },
     value() {
       return this.$store.state.value;
-    }
+    },
   },
   methods: {
     getClues(catid) {
-  console.log('getClues method in CatClues file');
-    this.clues = this.$store.dispatch("fetchAllClues", catid);
-},
+      console.log("getClues method in CatClues file");
+      this.clues = this.$store.dispatch("fetchAllClues", catid);
+    },
     getClue(clueid) {
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
@@ -147,71 +155,99 @@ computed: {
 
     },
     updateScoreAndClue(input, answer, clueid) {
-
       this.showMessage = true;
-      let buttonbox = document.querySelector(`.buttonbox_${clueid}`);
 
-      if(input !== answer) {
-
+      if (input !== answer) {
         this.answeredCorrect = 0;
 
+        const clue_payload = {
+          clueid: clueid,
+          answeredCorrect: this.answeredCorrect,
+        };
+
+        this.$store.dispatch("updateClue", clue_payload);
+
+      //trigger vuex action
+        const buttonCSS_payload = {
+          clueid: clueid,
+          answeredCorrect: this.answeredCorrect,
+        }
+
+        this.$store.commit('showModalMutation', buttonCSS_payload)
+        console.log("clue id after mutation method runs = " + this.$store.state.currClueId)
+
+        const buttonbox = document.querySelector(`.buttonbox_${this.$store.state.currClueId}`);
         buttonbox.classList.remove('answeredCorrect_1');
         buttonbox.classList.remove('answeredCorrect_null');
         buttonbox.classList.add('answeredCorrect_0');
-        buttonbox.disabled = true;
-
-      let clue_payload = {
-        clueid: clueid,
-        answeredCorrect:this.answeredCorrect
-      };
-        this.$store.dispatch("updateClue", clue_payload);
+        document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
       } else if (input === answer) {
 
         this.answeredCorrect = 1;
-        
-          buttonbox.classList.remove('answeredCorrect_0');
-          buttonbox.classList.remove('answeredCorrect_null');
-          buttonbox.style.backgroundColor = 'greenyellow';
 
-      //update clue answered value and answeredCorrect state
-        let clue_payload = {
-        clueid: clueid,
-        answeredCorrect: this.answeredCorrect,
-      };
+        const clue_payload = {
+          clueid: clueid,
+          answeredCorrect: this.answeredCorrect,
+        };
 
-      this.$store.dispatch("updateClue", clue_payload);
+        //update clue answered value and answeredCorrect state
 
-      //update score on db and in state
-       const score_payload = {
+        this.$store.dispatch("updateClue", clue_payload);
+
+        //update score on db and in state
+        const score_payload = {
           gameid: 1,
           score: this.$store.state.score,
         };
 
         this.$store.dispatch("setScore", score_payload);
 
+        const buttonCSS_payload = {
+          clueid: clueid,
+          answeredCorrect: this.answeredCorrect,
+        }
+
+        this.$store.commit('showModalMutation', buttonCSS_payload)
+        console.log("clue id after mutation method runs = " + this.$store.state.currClueId)
+
+        const buttonbox = document.querySelector(`.buttonbox_${this.$store.state.currClueId}`);
+        buttonbox.classList.remove('answeredCorrect_0');
+        buttonbox.classList.remove('answeredCorrect_null');
+        buttonbox.classList.add('answeredCorrect_1');
+
       }
 
-      console.log(input + " vs " + answer + " means answeredCorrect is " + this.answeredCorrect)
-
+      console.log(
+        input +
+          " vs " +
+          answer +
+          " means answeredCorrect is " +
+          this.answeredCorrect
+      );
     },
   },
   beforeMount() {
     this.clues;
-  }
+  },
 };
 </script>
 
 <style>
+.green {
+  border:2px dotted green;
+}
 
 div[class^="buttonbox_"] {
   border: 1px solid #000;
+  background-color: #417dff;
 }
 div[class^="buttonbox_"] {
   border: 1px solid #000;
 }
-div[class^="buttonbox_"].answeredCorrect_1 {
-  background-color: greenyellow!important;
+
+div[class^="buttonbox_"].answeredCorrect_1  {
+  background-color: greenyellow !important;
 }
 
 div[class^="buttonbox_"].answeredCorrect_0 {
@@ -223,50 +259,47 @@ div[class^="buttonbox_"].answeredCorrect_null {
 }
 
 button {
-  color:#000;
-  background-color: #417dff;
+  color: #000;
+  background: none;
   border: none;
-  padding:5%;
-  width:100%;
+  padding: 5%;
+  width: 100%;
 }
 
 button:hover {
-  background-color: #86a8f0;
-  width:100%;
+  width: 100%;
 }
 
 button:disabled,
 button[disabled] {
-  background-color: rgb(220, 27, 146);
-  color:#999;
+  color: #999;
   border: none;
 }
 
 input {
-  padding:3px 10px;
+  padding: 3px 10px;
 }
 
 label {
-  font-weight:bold;
-  margin-right:5px;
+  font-weight: bold;
+  margin-right: 5px;
 }
 
 .close {
-  font-size:40px;
+  font-size: 40px;
 }
 
 .modal-header {
-    padding: 0 20px!important;
+  padding: 0 20px !important;
 }
 
 .modal.show .modal-dialog {
-margin-top:10%;
+  margin-top: 10%;
 }
 
 @media screen and (max-width: 767px) {
   .modal.show .modal-dialog {
-    margin-top:15%;
+    margin-top: 15%;
+  }
 }
-}
-
 </style>

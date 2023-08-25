@@ -119,6 +119,7 @@ export default {
   border:2px solid rgb(241, 221, 69);
 }
 
+
 footer {
   grid-column: 1, 1fr;
   padding-top: 20px;
