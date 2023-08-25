@@ -158,7 +158,7 @@ export default {
     updateScoreAndClue(input, answer, clueid) {
       this.showMessage = true;
 
-      if (input !== answer) {
+      if (input.toLowerCase() !== answer.toLowerCase()) {
         this.answeredCorrect = 0;
 
         const clue_payload = {
@@ -183,7 +183,7 @@ export default {
         buttonbox.classList.add('answeredCorrect_0');
         document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
-      } else if (input === answer) {
+      } else if (input.toLowerCase() === answer.toLowerCase()) {
 
         this.answeredCorrect = 1;
 
