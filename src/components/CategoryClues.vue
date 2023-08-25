@@ -251,8 +251,24 @@ div[class^="buttonbox_"].answeredCorrect_1  {
   background-color: greenyellow !important;
 }
 
+.msg_text_correct {
+  color:greenyellow;
+}
+
+.msg_text_correct::after {
+  content:"wrong";
+}
+
 div[class^="buttonbox_"].answeredCorrect_0 {
   background-color: rgb(220, 27, 146);
+}
+
+.msg_text_incorrect {
+  color:rgb(220, 27, 146);
+}
+
+.msg_text_incorrect::after {
+  content:"bi bi-slash-circle-fill";
 }
 
 div[class^="buttonbox_"].answeredCorrect_null {
