@@ -50,6 +50,7 @@
           <div v-if="showMessage === true">
             <div v-if="answeredCorrect">You are correct!</div>
             <div v-if="!answeredCorrect">No, that is incorrect.</div>
+            <div>The correct answer is {{  answer  }}</div>
             <p></p>
             <p></p>
           </div>
