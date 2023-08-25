@@ -49,11 +49,11 @@
           <p></p>
           <div v-if="showMessage === true">
             <div v-if="answeredCorrect" class="msg_text_correct">
-              <span class="msg_text_correct"><i class="bi bi-emoji-smile-upside-down-fill"></i></span>
+
                 <p>You are correct!</p>
             </div>
             <div v-if="!answeredCorrect">
-              <span class="msg_text_incorrect"><i class="bi bi-emoji-smile-upside-down-fill"></i></span>
+
               <p>No, that is incorrect.</p>
             <p><strong>Correct answer: {{  answer  }}</strong></p>
           </div>
