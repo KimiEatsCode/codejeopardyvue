@@ -48,8 +48,8 @@
           </div>
           <p></p>
           <div v-if="showMessage === true">
-            <div v-if="answeredCorrect">You are correct!</div>
-            <div v-if="!answeredCorrect">No, that is incorrect.</div>
+            <div v-if="answeredCorrect" class="msg_text_correct">You are correct!</div>
+            <div v-if="!answeredCorrect" class="msg_text_incorrect">No, that is incorrect.</div>
             <div><strong>Correct answer: {{  answer  }}</strong></div>
             <p></p>
             <p></p>
