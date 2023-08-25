@@ -45,12 +45,18 @@
             >
               <span aria-hidden="true">&times;</span>
             </div>
-          </div>
+          </div><i class="bi bi-emoji-smile-fill"></i>
           <p></p>
           <div v-if="showMessage === true">
-            <div v-if="answeredCorrect" class="msg_text_correct">You are correct!</div>
-            <div v-if="!answeredCorrect" class="msg_text_incorrect">No, that is incorrect.</div>
-            <div><strong>Correct answer: {{  answer  }}</strong></div>
+            <div v-if="answeredCorrect" class="msg_text_correct">
+              <span class="msg_text_correct"><i class="bi bi-emoji-smile-upside-down-fill"></i></span>
+                <p>You are correct!</p>
+            </div>
+            <div v-if="!answeredCorrect">
+              <span class="msg_text_incorrect"><i class="bi bi-emoji-smile-upside-down-fill"></i></span>
+              <p>No, that is incorrect.</p>
+            <p><strong>Correct answer: {{  answer  }}</strong></p>
+          </div>
             <p></p>
             <p></p>
           </div>
@@ -265,10 +271,6 @@ div[class^="buttonbox_"].answeredCorrect_0 {
 
 .msg_text_incorrect {
   color:rgb(220, 27, 146);
-}
-
-.msg_text_incorrect::after {
-  content:"bi bi-slash-circle-fill";
 }
 
 div[class^="buttonbox_"].answeredCorrect_null {
