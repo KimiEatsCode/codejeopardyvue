@@ -48,14 +48,19 @@
           </div><i class="bi bi-emoji-smile-fill"></i>
           <p></p>
           <div v-if="showMessage === true">
-            <div v-if="answeredCorrect" class="msg_text_correct">
 
-                <p>You are correct!</p>
+            <div v-if="answeredCorrect">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-smile-fill msg_text_correct" viewBox="0 0 16 16">
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
+</svg>  <p>You are correct!</p>
+
             </div>
             <div v-if="!answeredCorrect">
-
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-slash-circle-fill msg_text_incorrect" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"/>
+</svg>
               <p>No, that is incorrect.</p>
-            <p><strong>Correct answer: {{  answer  }}</strong></p>
+              <p><strong> Correct answer is: {{  answer  }}</strong></p>
           </div>
             <p></p>
             <p></p>
@@ -254,15 +259,12 @@ div[class^="buttonbox_"] {
 }
 
 div[class^="buttonbox_"].answeredCorrect_1  {
-  background-color: greenyellow !important;
+  background-color: greenyellow;
 }
 
 .msg_text_correct {
-  color:greenyellow;
-}
-
-.msg_text_correct::after {
-  content:"wrong";
+  color: #0ce74e;
+  margin-bottom:10px;
 }
 
 div[class^="buttonbox_"].answeredCorrect_0 {
@@ -271,6 +273,7 @@ div[class^="buttonbox_"].answeredCorrect_0 {
 
 .msg_text_incorrect {
   color:rgb(220, 27, 146);
+  margin-bottom: 10px;
 }
 
 div[class^="buttonbox_"].answeredCorrect_null {
