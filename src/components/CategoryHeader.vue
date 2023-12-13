@@ -42,8 +42,8 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("header categories call " + res.data.rows);
-          return (this.categories = res.data);
+          console.log("header categories call " + JSON.stringify(res.data.data.rows[0]));
+          return (this.categories = res.data.data.rows[0]);
         })
         .catch((error) => {
           console.log(error);
@@ -53,8 +53,8 @@ export default {
         .get(`${this.$store.state.url}/api/allclues`)
         .then((res) => {
           this.getResponse = true;
-          // console.log("getting all clues " + JSON.stringify(res.data));
-          return (this.clues = res.data);
+
+          return (this.clues = res.data.rows.rows[0]);
         })
         .catch((error) => {
           console.log(error);

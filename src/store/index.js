@@ -29,10 +29,8 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
-          console.log("header categories call " + res.data);
-          // this.categories = res.data;
-
-          commit("fetchCategories", res.data);
+          console.log("header categories call " + res.data.data.rows[0]);
+          commit("fetchCategories", res.data.data.rows[0]);
         })
         .catch((error) => {
           console.log(error + " fetch cat error");
@@ -46,7 +44,7 @@ export default createStore({
             this.state.url +
               "fetch clues in store index js file"
           );
-          commit("setClues", res);
+          commit("setClues", res.data.rows.rows[0]);
         })
         .catch((error) => {
           console.log(error);
@@ -58,7 +56,7 @@ export default createStore({
         .then((res) => {
           console.log("This is clueid for fetchClue is " + clueid);
 
-          commit("setClue", res.data.rows);
+          commit("setClue", res.data.rows.rows[0]);
         })
         .catch((error) => {
           console.log(error);

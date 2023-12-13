@@ -110,15 +110,17 @@ export default {
         name: "",
       },
       clues: axios
-        .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
+        // .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
+        .get(`${this.$store.state.url}/api/category-clues/2`)
         .then((res) => {
-          if (res.data === "") {
+          console.log(JSON.stringify(res.data.rows.rows[0]))
+          if (res.data.rows.rows[0] === "") {
             console.log(
               "game clues data response is empty " + this.$store.state.url
             );
           } else {
-            this.$store.state.clues = res.data;
-            return (this.clues = res.data);
+            this.$store.state.clues = res.data.rows.rows[0];
+            return (this.clues = res.data.rows.rows[0]);
           }
         })
         .catch((error) => {
