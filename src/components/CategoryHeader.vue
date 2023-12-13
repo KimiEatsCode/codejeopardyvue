@@ -18,8 +18,11 @@
     <!--using categories from data below instead of having it be part of the headings categories loop so that css grid can work and not repeat clue column as many categories there are -->
 
     <div  class="grid-clues"  v-for="category in categories" v-bind:key="category.id">
+
       <div v-for="cat in category" v-bind:key="cat.id">
-        <clue-column :categoryid="cat.category_id" />
+        <!-- <clue-column :categoryid="cat.category_id" /> -->
+        {{  cat }}
+           <clue-column :categoryid="cat.category_id" />
       </div>
     </div>
     <footer>Created by Kimi Rettig</footer>
@@ -42,8 +45,8 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("header categories call " + JSON.stringify(res.data.data.rows[0]));
-          return (this.categories = res.data.data.rows[0]);
+          console.log("header categories call " + JSON.stringify(res));
+          return (this.categories = res);
         })
         .catch((error) => {
           console.log(error);

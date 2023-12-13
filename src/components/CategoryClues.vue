@@ -1,6 +1,18 @@
 <template>
-  <div v-for="clue in clues" v-bind:key="clue.id">
-    <div v-for="clue_info in clue" v-bind:key="clue_info.clue_id">
+
+  <div v-for="clue in clues" v-bind:key="clue.clue_id">
+
+    <!-- <button
+          :class="`button_${clue.clue_id}`"
+          @click="
+            modalToggle(clue.clue_id);
+            getClue(clue.clue_id);
+          "
+        >
+          {{ clue.value }}
+        </button> -->
+    <div v-for="clue_info in clue" v-bind:key="clue_info">
+
       <!-- <div
         :class="[
           `buttonbox_${clue_info.clue_id} answeredCorrect_${clue_info.answered}`
@@ -110,15 +122,14 @@ export default {
         name: "",
       },
       clues: axios
-        // .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
-        .get(`${this.$store.state.url}/api/category-clues/2`)
-        .then((res) => {
-          console.log(JSON.stringify(res.data.rows.rows[0]))
-          if (res.data.rows.rows[0] === "") {
+        .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`).then((res) => {
+          console.log(JSON.stringify(res.data))
+          if (res.data === "") {
             console.log(
-              "game clues data response is empty " + this.$store.state.url
+              "game clues data response is EMPTY " + this.$store.state.url
             );
           } else {
+            console.log("game clues is NOT empty " + JSON.stringify(res.data.rows.rows[0]))
             this.$store.state.clues = res.data.rows.rows[0];
             return (this.clues = res.data.rows.rows[0]);
           }
