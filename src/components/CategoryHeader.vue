@@ -45,8 +45,8 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("header categories call " + JSON.stringify(res));
-          return (this.categories = res);
+          console.log("header categories call " + JSON.stringify(res.data));
+          return (this.categories = res.data);
         })
         .catch((error) => {
           console.log(error);
