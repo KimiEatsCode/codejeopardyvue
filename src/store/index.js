@@ -16,7 +16,7 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: null,
-      url: "https://codejeopardy-2399c55e116b.herokuapp.com",
+      url: "https://codejeopardy-api.onrender.com",
       // url: "http://localhost:3306",
       //mock url 3001 to help with too many connection issue
       // url: "http://localhost:3001",
