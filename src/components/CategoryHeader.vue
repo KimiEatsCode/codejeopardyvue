@@ -4,26 +4,19 @@
     <div class="scorebox">Score: {{ $store.state.score }}</div>
 
     <button @click="newGameReset()" class="reset-button">Reset Game</button>
-
+<div class="grid-header">
     <div
       class="grid-headings"
       v-for="(category, index) in categories"
       v-bind:key="index"
-    >
-      <div v-for="cat in category" v-bind:key="cat.id">
-        {{ cat.name }}
-      </div>
+    > {{ category.name }}
+
     </div>
+  </div>
 
-    <!--using categories from data below instead of having it be part of the headings categories loop so that css grid can work and not repeat clue column as many categories there are -->
+    <div class="grid-clues" v-for="category in categories" v-bind:key="category.id">
+      <clue-column :categoryid="category.category_id" />
 
-    <div  class="grid-clues"  v-for="category in categories" v-bind:key="category.id">
-
-      <div v-for="cat in category" v-bind:key="cat.id">
-        <!-- <clue-column :categoryid="cat.category_id" /> -->
-        {{  cat }}
-           <clue-column :categoryid="cat.category_id" />
-      </div>
     </div>
     <footer>Created by Kimi Rettig</footer>
   </div>
@@ -45,7 +38,7 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("header categories call " + JSON.stringify(res.data));
+          console.log("CategoryHeader vue file categories http call " + JSON.stringify(res.data));
           return (this.categories = res.data);
         })
         .catch((error) => {
@@ -96,9 +89,13 @@ export default {
   grid-template-rows: repeat(1, 1fr);
 }
 
+.grid-header {
+  display:inline-grid;
+  grid-template-columns: auto auto auto auto;
+  padding:10px;
+}
+
 .grid-headings {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
   background-color: lightseagreen;
   font-size: 1.2em;
 }
@@ -122,11 +119,13 @@ export default {
   border:2px solid rgb(241, 221, 69);
 }
 
-
 footer {
+  position:absolute;
+  bottom:0px;
   grid-column: 1, 1fr;
   padding-top: 20px;
   font-size: 1.1em;
+
 }
 
 .scorebox {

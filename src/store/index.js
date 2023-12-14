@@ -16,11 +16,12 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: null,
-      url: "https://codejeopardy-api.onrender.com",
-      // url: "http://localhost:3306",
+      // url: "https://codejeopardy-api.onrender.com",
+      url: "http://localhost:3306",
       //mock url 3001 to help with too many connection issue
       // url: "http://localhost:3001",
       getResponse: true,
+   
     };
   },
   getters: {},
@@ -29,8 +30,8 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
-          console.log("header categories call " + res.data.data.rows[0]);
-          commit("fetchCategories", res.data.data.rows[0]);
+          console.log("header categories call " + res.data);
+          commit("fetchCategories", res.data);
         })
         .catch((error) => {
           console.log(error + " fetch cat error");
@@ -44,7 +45,7 @@ export default createStore({
             this.state.url +
               "fetch clues in store index js file"
           );
-          commit("setClues", res.data.rows.rows[0]);
+          commit("setClues", res.data);
         })
         .catch((error) => {
           console.log(error);
@@ -56,7 +57,7 @@ export default createStore({
         .then((res) => {
           console.log("This is clueid for fetchClue is " + clueid);
 
-          commit("setClue", res.data.rows.rows[0]);
+          commit("setClue", res.data);
         })
         .catch((error) => {
           console.log(error);
@@ -138,6 +139,7 @@ export default createStore({
       });
 
       state.clue = clue; //this is the whole object not just the clue text
+      console.log("store " + clue)
      let clueText = x["clue"];
       state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
