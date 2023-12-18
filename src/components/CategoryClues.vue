@@ -109,7 +109,7 @@ export default {
               "game clues data response is EMPTY " + this.$store.state.url
             );
           } else {
-            console.log("game clues is NOT empty " + JSON.stringify(res.data))
+            // console.log("game clues is NOT empty " + JSON.stringify(res.data))
             this.$store.state.clues = res.data;
             return (this.clues = res.data);
           }
