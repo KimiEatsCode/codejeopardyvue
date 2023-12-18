@@ -134,9 +134,8 @@ export default createStore({
       state.getResponse = true;
     },
     setClue(state, clue) {
-      let x = clue.find((clue) => {
-        return clue;
-      });
+      console.log("find not function error " + JSON.stringify(clue))
+      let x = clue;
 
       state.clue = clue; //this is the whole object not just the clue text
       console.log("store " + clue)
