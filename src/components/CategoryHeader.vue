@@ -3,7 +3,7 @@
     <h2>Code Jeopardy</h2>
     <div class="scorebox">Score: {{ $store.state.score }}</div>
 
-    <button @click="newGameReset()" class="reset-button">Reset Game</button>
+    <button @click="newGameReset()" class="reset-button, button-3d-style">Reset Game</button>
 <div class="grid-header">
     <div
       class="grid-headings"
@@ -18,7 +18,7 @@
       <clue-column :categoryid="category.category_id" />
     </div>
   </div>
-    <footer>Created by Kimi Rettig</footer>
+
   </div>
 
 </template>
@@ -84,10 +84,12 @@ export default {
 </script>
 
 <style>
+
 .grid-body {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+  min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
 }
 
 .grid-header {
@@ -121,20 +123,56 @@ export default {
 }
 
 .reset-button {
+  width:500px;
   text-decoration: underline;
   font-size:1.2em;
-  width: 100%;
   padding: 10px;
   margin-bottom: 20px;
-  border:2px solid rgb(241, 221, 69);
 }
 
-footer {
-  display:fixed;
-  bottom:0px;
-  grid-column: 1, 1fr;
-  padding-top: 20px;
-  font-size: 1.1em;
+.button-3d-style {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  width:70%;
+  margin: 20px auto;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.button-3d-style:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.button-3d-style:hover {
+  box-shadow: hsl(330, 100%, 71%) 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, hsl(330, 96%, 41%) 0 -3px 0 inset;
+  background-color:hsl(330, 100%, 71%);
+  width:70%;
+}
+
+.button-3d-style:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
 }
 
 .scorebox {

@@ -180,10 +180,10 @@ export default {
         this.$store.commit('showModalMutation', buttonCSS_payload)
         console.log("clue id after mutation method runs = " + this.$store.state.currClueId)
 
-        const buttonbox = document.querySelector(`.buttonbox_${this.$store.state.currClueId}`);
-        buttonbox.classList.remove('answeredCorrect_1');
-        buttonbox.classList.remove('answeredCorrect_null');
-        buttonbox.classList.add('answeredCorrect_0');
+        // const buttonbox = document.querySelector(`.buttonbox_${this.$store.state.currClueId}`);
+        // buttonbox.classList.remove('answeredCorrect_1');
+        // buttonbox.classList.remove('answeredCorrect_null');
+        // buttonbox.classList.add('answeredCorrect_0');
         document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
       } else if (input.toLowerCase() === answer.toLowerCase()) {
