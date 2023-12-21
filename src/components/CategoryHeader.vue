@@ -104,11 +104,15 @@ export default {
 .grid-clues-container {
   display:grid;
   grid-template-columns: auto auto auto auto;
+  grid-template-rows: fit-content;
+  overflow:none;
+
 }
 
 .grid-clues {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(1, 1fr); /*make 1 column responsive*/
+  grid-template-rows: repeat(3,1fr); /*make rows responsive*/
   font-size: 1.2em;
 }
 
@@ -126,12 +130,11 @@ export default {
 }
 
 footer {
-  position:absolute;
+  display:fixed;
   bottom:0px;
   grid-column: 1, 1fr;
   padding-top: 20px;
   font-size: 1.1em;
-
 }
 
 .scorebox {
