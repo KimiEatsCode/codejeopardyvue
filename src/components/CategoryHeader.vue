@@ -13,13 +13,14 @@
 
     </div>
   </div>
-
+<div class="grid-clues-container">
     <div class="grid-clues" v-for="category in categories" v-bind:key="category.id">
       <clue-column :categoryid="category.category_id" />
-
     </div>
+  </div>
     <footer>Created by Kimi Rettig</footer>
   </div>
+
 </template>
 
 <script>
@@ -100,9 +101,14 @@ export default {
   font-size: 1.2em;
 }
 
+.grid-clues-container {
+  display:grid;
+  grid-template-columns: auto auto auto auto;
+}
+
 .grid-clues {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   font-size: 1.2em;
 }
 

@@ -95,6 +95,8 @@ export default {
   },
   data() {
     return {
+
+    clue: this.$store.state.clue,
       showMessage: false,
       selectedItem: null,
       active: "",
@@ -122,9 +124,6 @@ export default {
 
   computed: {
 
-    clue() {
-      return this.$store.state.clue;
-    },
     clueText() {
       return this.$store.state.clueText;
     },
