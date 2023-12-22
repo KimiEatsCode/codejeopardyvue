@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(clue, index) in clues" v-bind:key="index">
+  <div v-for="(clue,index) in clues" v-bind:key="index">
       <div
         :class="[
           `buttonbox_${clue.clue_id}`
@@ -15,7 +15,7 @@
           {{ clue.clue }}
         </button>
       </div>
-    </div>
+
   <div>
     <div
       ref="modal"
@@ -61,8 +61,8 @@
             {{ clueText }}
             <p></p>
             <form
-              v-on:submit.prevent="updateScoreAndClue(form.name, answer, clue.clue_id)"
-            >
+              v-on:submit.prevent="updateScoreAndClue(form.name, answer, currClueId  )"
+            >{{  index  }}
               <label class="label">{{ question }}...</label>
               <input
                 id="modalInput"
@@ -81,7 +81,7 @@
       </div>
     </div>
     <div v-if="active" class="modal-backdrop fade show"></div>
-  </div>
+  </div>   </div>
 </template>
 
 <script>
@@ -95,17 +95,17 @@ export default {
   },
   data() {
     return {
-
-    clue: this.$store.state.clue,
+      currClueId: null,
+      clue: this.$store.state.clue,
       showMessage: false,
       selectedItem: null,
       active: "",
       form: {
-        name: "",
+      name: "",
       },
       clues: axios
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`).then((res) => {
-          console.log("game clues " + JSON.stringify(res.data))
+          // console.log("game clues in CategoryClues vue file  " + JSON.stringify(res.data))
           if (res.data === "") {
             console.log(
               "game clues data response is EMPTY " + this.$store.state.url
@@ -123,7 +123,6 @@ export default {
   },
 
   computed: {
-
     clueText() {
       return this.$store.state.clueText;
     },
@@ -132,9 +131,6 @@ export default {
     },
     answer() {
       return this.$store.state.answer;
-    },
-    clueid() {
-      return this.$store.state.clueid;
     },
     value() {
       return this.$store.state.value;
@@ -146,6 +142,8 @@ export default {
       this.clues = this.$store.dispatch("fetchAllClues", catid);
     },
     getClue(clueid) {
+      this.currClueId = clueid;
+      console.log("get cur " + this.currClueId)
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
     modalToggle() {
@@ -157,15 +155,16 @@ export default {
       this.form.name = "";
       this.showMessage = false;
 
+
     },
-    updateScoreAndClue(input, answer, clueid) {
+    updateScoreAndClue(input, answer, clueID) {
       this.showMessage = true;
 
       if (input.toLowerCase() !== answer.toLowerCase()) {
         this.answeredCorrect = 0;
 
         const clue_payload = {
-          clueid: clueid,
+          clueid: clueID,
           answeredCorrect: this.answeredCorrect,
         };
 
@@ -173,17 +172,17 @@ export default {
 
       //trigger vuex action
         const buttonCSS_payload = {
-          clueid: clueid,
+          clueid: clueID,
           answeredCorrect: this.answeredCorrect,
         }
 
         this.$store.commit('showModalMutation', buttonCSS_payload)
-        console.log("clue id after mutation method runs = " + this.$store.state.currClueId)
+        console.log("clue id after mutation method runs = " + clueID)
 
-        // const buttonbox = document.querySelector(`.buttonbox_${this.$store.state.currClueId}`);
-        // buttonbox.classList.remove('answeredCorrect_1');
-        // buttonbox.classList.remove('answeredCorrect_null');
-        // buttonbox.classList.add('answeredCorrect_0');
+        const buttonbox = document.querySelector(`.buttonbox_${clueID}`);
+        buttonbox.classList.remove('answeredCorrect_1');
+        buttonbox.classList.remove('answeredCorrect_null');
+        buttonbox.classList.add('answeredCorrect_0');
         document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
       } else if (input.toLowerCase() === answer.toLowerCase()) {
@@ -191,7 +190,7 @@ export default {
         this.answeredCorrect = 1;
 
         const clue_payload = {
-          clueid: clueid,
+          clueid: clueID,
           answeredCorrect: this.answeredCorrect,
         };
 
@@ -208,14 +207,14 @@ export default {
         this.$store.dispatch("setScore", score_payload);
 
         const buttonCSS_payload = {
-          clueid: clueid,
+          clueid: clueID,
           answeredCorrect: this.answeredCorrect,
         }
 
         this.$store.commit('showModalMutation', buttonCSS_payload)
-        console.log("clue id after mutation method runs = " + this.$store.state.currClueId)
+        console.log("currClueId value after showModalMutation mutation method runs = " + this.$store.state.currClueId)
 
-        const buttonbox = document.querySelector(`.buttonbox_${this.$store.state.currClueId}`);
+        const buttonbox = document.querySelector(`.buttonbox_${clueID}`);
         buttonbox.classList.remove('answeredCorrect_0');
         buttonbox.classList.remove('answeredCorrect_null');
         buttonbox.classList.add('answeredCorrect_1');
@@ -285,7 +284,7 @@ button:hover {
 
 button:disabled,
 button[disabled] {
-  color: #999;
+  color: #fff;
   border: none;
 }
 
