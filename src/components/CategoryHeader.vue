@@ -50,13 +50,14 @@ export default {
         .get(`${this.$store.state.url}/api/allclues`)
         .then((res) => {
           this.getResponse = true;
-
+          this.$store.dispatch("resetClues");
           return (this.clues = res.data.rows.rows[0]);
         })
         .catch((error) => {
           console.log(error);
           this.getResponse = false;
         }),
+
     };
   },
   methods: {
@@ -76,7 +77,6 @@ export default {
     newGameReset() {
       this.$store.dispatch("resetClues");
       location.reload();
-      //  this.getCategories();
     },
   },
   beforeMount() {},
@@ -95,12 +95,12 @@ export default {
 .grid-header {
   display:inline-grid;
   grid-template-columns: auto auto auto auto;
-  padding:10px;
 }
 
 .grid-headings {
   background-color: lightseagreen;
   font-size: 1.2em;
+  padding:10px;
 }
 
 .grid-clues-container {
@@ -122,6 +122,10 @@ export default {
   background-color: rgb(65, 125, 255);
 }
 
+.grid-clues button {
+  height:100%;
+}
+
 .reset-button {
   width:500px;
   text-decoration: underline;
@@ -130,6 +134,7 @@ export default {
   margin-bottom: 20px;
 }
 
+/*reset button styles*/
 .button-3d-style {
   align-items: center;
   appearance: none;
@@ -174,6 +179,8 @@ export default {
 .button-3d-style:active {
   box-shadow: #D6D6E7 0 3px 7px inset;
 }
+
+/*end reset button styles*/
 
 .scorebox {
   font-weight: bold;
