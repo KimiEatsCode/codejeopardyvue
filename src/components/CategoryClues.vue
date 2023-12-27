@@ -12,12 +12,13 @@
             getClue(clue.clue_id);
           "
         >
-          {{ clue.clue }}
+          {{ clue.value }}
         </button>
       </div>
 
   <div>
     <div
+    @click="modalToggleAnswered"
       ref="modal"
       class="modal fade"
       :class="{ show: active, 'd-block': active }"
@@ -62,8 +63,8 @@
             <p></p>
             <form
               v-on:submit.prevent="updateScoreAndClue(form.name, answer, currClueId  )"
-            >{{  index  }}
-              <label class="label">{{ question }}...</label>
+            >
+              <label class="label">{{ question }} </label>
               <input
                 id="modalInput"
                 v-model="form.name"
@@ -154,9 +155,22 @@ export default {
         : body.classList.remove("modal-open");
       this.form.name = "";
       this.showMessage = false;
-
-
     },
+    // modalToggleAnswered() {
+    //    if(this.answeredCorrect != undefined || this.answeredCorrect === null) {
+    //     console.log("this answeredCorrect " + this.answeredCorrect)
+    //     const body = document.querySelector("body");
+    //     this.active = !this.active;
+    //     this.active
+    //     ? body.classList.add("modal-open")
+    //     : body.classList.remove("modal-open");
+    //     this.form.name = "";
+    //     this.showMessage = false;
+    //    } else  {
+    //     return;
+    //    }
+
+    // },
     updateScoreAndClue(input, answer, clueID) {
       this.showMessage = true;
 
@@ -219,6 +233,8 @@ export default {
         buttonbox.classList.remove('answeredCorrect_null');
         buttonbox.classList.add('answeredCorrect_1');
 
+        document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
+
       }
 
       console.log(
@@ -245,6 +261,7 @@ div[class^="buttonbox_"] {
   border: 1px solid #000;
   background-color: #417dff;
   height:100%;
+  padding: 2px;
 }
 
 div[class^="buttonbox_"].answeredCorrect_null {
@@ -286,6 +303,13 @@ button:disabled,
 button[disabled] {
   color: #fff;
   border: none;
+  background: repeating-linear-gradient(
+  45deg,
+  #606dbc,
+  #606dbc 10px,
+  #465298 10px,
+  #465298 20px
+);
 }
 
 input {
