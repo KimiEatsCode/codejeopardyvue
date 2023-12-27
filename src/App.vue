@@ -2,7 +2,10 @@
   <div class="container-fluid">
 <CategoryHeader/>
 </div>
-<footer>Made by Kimi Rettig. Project uses Vue JS, HTML, CSS Grid, Flexbox, PostgresSQL, Node/Express API hosted on Render</footer>
+
+<footer><button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Made by Kimi Rettig. Project uses Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgresSQL, Node/Express API hosted on Render.">
+Made With!
+</button></footer>
 </template>
 
 <script>
