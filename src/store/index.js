@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
+// import env_vars from "./config";
 
 export default createStore({
   state() {
@@ -18,6 +19,7 @@ export default createStore({
       answeredCorrect: null,
       url: "https://codejeopardy-api.onrender.com",
       // url: "http://localhost:3306",
+      // url: env_vars.apiUrl,
       //mock url 3001 to help with too many connection issue
       // url: "http://localhost:3001",
       getResponse: true,
@@ -30,7 +32,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
-          console.log("header categories call " + res.data);
+          console.log(" header categories call " + res.data);
           commit("fetchCategories", res.data);
         })
         .catch((error) => {
