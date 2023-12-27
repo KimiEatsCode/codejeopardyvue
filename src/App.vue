@@ -3,21 +3,31 @@
 <CategoryHeader/>
 </div>
 
-<footer><button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Made by Kimi Rettig. Project uses Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgresSQL, Node/Express API hosted on Render.">
-Made With!
-</button></footer>
+<!-- <footer><button onClick="showInfo()" type="button" id="toggle-info-button" class="btn btn-secondary"> -->
+  <footer>
+Made With:
+<div id="info-popover">Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgresSQL, Node/Express API hosted on Render.</div></footer>
 </template>
 
 <script>
 
-import CategoryHeader from './components/CategoryHeader.vue'
+import CategoryHeader from './components/CategoryHeader.vue';
 
 export default {
   name: 'App',
   components: {
     CategoryHeader,
-
   }
+//   methods: {
+//     showInfo: function() {
+//   let x = document.getElementById("info-popover");
+//   if (x.style.display === "none") {
+//     x.style.display = "block";
+//   } else {
+//     x.style.display = "none";
+//   }
+// }
+//   }
 
   }
 
@@ -42,7 +52,7 @@ footer {
   bottom:0px;
  height:50px;
   padding:20px;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 
