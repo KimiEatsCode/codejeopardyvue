@@ -322,7 +322,11 @@ label {
 }
 
 .close {
-  font-size: 40px;
+    font-size: 80px;
+    position: fixed;
+    bottom: 0;
+    color: #fff;
+    right: 30px;
 }
 
 .modal-header {
