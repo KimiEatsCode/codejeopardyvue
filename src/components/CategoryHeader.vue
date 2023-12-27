@@ -51,7 +51,8 @@ export default {
         .then((res) => {
           this.getResponse = true;
           this.$store.dispatch("resetClues");
-          return (this.clues = res.data.rows.rows[0]);
+          // return (this.clues = res.data.rows.rows[0]);
+          return (this.clues = res.data);
         })
         .catch((error) => {
           console.log(error);
