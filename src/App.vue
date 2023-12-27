@@ -2,7 +2,7 @@
   <div class="container-fluid">
 <CategoryHeader/>
 </div>
-<footer>Made by Kimi Rettig. Project uses CSS Grid, Vue JS, Flexbox, SQLPostGres, Node/Express API hosted on Render</footer>
+<footer>Made by Kimi Rettig. Project uses Vue JS, HTML, CSS Grid, Flexbox, PostgresSQL, Node/Express API hosted on Render</footer>
 </template>
 
 <script>
