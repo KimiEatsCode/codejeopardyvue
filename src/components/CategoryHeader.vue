@@ -31,7 +31,9 @@ export default {
   components: {
     "clue-column": ClueColumn,
   },
-
+  beforeMount() {
+    this.clues;
+  },
   data() {
     return {
       getResponse: false,
@@ -52,6 +54,7 @@ export default {
           this.getResponse = true;
           this.$store.dispatch("resetClues");
           // return (this.clues = res.data.rows.rows[0]);
+          console.log("get clues in header file " + res.data)
           return (this.clues = res.data);
         })
         .catch((error) => {
@@ -80,7 +83,7 @@ export default {
       location.reload();
     },
   },
-  beforeMount() {},
+
 };
 </script>
 
