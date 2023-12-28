@@ -52,7 +52,8 @@ footer {
   bottom:0px;
  height:50px;
   padding:20px;
-  font-size: 1em;
+  font-size: 0.8em;
+  line-height:15px;
 }
 
 

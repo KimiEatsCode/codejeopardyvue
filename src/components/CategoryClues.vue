@@ -329,6 +329,10 @@ label {
     right: 30px;
 }
 
+.mode-content {
+  border-radius:none;
+}
+
 .modal-header {
   padding: 0 20px !important;
 }
@@ -340,6 +344,7 @@ label {
 @media screen and (max-width: 767px) {
   .modal.show .modal-dialog {
     margin-top: 15%;
+    overflow:scroll;
   }
 }
 </style>
