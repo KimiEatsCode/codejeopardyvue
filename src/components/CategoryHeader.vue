@@ -15,7 +15,7 @@
   </div>
 <div class="grid-clues-container">
     <div class="grid-clues" v-for="category in categories" v-bind:key="category.id">
-      <clue-column :categoryid="category.category_id" />
+      <clue-column :categoryid="category.category_id" :catname="category.name" />
     </div>
   </div>
 
