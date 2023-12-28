@@ -1,7 +1,7 @@
 <template>
   <div class="grid-body">
     <h2>Code Jeopardy</h2>
-    <div class="scorebox">Score: {{ $store.state.score }}</div>
+    <div class="scorebox">Score: ${{ $store.state.score }}</div>
 
     <button @click="newGameReset()" class="reset-button, button-3d-style">Reset Game</button>
 <div class="grid-header">
