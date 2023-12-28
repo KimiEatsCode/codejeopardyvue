@@ -12,7 +12,7 @@
             getClue(clue.clue_id);
           "
         >
-          {{ clue.value }}
+          ${{ clue.value }}
         </button>
       </div>
 
@@ -28,7 +28,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title"></h5>
+            <h5 class="modal-title">{{  catname }}</h5>
             <div
               type="button"
               class="close"
@@ -93,6 +93,7 @@ export default {
   emits: ["modalToggle"],
   props: {
     categoryid: Number,
+    catname: String
   },
   data() {
     return {
@@ -329,7 +330,16 @@ label {
     right: 30px;
 }
 
-.mode-content {
+.modal-header {
+  justify-content:center!important;
+  font-size: 1.2em!important;
+}
+
+.modal-title {
+  padding:10px!important;
+}
+
+.modal-content {
   border-radius:none;
 }
 
