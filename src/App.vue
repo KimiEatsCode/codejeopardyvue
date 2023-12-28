@@ -6,7 +6,7 @@
 <!-- <footer><button onClick="showInfo()" type="button" id="toggle-info-button" class="btn btn-secondary"> -->
   <footer>
 Made With:
-<div id="info-popover">Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgresSQL, Node/Express API hosted on Render.</div></footer>
+<div id="info-popover">Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API hosted on Render.</div></footer>
 </template>
 
 <script>
