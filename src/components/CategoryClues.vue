@@ -322,21 +322,29 @@ label {
   margin-right: 5px;
 }
 
-.close {
+/* .close {
     font-size: 80px;
     position: fixed;
     bottom: 0;
     color: #fff;
     right: 30px;
+} */
+
+.close {
+  font-size:40px;
+  justify-content:end;
 }
 
 .modal-header {
-  justify-content:center!important;
   font-size: 1.2em!important;
 }
 
 .modal-title {
-  padding:10px!important;
+    margin-bottom: 0;
+    line-height: var(--bs-modal-title-line-height);
+    background-color: cadetblue;
+    border-radius: 48%;
+    padding: 8px 10px!important;
 }
 
 .modal-content {

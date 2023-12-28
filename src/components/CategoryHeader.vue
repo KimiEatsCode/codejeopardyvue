@@ -102,7 +102,8 @@ export default {
 }
 
 .grid-headings {
-  background-color: lightseagreen;
+  background-color: cadetblue;
+  font-weight:bold;
   font-size: 1.2em;
   padding:10px;
 }
