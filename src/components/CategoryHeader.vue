@@ -105,7 +105,7 @@ export default {
   background-color: cadetblue;
   font-weight:bold;
   font-size: 1.2em;
-  padding:10px;
+  padding:10px 5px;
 }
 
 .grid-clues-container {
