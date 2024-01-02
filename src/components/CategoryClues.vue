@@ -15,7 +15,7 @@
           ${{ clue.value }}
         </button>
       </div>
-
+    </div>
   <div>
     <div
     @click="modalToggleAnswered"
@@ -28,7 +28,9 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
+
             <h5 class="modal-title">{{  catname }}</h5>
+          
             <div
               type="button"
               class="close"
@@ -82,7 +84,7 @@
       </div>
     </div>
     <div v-if="active" class="modal-backdrop fade show"></div>
-  </div>   </div>
+  </div>
 </template>
 
 <script>
