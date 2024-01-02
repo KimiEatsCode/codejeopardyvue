@@ -359,9 +359,5 @@ label {
   margin-top: 10%;
 }
 
-@media screen and (max-width: 767px) {
-  .modal.show .modal-dialog {
-    margin-top: 15%;
-  }
-}
+
 </style>
