@@ -1,7 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-
 export default createStore({
   state() {
     return {
@@ -13,17 +12,18 @@ export default createStore({
       answer: "",
       clues: [],
       clueid: "",
-      currClueId:"",
+      currClueId: "",
       score: 0,
       value: "",
       answeredCorrect: null,
-      // url: "https://codejeopardy-api.onrender.com",
-      url: "http://localhost:3306",
+      //use url for production
+      url: "https://codejeopardy-api.onrender.com",
+      //use url for development
+      // url: "http://localhost:3306",
       // url: env_vars.apiUrl,
       //mock url 3001 to help with too many connection issue
 
       getResponse: true,
-
     };
   },
   getters: {},
@@ -43,10 +43,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clues/${categoryid}`)
         .then((res) => {
-          console.log(
-            this.state.url +
-              "fetch clues in store index js file"
-          );
+          console.log(this.state.url + "fetch clues in store index js file");
           commit("setClues", res.data);
         })
         .catch((error) => {
@@ -108,8 +105,6 @@ export default createStore({
           console.log(error);
         });
     },
-
-
   },
   mutations: {
     fetchCategories(state, payload) {
@@ -136,12 +131,12 @@ export default createStore({
       state.getResponse = true;
     },
     setClue(state, clue) {
-      console.log("find not function error " + JSON.stringify(clue))
+      console.log("find not function error " + JSON.stringify(clue));
       let x = clue;
 
       state.clue = clue; //this is the whole object not just the clue text
-      console.log("store " + clue)
-     let clueText = x["clue"];
+      console.log("store " + clue);
+      let clueText = x["clue"];
       state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
       state.answer = x["answer"];
@@ -152,8 +147,8 @@ export default createStore({
     },
     showModalMutation(state, payload) {
       state.currClueId = payload.clueid;
-     return state.currClueId;
-    }
+      return state.currClueId;
+    },
   },
 
   modules: {},
