@@ -8,7 +8,7 @@ export default createStore({
       gameid: "1",
       clue: "",
       clueText: "",
-      question: "",
+      question: "",     
       answer: "",
       clues: [],
       clueid: "",
@@ -17,9 +17,9 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       //use url for production
-      url: "https://codejeopardy-api.onrender.com",
+      // url: "https://codejeopardy-api.onrender.com",
       //use url for development
-      // url: "http://localhost:3306",
+      url: "http://localhost:3306",
       // url: env_vars.apiUrl,
       //mock url 3001 to help with too many connection issue
 

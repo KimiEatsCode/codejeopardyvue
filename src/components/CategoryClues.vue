@@ -30,7 +30,7 @@
           <div class="modal-header">
 
             <h5 class="modal-title">{{  catname }}</h5>
-          
+
             <div
               type="button"
               class="close"
@@ -196,11 +196,13 @@ export default {
         this.$store.commit('showModalMutation', buttonCSS_payload)
         console.log("clue id after mutation method runs = " + clueID)
 
-        const buttonbox = document.querySelector(`.buttonbox_${clueID}`);
-        buttonbox.classList.remove('answeredCorrect_1');
-        buttonbox.classList.remove('answeredCorrect_null');
-        buttonbox.classList.add('answeredCorrect_0');
-        document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
+        //css code causing blocking message in browser as part of cross security
+        //may need to rework code to not manipulate inline styles
+        // const buttonbox = document.querySelector(`.buttonbox_${clueID}`);
+        // buttonbox.classList.remove('answeredCorrect_1');
+        // buttonbox.classList.remove('answeredCorrect_null');
+        // buttonbox.classList.add('answeredCorrect_0');
+        // document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
       } else if (input.toLowerCase() === answer.toLowerCase()) {
 
