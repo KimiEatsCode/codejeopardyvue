@@ -20,7 +20,7 @@ export default createStore({
       // url: "https://codejeopardy-api.onrender.com",
       //use url for development
       url: "http://localhost:3000",
-      //mock url 3001 to help with too many connection issue
+      //url is for endpoints to hit the api express app
 
       getResponse: true,
     };
