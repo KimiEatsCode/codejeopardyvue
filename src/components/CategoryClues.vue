@@ -29,7 +29,7 @@
         <div class="modal-content">
           <div class="modal-header">
 
-            <h5 class="modal-title">{{  catname }}</h5>
+            <div class="modal-title"><h5>{{  catname }}</h5></div>
 
             <div
               type="button"
@@ -40,7 +40,8 @@
             >
               <span aria-hidden="true">&times;</span>
             </div>
-          </div><i class="bi bi-emoji-smile-fill"></i>
+          </div>
+          <i class="bi bi-emoji-smile-fill"></i>
           <p></p>
           <div v-if="showMessage === true">
 
@@ -55,7 +56,7 @@
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"/>
 </svg>
               <p>No, that is incorrect.</p>
-              <p><strong> Correct answer is: {{  answer  }}</strong></p>
+              <p><strong> Correct answer is: {{  answer  }}  <span v-if="answer_alternatives !== null"> or {{ answer_alternatives }} </span></strong></p>
           </div>
             <p></p>
             <p></p>
@@ -64,7 +65,7 @@
             {{ clueText }}
             <p></p>
             <form
-              v-on:submit.prevent="updateScoreAndClue(form.name, answer, currClueId  )"
+              v-on:submit.prevent="updateScoreAndClue(form.name, answer, answer_alternatives, currClueId  )"
             >
               <label class="label">{{ question }} </label>
               <input
@@ -136,6 +137,9 @@ export default {
     answer() {
       return this.$store.state.answer;
     },
+    answer_alternatives() {
+      return this.$store.state.answer_alternatives;
+    },
     value() {
       return this.$store.state.value;
     },
@@ -159,25 +163,14 @@ export default {
       this.form.name = "";
       this.showMessage = false;
     },
-    // modalToggleAnswered() {
-    //    if(this.answeredCorrect != undefined || this.answeredCorrect === null) {
-    //     console.log("this answeredCorrect " + this.answeredCorrect)
-    //     const body = document.querySelector("body");
-    //     this.active = !this.active;
-    //     this.active
-    //     ? body.classList.add("modal-open")
-    //     : body.classList.remove("modal-open");
-    //     this.form.name = "";
-    //     this.showMessage = false;
-    //    } else  {
-    //     return;
-    //    }
 
-    // },
-    updateScoreAndClue(input, answer, clueID) {
+    updateScoreAndClue(input, answer, answer_alternatives, clueID) {
+
       this.showMessage = true;
+      const answerAltUsed =  answer_alternatives.toLowerCase().includes(input.toLowerCase());
 
-      if (input.toLowerCase() !== answer.toLowerCase()) {
+      if (input.toLowerCase() !== answer.toLowerCase() && answerAltUsed === false || answerAltUsed === null) {
+console.log("!!answerAltUsed " + answerAltUsed)
         this.answeredCorrect = 0;
 
         const clue_payload = {
@@ -187,7 +180,6 @@ export default {
 
         this.$store.dispatch("updateClue", clue_payload);
 
-      //trigger vuex action
         const buttonCSS_payload = {
           clueid: clueID,
           answeredCorrect: this.answeredCorrect,
@@ -196,15 +188,7 @@ export default {
         this.$store.commit('showModalMutation', buttonCSS_payload)
         console.log("clue id after mutation method runs = " + clueID)
 
-        //css code causing blocking message in browser as part of cross security
-        //may need to rework code to not manipulate inline styles
-        // const buttonbox = document.querySelector(`.buttonbox_${clueID}`);
-        // buttonbox.classList.remove('answeredCorrect_1');
-        // buttonbox.classList.remove('answeredCorrect_null');
-        // buttonbox.classList.add('answeredCorrect_0');
-        // document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
-
-      } else if (input.toLowerCase() === answer.toLowerCase()) {
+      } else if (input.toLowerCase() === answer.toLowerCase() || answerAltUsed) {
 
         this.answeredCorrect = 1;
 
@@ -240,6 +224,8 @@ export default {
 
         document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
+      } else if((answer_alternatives.toLowerCase().includes(input.toLowerCase()))) {
+        console.log("!!!includes answer alts " + answer_alternatives)
       }
 
       console.log(
@@ -326,37 +312,29 @@ label {
   margin-right: 5px;
 }
 
-/* .close {
-    font-size: 80px;
-    position: fixed;
-    bottom: 0;
-    color: #fff;
-    right: 30px;
-} */
-
-.close {
-  font-size:40px;
-  justify-content:end;
-}
-
 .modal-header {
+  display:grid!important;
+  grid-template: 50px/auto auto;
+  padding:5px 10px 10px 30px;
   font-size: 1.2em!important;
+  text-align:left;
 }
 
-.modal-title {
+
+div.close {
+  font-size:40px;
+  text-align:right;
+}
+
+
+div.modal-title {
     margin-bottom: 0;
-    line-height: var(--bs-modal-title-line-height);
-    background-color: cadetblue;
-    border-radius: 48%;
-    padding: 8px 10px!important;
+    padding: 20px 0px 0px;
 }
 
 .modal-content {
   border-radius:none;
-}
-
-.modal-header {
-  padding: 0 20px !important;
+  padding-bottom:20px;
 }
 
 .modal.show .modal-dialog {

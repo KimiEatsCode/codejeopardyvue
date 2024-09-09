@@ -10,6 +10,7 @@ export default createStore({
       clueText: "",
       question: "",
       answer: "",
+      answer_alternatives:[],
       clues: [],
       clueid: "",
       currClueId: "",
@@ -27,6 +28,17 @@ export default createStore({
   },
   getters: {},
   actions: {
+    async fetchGameInfo({ commit }) {
+      axios
+        .get(`${this.state.url}/api/games`)
+        .then((res) => {
+          console.log("game info from games call " + res.data);
+          commit("fetchGameInfo", res.data);
+        })
+        .catch((error) => {
+          console.log(error + " fetch game info error");
+        });
+    },
     async fetchAllCat({ commit }) {
       axios
         .get(`${this.state.url}/api/game-categories`)
@@ -139,6 +151,7 @@ export default createStore({
       state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
       state.answer = x["answer"];
+      state.answer_alternatives = x["answer_alternatives"]
       state.clueid = x["clueid"];
       state.answeredCorrect = x["answered"];
       state.value = x["value"];

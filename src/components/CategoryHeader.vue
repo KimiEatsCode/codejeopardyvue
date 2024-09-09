@@ -1,25 +1,25 @@
 <template>
   <div class="grid-body">
 
-    <h2 class="page-title">Code Jeopardy</h2>
+    <h2 class="page-title">{{  this.gameInfo.game_name }}</h2>
     <div class="scorebox">Score: ${{ $store.state.score }}</div>
 
-    <button @click="newGameReset()" class="reset-button, button-3d-style">Reset Game</button>
+
 <div class="grid-header">
     <div
       class="grid-headings"
       v-for="(category, index) in categories"
       v-bind:key="index"
-    > {{ category.name }}
+    > {{ category.category_name }}
 
     </div>
   </div>
 <div class="grid-clues-container">
-    <div class="grid-clues" v-for="category in categories" v-bind:key="category.id">
-      <clue-column :categoryid="category.category_id" :catname="category.name" />
+    <div class="grid-clues" v-for="category in categories" v-bind:key="category.category_id">
+      <clue-column :categoryid="category.category_id" :catname="category.category_name" />
     </div>
   </div>
-
+  <button @click="newGameReset()" class="reset-button, button-3d-style">Reset Game</button>
   </div>
 
 </template>
@@ -38,6 +38,17 @@ export default {
   data() {
     return {
       getResponse: false,
+      gameInfo: axios
+      .get(`${this.$store.state.url}/api/games`)
+        .then((res) => {
+          this.getResponse = true;
+          console.log("Get game info call " + JSON.stringify(res.data));
+          return (this.gameInfo = res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.getResponse = false;
+        }),
       categories: axios
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
