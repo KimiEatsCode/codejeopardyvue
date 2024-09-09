@@ -1,4 +1,4 @@
-# vue-project
+# Front-End of Code Jeopardy project
 
 ## Project setup
 ```
