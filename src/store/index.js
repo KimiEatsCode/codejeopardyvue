@@ -10,7 +10,7 @@ export default createStore({
       clueText: "",
       question: "",
       answer: "",
-      answer_alternatives:[],
+      answer_alternatives:"",
       clues: [],
       clueid: "",
       currClueId: "",

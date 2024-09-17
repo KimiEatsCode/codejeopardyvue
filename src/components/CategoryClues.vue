@@ -49,14 +49,25 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-smile-fill msg_text_correct" viewBox="0 0 16 16">
   <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
 </svg>  <p>You are correct!</p>
-
+<p><strong> Correct answer is: {{  answer  }}
+                <span v-if="answer_alternatives !== null"> or {{ answer_alternatives }} </span>
+                <span v-else></span>
+              </strong>
+              </p>
             </div>
             <div v-if="!answeredCorrect">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-slash-circle-fill msg_text_incorrect" viewBox="0 0 16 16">
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"/>
 </svg>
               <p>No, that is incorrect.</p>
-              <p><strong> Correct answer is: {{  answer  }}  <span v-if="answer_alternatives !== null"> or {{ answer_alternatives }} </span></strong></p>
+              <p><strong> Correct answer is: {{  answer  }}
+                <p>
+                <span v-if="answer_alternatives !== null"> or {{ answer_alternatives }} </span>
+                <span v-else></span>
+              </p>
+              </strong>
+
+              </p>
           </div>
             <p></p>
             <p></p>
@@ -166,11 +177,21 @@ export default {
 
     updateScoreAndClue(input, answer, answer_alternatives, clueID) {
 
-      this.showMessage = true;
-      const answerAltUsed =  answer_alternatives.toLowerCase().includes(input.toLowerCase());
+      answer = answer.replace(/^ +/, '').toLowerCase();
+      input = input.toLowerCase();
 
-      if (input.toLowerCase() !== answer.toLowerCase() && answerAltUsed === false || answerAltUsed === null) {
-console.log("!!answerAltUsed " + answerAltUsed)
+      this.showMessage = true;
+
+      if(answer_alternatives !== null) {
+
+
+        console.log("what the " + answer_alternatives)
+      }
+
+
+
+      if (answer.includes(input) === false) {
+
         this.answeredCorrect = 0;
 
         const clue_payload = {
@@ -188,7 +209,7 @@ console.log("!!answerAltUsed " + answerAltUsed)
         this.$store.commit('showModalMutation', buttonCSS_payload)
         console.log("clue id after mutation method runs = " + clueID)
 
-      } else if (input.toLowerCase() === answer.toLowerCase() || answerAltUsed) {
+      } else if (answer.includes(input)) {
 
         this.answeredCorrect = 1;
 
@@ -224,15 +245,11 @@ console.log("!!answerAltUsed " + answerAltUsed)
 
         document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
-      } else if((answer_alternatives.toLowerCase().includes(input.toLowerCase()))) {
-        console.log("!!!includes answer alts " + answer_alternatives)
       }
-
       console.log(
         input +
-          " vs " +
-          answer +
-          " means answeredCorrect is " +
+          " vs " + answer + " or "  + this.answer_alternatives + 
+          " line 248 means answeredCorrect is " +
           this.answeredCorrect
       );
     },
