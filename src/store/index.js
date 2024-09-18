@@ -10,7 +10,7 @@ export default createStore({
       clueText: "",
       question: "",
       answer: "",
-      answer_alternatives:"",
+      answer_alternatives: "",
       clues: [],
       clueid: "",
       currClueId: "",
@@ -18,11 +18,9 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       //use url for production
-      // url: "https://codejeopardy-api.onrender.com",
+      url: "codejeopardy-api-service-s9s6:5432",
       //use url for development
-      url: "http://localhost:3000",
-      //url is for endpoints to hit the api express app
-
+      // url: "http://localhost:3000",
       getResponse: true,
     };
   },
@@ -151,7 +149,7 @@ export default createStore({
       state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
       state.answer = x["answer"];
-      state.answer_alternatives = x["answer_alternatives"]
+      state.answer_alternatives = x["answer_alternatives"];
       state.clueid = x["clueid"];
       state.answeredCorrect = x["answered"];
       state.value = x["value"];
