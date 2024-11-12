@@ -18,7 +18,7 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       //use url for production
-      url: "https://codejeopardy-api-service-s9s6.onrender.com/",
+      url: "https://codejeopardy-api-service-ap1e.onrender.com",
       //use url for development
       // url: "http://localhost:3000",
       getResponse: true,
@@ -97,7 +97,7 @@ export default createStore({
           console.log("reset game");
           // commit("resetAllClues", res);
           commit("fetchCategories", res);
-          console.log(res);
+          console.log("clues resetClues called");
         })
         .catch((error) => {
           console.log(error);

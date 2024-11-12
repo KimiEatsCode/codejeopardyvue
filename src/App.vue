@@ -5,16 +5,16 @@
 
 
   <footer>
-Made With:
+<strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API hosted on Render.
 <div class="links">
 
 <a href="https://github.com/stars/KimiEatsCode/lists/code-jeopardy-workspace">
   View on Github</a>
 
- <a href="https://tally.so/embed/n9vl6V?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1">Send a me note or useful feedback</a>
+ <a href="https://tally.so/embed/n9vl6V?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1">Message Me</a>
 
- <a href="" @click="newGameReset()">New Game</a>
+ <a href="" @click="newGameReset()">Start New Game</a>
 </div>
 </footer>
 </template>
