@@ -18,7 +18,7 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       //use url for production
-      url: "https://codejeopardyvue-s7pt.onrender.com/",
+      url: "https://codejeopardy-api-service-ap1e.onrender.com",
       //use url for development
       // url: "http://localhost:3000",
       getResponse: true,
