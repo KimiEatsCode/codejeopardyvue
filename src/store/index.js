@@ -18,9 +18,9 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       //use url for production
-      url: "https://codejeopardy-api-service-ap1e.onrender.com",
+    //  url: "https://codejeopardy-api-service-ap1e.onrender.com",
       //use url for development
-      // url: "http://localhost:3000",
+      url: "http://localhost:3000",
       getResponse: true,
     };
   },
@@ -75,7 +75,7 @@ export default createStore({
     async updateClue({ commit }, payload) {
       console.log("update clue payload " + JSON.stringify(payload));
       axios
-        .patch(
+        .put(
           `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredCorrect}`
         )
         .then((res) => {
@@ -92,7 +92,7 @@ export default createStore({
     },
     async resetClues({ commit }) {
       axios
-        .patch(`${this.state.url}/api/category-clue/newgame`)
+        .put(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
           console.log("reset game");
           // commit("resetAllClues", res);
@@ -105,7 +105,7 @@ export default createStore({
     },
     async setScore({ commit }, state) {
       axios
-        .patch(`${this.state.url}/api/game/1&${state.score}`)
+        .put(`${this.state.url}/api/game/1&${state.score}`)
         .then((res) => {
           commit("setScore", res);
           console.log("state score is " + state.score);
