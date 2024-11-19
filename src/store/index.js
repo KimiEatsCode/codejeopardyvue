@@ -17,9 +17,9 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: null,
-      // url: "https://codejeopardy-api-service-ap1e.onrender.com",
+      url: "codejeopardy-api-service-ap1e:3000",
       //use localhost3000 url for development and production when hosting client and api on render.com host
-      url: "http://localhost:3000",
+      // url: "http://localhost:3000",
       getResponse: true,
     };
   },
