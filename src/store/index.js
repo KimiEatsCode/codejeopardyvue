@@ -40,7 +40,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
-          console.log(" header categories call " + res.data);
+          // console.log(" header categories call " + res.data);
           commit("fetchCategories", res.data);
         })
         .catch((error) => {
@@ -51,7 +51,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clues/${categoryid}`)
         .then((res) => {
-          console.log(this.state.url + "fetch clues in store index js file");
+          // console.log(this.state.url + "fetch clues in store index js file");
           commit("setClues", res.data);
         })
         .catch((error) => {
@@ -62,7 +62,7 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
-          console.log("This is clueid for fetchClue is " + clueid);
+          // console.log("This is clueid for fetchClue is " + clueid);
 
           commit("setClue", res.data);
         })
@@ -117,11 +117,10 @@ export default createStore({
   mutations: {
     fetchCategories(state, payload) {
       state.categories = payload;
-      console.log("categories " + JSON.stringify(state.categories));
       return state.categories;
     },
     answeredCorrect(state, payload) {
-      console.log("commit answeredCorrect " + payload.answeredCorrect);
+      console.log("commit answeredCorrect store " + payload.answeredCorrect);
       state.answeredCorrect = payload.answeredCorrect;
       return state.answeredCorrect;
     },

@@ -207,9 +207,9 @@ export default {
         }
 
         this.$store.commit('showModalMutation', buttonCSS_payload)
-        console.log("clue id after mutation method runs = " + clueID)
+        // console.log("clue id after mutation method runs = " + clueID)
 
-      } else if (answer.includes(input)) {
+      } else if (answer.includes(input) && input !=="") {
 
         this.answeredCorrect = 1;
 
@@ -248,7 +248,7 @@ export default {
       }
       console.log(
         input +
-          " vs " + answer + " or "  + this.answer_alternatives + 
+          " vs " + answer + " or "  + this.answer_alternatives +
           " line 248 means answeredCorrect is " +
           this.answeredCorrect
       );
