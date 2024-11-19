@@ -176,16 +176,19 @@ export default {
     },
 
     updateScoreAndClue(input, answer, answer_alternatives, clueID) {
-
+      //I think below can be rewritten refactored also may belong in store instead of in this component
       answer = answer.replace(/^ +/, '').toLowerCase();
-      input = input.toLowerCase();
+      answer = answer.replace(/\s/g, "");
+
+      input = input.replace(/^ +/, '').toLowerCase();
+      input = input.replace(/\s/g, "");
+
 
       this.showMessage = true;
 
       if(answer_alternatives !== null) {
 
-
-        console.log("what the " + answer_alternatives)
+        console.log("Answer alternatives without spaces and lowercased - " + answer_alternatives)
       }
 
 
@@ -208,7 +211,7 @@ export default {
 
         this.$store.commit('showModalMutation', buttonCSS_payload)
         // console.log("clue id after mutation method runs = " + clueID)
-
+        //probably might need to remove spaces from answer and from input then compare
       } else if (answer.includes(input) && input !=="") {
 
         this.answeredCorrect = 1;

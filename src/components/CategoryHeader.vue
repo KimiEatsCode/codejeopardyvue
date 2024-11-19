@@ -18,6 +18,8 @@
   </div>
 
   </div>
+
+
 </template>
 
 <script>
@@ -50,7 +52,7 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("CategoryHeader vue file categories http call " + JSON.stringify(res.data));
+          // console.log("CategoryHeader vue file categories http call " + JSON.stringify(res.data));
           return (this.categories = res.data);
         })
         .catch((error) => {
@@ -63,7 +65,7 @@ export default {
           this.getResponse = true;
           this.$store.dispatch("resetClues");
           // return (this.clues = res.data.rows.rows[0]);
-          console.log("get clues in header file " + res.data)
+          // console.log("get clues in header file " + res.data)
           return (this.clues = res.data);
         })
         .catch((error) => {
@@ -148,4 +150,11 @@ export default {
   padding:5px;
   margin-bottom:5px;
 }
+
+@media (min-width:768px) {
+ 
+
+}
+
+
 </style>
