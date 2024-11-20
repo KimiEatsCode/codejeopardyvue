@@ -138,10 +138,11 @@ export default createStore({
       state.getResponse = true;
     },
     setClue(state, clue) {
-      // console.log("setClue mutation result is " + JSON.stringify(clue));
+      console.log("find not function error " + JSON.stringify(clue));
       let x = clue;
 
       state.clue = clue; //this is the whole object not just the clue text
+      console.log("store " + clue);
       let clueText = x["clue"];
       state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = x["question"];
