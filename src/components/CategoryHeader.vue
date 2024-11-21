@@ -39,7 +39,7 @@ export default {
       .get(`${this.$store.state.url}/api/games`)
         .then((res) => {
           this.getResponse = true;
-          console.log("Get game info call " + JSON.stringify(res.data));
+          console.log("Get game info in cat head file " + JSON.stringify(res.data));
           return (this.gameInfo = res.data);
         })
         .catch((error) => {
@@ -50,7 +50,7 @@ export default {
         .get(`${this.$store.state.url}/api/game-categories`)
         .then((res) => {
           this.getResponse = true;
-          console.log("CategoryHeader vue file categories http call " + JSON.stringify(res.data));
+          console.log("Get categories info " + JSON.stringify(res.data));
           return (this.categories = res.data);
         })
         .catch((error) => {
@@ -61,9 +61,8 @@ export default {
         .get(`${this.$store.state.url}/api/allclues`)
         .then((res) => {
           this.getResponse = true;
-          this.$store.dispatch("resetClues");
-          // return (this.clues = res.data.rows.rows[0]);
-          console.log("get clues in header file " + res.data)
+          this.$store.dispatch("resetClues")
+
           return (this.clues = res.data);
         })
         .catch((error) => {
@@ -74,11 +73,11 @@ export default {
     };
   },
   methods: {
-    getCategories() {
-      this.categories = this.$store.dispatch("fetchAllCat");
-      console.log("getCat called" + JSON.stringify(this.categories));
-      return this.categories;
-    },
+    // getCategories() {
+    //   this.categories = this.$store.dispatch("fetchAllCat");
+    //   console.log("getCat called" + JSON.stringify(this.categories));
+    //   return this.categories;
+    // },
 
     modalToggle() {
       const body = document.querySelector("body");

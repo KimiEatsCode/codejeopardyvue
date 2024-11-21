@@ -17,7 +17,7 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: null,
-      url: "https://codejeopardy-api-service-ap1e.onrender.com",
+     url: "https://codejeopardy-api-service-ap1e.onrender.com",
       //use localhost3000 url for development and production when hosting client and api on render.com host
       // url: "http://localhost:3000",
       getResponse: true,
@@ -137,7 +137,7 @@ export default createStore({
       state.getResponse = true;
     },
     setClue(state, clue) {
-      console.log("find not function error " + JSON.stringify(clue));
+      console.log("set clue in index file " + JSON.stringify(clue));
       let x = clue;
 
       state.clue = clue; //this is the whole object not just the clue text
