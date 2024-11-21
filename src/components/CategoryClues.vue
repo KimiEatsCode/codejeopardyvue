@@ -121,7 +121,6 @@ export default {
       },
       clues: axios
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`).then((res) => {
-          // console.log("game clues in CategoryClues vue file  " + JSON.stringify(res.data))
           if (res.data === "") {
             console.log(
               "game clues data response is EMPTY " + this.$store.state.url
@@ -246,12 +245,7 @@ export default {
         document.querySelector(`.button_${this.$store.state.currClueId}`).disabled = true;
 
       }
-      console.log(
-        input +
-          " vs " + answer + " or "  + this.answer_alternatives +
-          " line 248 means answeredCorrect is " +
-          this.answeredCorrect
-      );
+
     },
   },
   beforeMount() {
