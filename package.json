@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "postinstall": "npm run build",
-    "start": "npm run serve"
+    "start": "npm run serve",
+    "server": "node server.js"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
@@ -15,6 +16,9 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "core-js": "^3.8.3",
+    "json": "^11.0.0",
+    "json-server": "^1.0.0-beta.3",
+    "server": "^1.0.41",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
   },
