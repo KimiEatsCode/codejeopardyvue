@@ -61,9 +61,9 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
-          // console.log("This is clueid for fetchClue is " + clueid);
+          console.log("This is clueid for fetchClue is " + JSON.stringify(res.data));
 
-          commit("setClue", res.data);
+          commit("setClue", res.data[0]);
         })
         .catch((error) => {
           console.log(error);
@@ -92,10 +92,10 @@ export default createStore({
       axios
         .put(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
-          console.log("reset game");
+          // console.log("reset game");
           // commit("resetAllClues", res);
           commit("fetchCategories", res);
-          console.log("clues resetClues called");
+
         })
         .catch((error) => {
           console.log(error);
@@ -138,18 +138,17 @@ export default createStore({
     },
     setClue(state, clue) {
       console.log("set clue in index file " + JSON.stringify(clue));
-      let x = clue;
 
       state.clue = clue; //this is the whole object not just the clue text
       console.log("store " + clue);
-      let clueText = x["clue"];
-      state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
-      state.question = x["question"];
-      state.answer = x["answer"];
-      state.answer_alternatives = x["answer_alternatives"];
-      state.clueid = x["clueid"];
-      state.answeredCorrect = x["answered"];
-      state.value = x["value"];
+      state.clueText = clue["clueText"];
+      // state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
+      state.question = clue["question"];
+      state.answer = clue["answer"];
+      state.answer_alternatives = clue["answer_alternatives"];
+      state.clueid = clue["clueid"];
+      state.answeredCorrect = clue["answered"];
+      state.value = clue["value"];
       return clue;
     },
     showModalMutation(state, payload) {

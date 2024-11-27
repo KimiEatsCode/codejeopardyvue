@@ -39,8 +39,8 @@ export default {
       .get(`${this.$store.state.url}/api/games`)
         .then((res) => {
           this.getResponse = true;
-          console.log("Get game info in cat head file " + JSON.stringify(res.data));
-          return (this.gameInfo = res.data);
+          console.log("Get game info in cat head file not from store " + JSON.stringify(res.data[0]));
+          return (this.gameInfo = res.data[0]);
         })
         .catch((error) => {
           console.log(error);
@@ -73,12 +73,6 @@ export default {
     };
   },
   methods: {
-    // getCategories() {
-    //   this.categories = this.$store.dispatch("fetchAllCat");
-    //   console.log("getCat called" + JSON.stringify(this.categories));
-    //   return this.categories;
-    // },
-
     modalToggle() {
       const body = document.querySelector("body");
       this.active = !this.active;
