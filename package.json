@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=development npm start",
-    "start:prod": "NODE_ENV=production node run serve.js",
+    "start:prod": "NODE_ENV=production node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
