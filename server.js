@@ -9,6 +9,7 @@ app.use(serveStatic(path.join(__dirname, "dist")));
 app.use(
   cors({
     origin: ["https://codejeo-7137663a4c65.herokuapp.com/game-categories"],
+    credentials: true
   })
 );
 
