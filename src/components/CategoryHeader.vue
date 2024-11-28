@@ -8,7 +8,6 @@
       v-for="(category, index) in categories"
       v-bind:key="index"
     > {{ category.category_name }}
-
     </div>
   </div>
 <div class="grid-clues-container">
@@ -16,7 +15,6 @@
       <clue-column :categoryid="category.category_id" :catname="category.category_name" />
     </div>
   </div>
-
   </div>
 </template>
 
