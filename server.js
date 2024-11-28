@@ -6,19 +6,21 @@ const app = express();
 
 app.use(serveStatic(path.join(__dirname, 'dist')));
 
-app.use(cors());
+
+app.use(cors({
+  origin: ['https://codejeo-7137663a4c65.herokuapp.com/*']
+}));
 
 
-
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://codejeo-7137663a4c65.herokuapp.com/*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port);
