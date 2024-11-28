@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=Development vue-cli-service serve",
+    "start": "NODE_ENV=development rnpm start",
+    "start:prod": "NODE_ENV=production node run serve.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
