@@ -90,7 +90,7 @@ export default createStore({
     },
     async resetClues({ commit }) {
       axios
-        .put(`${this.state.url}/api/category-clue/newgame`)
+        .get(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
           // console.log("reset game");
           // commit("resetAllClues", res);
