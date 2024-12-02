@@ -61,7 +61,9 @@ export default createStore({
       axios
         .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
-          console.log("This is clueid for fetchClue is " + JSON.stringify(res.data));
+          console.log(
+            "This is clueid for fetchClue is " + JSON.stringify(res.data)
+          );
 
           commit("setClue", res.data[0]);
         })
@@ -73,7 +75,7 @@ export default createStore({
     async updateClue({ commit }, payload) {
       console.log("update clue payload " + JSON.stringify(payload));
       axios
-        .put(
+        .patch(
           `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredCorrect}`
         )
         .then((res) => {
@@ -95,7 +97,6 @@ export default createStore({
           // console.log("reset game");
           // commit("resetAllClues", res);
           commit("fetchCategories", res);
-
         })
         .catch((error) => {
           console.log(error);
@@ -103,7 +104,7 @@ export default createStore({
     },
     async setScore({ commit }, state) {
       axios
-        .put(`${this.state.url}/api/game/1&${state.score}`)
+        .patch(`${this.state.url}/api/game/1&${state.score}`)
         .then((res) => {
           commit("setScore", res);
           console.log("state score is " + state.score);
