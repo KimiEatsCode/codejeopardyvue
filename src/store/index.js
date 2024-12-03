@@ -4,22 +4,22 @@ import axios from "axios";
 export default createStore({
   state() {
     return {
-      categories: [],
+      categories: "",
       gameid: "1",
       clue: "",
       clueText: "",
       question: "",
       answer: "",
       answer_alternatives: "",
-      clues: [],
+      clues: "",
       clueid: "",
       currClueId: "",
       score: 0,
       value: "",
       answeredCorrect: null,
-      url: "https://codejeo-7137663a4c65.herokuapp.com",
+      // url: "https://codejeo-7137663a4c65.herokuapp.com",
 
-      // url: "http://localhost:3000",
+      url: "http://localhost:3000",
       getResponse: true,
     };
   },
@@ -76,7 +76,7 @@ export default createStore({
       console.log("update clue payload " + JSON.stringify(payload));
       axios
         .patch(
-          `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredCorrect}`
+          `${this.state.url}/api/category-clue/${payload.clueid}/${payload.answeredCorrect}`
         )
         .then((res) => {
           console.log(
@@ -90,13 +90,11 @@ export default createStore({
       commit("answeredCorrect", payload);
       // commit("refreshClues");
     },
-    async resetClues({ commit }) {
+    async resetClues() {
       axios
-        .get(`${this.state.url}/api/category-clue/newgame`)
+        .get(`${this.state.url}/api/newgame`)
         .then((res) => {
-          // console.log("reset game");
-          // commit("resetAllClues", res);
-          commit("fetchCategories", res);
+          console.log("reset game " + JSON.stringify(res));
         })
         .catch((error) => {
           console.log(error);
@@ -104,10 +102,10 @@ export default createStore({
     },
     async setScore({ commit }, state) {
       axios
-        .patch(`${this.state.url}/api/game/1&${state.score}`)
+        .patch(`${this.state.url}/api/game/1/${state.score}`)
         .then((res) => {
           commit("setScore", res);
-          console.log("state score is " + state.score);
+          console.log("state score is testing " + state.score);
         })
         .catch((error) => {
           console.log(error);
