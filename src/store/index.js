@@ -17,9 +17,9 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: null,
-      // url: "https://codejeo-7137663a4c65.herokuapp.com",
+      url: "https://codejeo-7137663a4c65.herokuapp.com",
 
-      url: "http://localhost:3000",
+      // url: "http://localhost:3000",
       getResponse: true,
     };
   },
