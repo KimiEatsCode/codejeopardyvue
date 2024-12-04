@@ -30,4 +30,6 @@ app.use(function (req, res, next) {
 const port = process.env.PORT || 8080;
 app.listen(port);
 
-console.log(`App is listening on port: ${port}`);
+console.log(
+  `Message from server js on front end for heroku deploy - App is listening on port: ${port}`
+);
