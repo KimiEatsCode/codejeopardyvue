@@ -18,7 +18,6 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       url: "https://codejeo-7137663a4c65.herokuapp.com",
-
       // url: "http://localhost:3000",
       getResponse: true,
     };
