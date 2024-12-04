@@ -17,8 +17,8 @@ export default createStore({
       score: 0,
       value: "",
       answeredCorrect: null,
-       url: "https://codejeo-7137663a4c65.herokuapp.com",
-     // url: "http://localhost:3000",
+      url: "https://codejeo-7137663a4c65.herokuapp.com",
+      // url: "http://localhost:3000",
       getResponse: true,
     };
   },
@@ -91,7 +91,7 @@ export default createStore({
     },
     async resetClues() {
       axios
-        .patch(`${this.state.url}/api/newgame`)
+        .get(`${this.state.url}/api/newgame`)
         .then((res) => {
           console.log("reset game " + JSON.stringify(res));
         })
