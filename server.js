@@ -5,27 +5,35 @@ const cors = require("cors");
 const app = express();
 
 app.use(serveStatic(path.join(__dirname, "dist")));
-app.options("*", cors());
-app.use(
-  cors({
-    origin: ["*"],
-    credentials: true,
-  })
-);
+// app.options("*", cors());
+// app.use(
+//   cors({
+//     origin: ["*"],
+//     credentials: true,
+//   })
+// );
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, PUT, POST, PATCH,DELETE, OPTIONS"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+app.use(cors());
+next();
 });
+
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Methods",
+//     "GET, PUT, POST, PATCH,DELETE, OPTIONS"
+//   );
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 const port = process.env.PORT || 8080;
 app.listen(port);

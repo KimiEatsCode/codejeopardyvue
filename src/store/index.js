@@ -91,7 +91,7 @@ export default createStore({
     },
     async resetClues() {
       axios
-        .get(`${this.state.url}/api/newgame`)
+        .get(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
           console.log("reset game " + JSON.stringify(res));
         })
@@ -101,7 +101,7 @@ export default createStore({
     },
     async setScore({ commit }, state) {
       axios
-        .patch(`${this.state.url}/api/game/1/${state.score}`)
+        .patch(`${this.state.url}/api/game/1&${state.score}`)
         .then((res) => {
           commit("setScore", res);
           console.log("state score is testing " + state.score);

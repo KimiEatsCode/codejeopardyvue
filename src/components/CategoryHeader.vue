@@ -59,7 +59,7 @@ export default {
         .get(`${this.$store.state.url}/api/allclues`)
         .then((res) => {
           this.getResponse = true;
-          this.$store.dispatch("resetClues")
+          // this.$store.dispatch("resetClues")
 
           return (this.clues = res.data);
         })
