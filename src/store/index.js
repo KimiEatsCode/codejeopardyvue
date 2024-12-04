@@ -58,7 +58,7 @@ export default createStore({
     },
     async fetchClue({ commit }, clueid) {
       axios
-        .get(`${this.state.url}/api/category-clue/${clueid}`)
+        .get(`${this.state.url}/api/category-clue/:${clueid}`)
         .then((res) => {
           console.log(
             "This is clueid for fetchClue is " + JSON.stringify(res.data)
@@ -75,7 +75,7 @@ export default createStore({
       console.log("update clue payload " + JSON.stringify(payload));
       axios
         .patch(
-          `${this.state.url}/api/category-clue/${payload.clueid}/${payload.answeredCorrect}`
+          `${this.state.url}/api/category-clue/:${payload.clueid}/:${payload.answeredCorrect}`
         )
         .then((res) => {
           console.log(
@@ -101,7 +101,7 @@ export default createStore({
     },
     async setScore({ commit }, state) {
       axios
-        .patch(`${this.state.url}/api/game/1&${state.score}`)
+        .patch(`${this.state.url}/api/game/1/:${state.score}`)
         .then((res) => {
           commit("setScore", res);
           console.log("state score is testing " + state.score);

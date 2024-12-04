@@ -120,7 +120,7 @@ export default {
       name: "",
       },
       clues: axios
-        .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`).then((res) => {
+        .get(`${this.$store.state.url}/api/category-clues/:${this.categoryid}`).then((res) => {
           if (res.data === "") {
             console.log(
               "game clues data response is EMPTY " + this.$store.state.url
