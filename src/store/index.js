@@ -1,17 +1,17 @@
 import { createStore } from "vuex";
-import axios from 'axios'
+import axios from "axios";
 
 const apiClient = axios.create({
   // baseURL: 'http://localhost:3000', // Not required due to proxy
 
-   withCredentials: false,
-   headers: {
-     Accept: 'application/json'
-   }
- })
+  withCredentials: false,
+  // headers: {
+  //   'Access-Control-Allow-Origin': '*',
+  //   'Content-Type': 'application/json',
+  // },
+});
 
 export default createStore({
-
   state() {
     return {
       categories: "",
@@ -28,7 +28,7 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       url: "https://codejeo-7137663a4c65.herokuapp.com",
-     // url: "http://localhost:3000",
+      // url: "http://localhost:3000",
       getResponse: true,
     };
   },
@@ -85,15 +85,18 @@ export default createStore({
       console.log("update clue payload " + JSON.stringify(payload));
       apiClient
         .put(
-          "${this.state.url}/api/category-clue/", {
+          `${this.state.url}/api/category-clue/`,
+
+          {
             params: {
               clueid: payload.clueid,
-              answeredCorrect: payload.answeredCorrect
+              answeredCorrect: payload.answeredCorrect,
             },
-            headers: {
-             "Access-Control-Allow-Origin": "*",
+            // headers: {
+            //   "Access-Control-Allow-Origin": "*",
+            //   "Content-Type": "application/json",
+            // },
           }
-       }
         )
         .then((res) => {
           console.log(
@@ -120,16 +123,16 @@ export default createStore({
     async setScore({ commit }, state) {
       apiClient
         // .put(`${this.state.url}/api/game/1/:${state.score}`)
-        .put(
-          `${this.state.url}/api/game/1/`, {
-            params: {
-              score: state.score,
-            },
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-          }
-        }
-        )
+        .get(`${this.state.url}/api/game/`, {
+          params: {
+            gameid: 1,
+            score: state.score,
+          },
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           commit("setScore", res);
           console.log("state score is testing " + state.score);
