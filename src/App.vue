@@ -1,12 +1,12 @@
 <template>
   <div class="container-fluid">
+
 <CategoryHeader/>
+
 </div>
-
-
   <footer>
 <strong>Made With:</strong>
-Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API hosted on Render.
+Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
 <div class="links">
 
 <a href="https://github.com/stars/KimiEatsCode/lists/code-jeopardy-workspace">
@@ -35,7 +35,7 @@ export default {
       .get(`${this.$store.state.url}/api/games`)
         .then((res) => {
           this.getResponse = true;
-          console.log("Get game info call " + JSON.stringify(res.data));
+          // console.log("Get game info call " + JSON.stringify(res.data));
           return (this.gameInfo = res.data);
         })
         .catch((error) => {

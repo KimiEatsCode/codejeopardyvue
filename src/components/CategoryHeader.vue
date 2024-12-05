@@ -8,7 +8,6 @@
       v-for="(category, index) in categories"
       v-bind:key="index"
     > {{ category.category_name }}
-
     </div>
   </div>
 <div class="grid-clues-container">
@@ -16,7 +15,6 @@
       <clue-column :categoryid="category.category_id" :catname="category.category_name" />
     </div>
   </div>
-
   </div>
 </template>
 
@@ -39,8 +37,8 @@ export default {
       .get(`${this.$store.state.url}/api/games`)
         .then((res) => {
           this.getResponse = true;
-          console.log("Get game info in cat head file " + JSON.stringify(res.data));
-          return (this.gameInfo = res.data);
+          console.log("Get game info in cat head file not from store " + JSON.stringify(res.data[0]));
+          return (this.gameInfo = res.data[0]);
         })
         .catch((error) => {
           console.log(error);
@@ -61,7 +59,7 @@ export default {
         .get(`${this.$store.state.url}/api/allclues`)
         .then((res) => {
           this.getResponse = true;
-          this.$store.dispatch("resetClues")
+          // this.$store.dispatch("resetClues")
 
           return (this.clues = res.data);
         })
@@ -73,12 +71,6 @@ export default {
     };
   },
   methods: {
-    // getCategories() {
-    //   this.categories = this.$store.dispatch("fetchAllCat");
-    //   console.log("getCat called" + JSON.stringify(this.categories));
-    //   return this.categories;
-    // },
-
     modalToggle() {
       const body = document.querySelector("body");
       this.active = !this.active;

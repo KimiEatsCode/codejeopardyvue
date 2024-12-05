@@ -1,4 +1,5 @@
 <template>
+
   <div v-for="(clue,index) in clues" v-bind:key="index">
       <div
         :class="[
@@ -18,7 +19,6 @@
     </div>
   <div>
     <div
-    @click="modalToggleAnswered"
       ref="modal"
       class="modal fade"
       :class="{ show: active, 'd-block': active }"
@@ -138,6 +138,7 @@ export default {
   },
 
   computed: {
+
     clueText() {
       return this.$store.state.clueText;
     },
@@ -161,7 +162,6 @@ export default {
     },
     getClue(clueid) {
       this.currClueId = clueid;
-      console.log("get cur " + this.currClueId)
       this.clue = this.$store.dispatch("fetchClue", clueid);
     },
     modalToggle() {
@@ -182,13 +182,8 @@ export default {
       this.showMessage = true;
 
       if(answer_alternatives !== null) {
-
-
         console.log("what the " + answer_alternatives)
       }
-
-
-
       if (answer.includes(input) === false) {
 
         this.answeredCorrect = 0;
@@ -321,6 +316,10 @@ input {
 label {
   font-weight: bold;
   margin-right: 5px;
+}
+
+.modal .fade {
+  z-index:-1;
 }
 
 .modal-header {

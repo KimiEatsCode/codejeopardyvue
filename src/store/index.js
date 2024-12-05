@@ -1,31 +1,40 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
+const apiClient = axios.create({
+  // baseURL: 'http://localhost:3000', // Not required due to proxy
+
+  withCredentials: false,
+  // headers: {
+  //   'Access-Control-Allow-Origin': '*',
+  //   'Content-Type': 'application/json',
+  // },
+});
+
 export default createStore({
   state() {
     return {
-      categories: [],
+      categories: "",
       gameid: "1",
       clue: "",
       clueText: "",
       question: "",
       answer: "",
       answer_alternatives: "",
-      clues: [],
+      clues: "",
       clueid: "",
       currClueId: "",
       score: 0,
       value: "",
       answeredCorrect: null,
       url: "https://codejeo-7137663a4c65.herokuapp.com",
-
       // url: "http://localhost:3000",
       getResponse: true,
     };
   },
   actions: {
     async fetchGameInfo({ commit }) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/games`)
         .then((res) => {
           console.log("game info from games call " + res.data);
@@ -36,7 +45,7 @@ export default createStore({
         });
     },
     async fetchAllCat({ commit }) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
           // console.log(" header categories call " + res.data);
@@ -47,7 +56,7 @@ export default createStore({
         });
     },
     async fetchAllClues({ commit }, categoryid) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/category-clues/${categoryid}`)
         .then((res) => {
           // console.log(this.state.url + "fetch clues in store index js file");
@@ -58,23 +67,36 @@ export default createStore({
         });
     },
     async fetchClue({ commit }, clueid) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
-          // console.log("This is clueid for fetchClue is " + clueid);
+          console.log(
+            "This is clueid for fetchClue is " + JSON.stringify(res.data)
+          );
 
-          commit("setClue", res.data);
+          commit("setClue", res.data[0]);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    //updateClue trying to do 2 things patch db and call a mutation method
+    //updateClue trying to do 2 things put db and call a mutation method
     async updateClue({ commit }, payload) {
       console.log("update clue payload " + JSON.stringify(payload));
-      axios
+      apiClient
         .put(
-          `${this.state.url}/api/category-clue/${payload.clueid}&${payload.answeredCorrect}`
+          `${this.state.url}/api/category-clue/`,
+
+          {
+            // params: {
+              clueid: payload.clueid,
+              answeredCorrect: payload.answeredCorrect,
+          //  },
+            // headers: {
+            //   "Access-Control-Allow-Origin": "*",
+            //   "Content-Type": "application/json",
+            // },
+          }
         )
         .then((res) => {
           console.log(
@@ -88,25 +110,32 @@ export default createStore({
       commit("answeredCorrect", payload);
       // commit("refreshClues");
     },
-    async resetClues({ commit }) {
-      axios
-        .put(`${this.state.url}/api/category-clue/newgame`)
+    async resetClues() {
+      apiClient
+        .get(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
-          console.log("reset game");
-          // commit("resetAllClues", res);
-          commit("fetchCategories", res);
-          console.log("clues resetClues called");
+          console.log("reset game " + JSON.stringify(res));
         })
         .catch((error) => {
           console.log(error);
         });
     },
     async setScore({ commit }, state) {
-      axios
-        .put(`${this.state.url}/api/game/1&${state.score}`)
+      apiClient
+        // .put(`${this.state.url}/api/game/1/:${state.score}`)
+        .get(`${this.state.url}/api/game/`, {
+          // params: {
+            gameid: 1,
+            score: state.score,
+          // },
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           commit("setScore", res);
-          console.log("state score is " + state.score);
+          console.log("state score is testing " + state.score);
         })
         .catch((error) => {
           console.log(error);
@@ -138,18 +167,17 @@ export default createStore({
     },
     setClue(state, clue) {
       console.log("set clue in index file " + JSON.stringify(clue));
-      let x = clue;
 
       state.clue = clue; //this is the whole object not just the clue text
       console.log("store " + clue);
-      let clueText = x["clue"];
-      state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
-      state.question = x["question"];
-      state.answer = x["answer"];
-      state.answer_alternatives = x["answer_alternatives"];
-      state.clueid = x["clueid"];
-      state.answeredCorrect = x["answered"];
-      state.value = x["value"];
+      state.clueText = clue["clueText"];
+      // state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
+      state.question = clue["question"];
+      state.answer = clue["answer"];
+      state.answer_alternatives = clue["answer_alternatives"];
+      state.clueid = clue["clueid"];
+      state.answeredCorrect = clue["answered"];
+      state.value = clue["value"];
       return clue;
     },
     showModalMutation(state, payload) {
