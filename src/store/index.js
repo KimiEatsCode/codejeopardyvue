@@ -84,14 +84,14 @@ export default createStore({
     async updateClue({ commit }, payload) {
       console.log("update clue payload " + JSON.stringify(payload));
       apiClient
-        .put(
+        .patch(
           `${this.state.url}/api/category-clue/`,
 
           {
             // params: {
-              clueid: payload.clueid,
-              answeredCorrect: payload.answeredCorrect,
-          //  },
+            clueid: "1",
+            answeredCorrect: "0",
+            //  },
             // headers: {
             //   "Access-Control-Allow-Origin": "*",
             //   "Content-Type": "application/json",
@@ -122,17 +122,11 @@ export default createStore({
     },
     async setScore({ commit }, state) {
       apiClient
-        // .put(`${this.state.url}/api/game/1/:${state.score}`)
-        .get(`${this.state.url}/api/game/`, {
-          // params: {
-            gameid: 1,
-            score: state.score,
-          // },
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
+        .patch(`${this.state.url}/api/game/1/${state.score}`)
+        // .patch(`${this.state.url}/api/game/1`, {
+        //     score: state.score,
+
+        // })
         .then((res) => {
           commit("setScore", res);
           console.log("state score is testing " + state.score);
@@ -169,7 +163,7 @@ export default createStore({
       console.log("set clue in index file " + JSON.stringify(clue));
 
       state.clue = clue; //this is the whole object not just the clue text
-      console.log("store " + clue);
+      // console.log("store " + clue);
       state.clueText = clue["clueText"];
       // state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = clue["question"];
