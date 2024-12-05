@@ -88,10 +88,10 @@ export default createStore({
           `${this.state.url}/api/category-clue/`,
 
           {
-            params: {
+            // params: {
               clueid: payload.clueid,
               answeredCorrect: payload.answeredCorrect,
-            },
+          //  },
             // headers: {
             //   "Access-Control-Allow-Origin": "*",
             //   "Content-Type": "application/json",
@@ -124,10 +124,10 @@ export default createStore({
       apiClient
         // .put(`${this.state.url}/api/game/1/:${state.score}`)
         .get(`${this.state.url}/api/game/`, {
-          params: {
+          // params: {
             gameid: 1,
             score: state.score,
-          },
+          // },
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
