@@ -4,21 +4,23 @@ const path = require("path");
 const cors = require("cors");
 const app = express();
 
+app.use(cors({ origin: true })); // enable origin cors
+
 app.use(serveStatic(path.join(__dirname, "dist")));
-// app.options("*", cors());
-// app.use(
-//   cors({
-//     origin: ["*"],
-//     credentials: true,
-//   })
-// );
+app.options("*", cors());
+app.use(
+  cors({
+    origin: ["*"],
+    credentials: true,
+  })
+);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-app.use(cors());
-next();
+  res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  app.use(cors());
+  next();
 });
 
 // app.use(function (req, res, next) {

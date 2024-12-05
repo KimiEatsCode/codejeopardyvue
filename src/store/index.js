@@ -1,7 +1,17 @@
 import { createStore } from "vuex";
-import axios from "axios";
+import axios from 'axios'
+
+const apiClient = axios.create({
+  // baseURL: 'http://localhost:3000', // Not required due to proxy
+
+   withCredentials: false,
+   headers: {
+     Accept: 'application/json'
+   }
+ })
 
 export default createStore({
+
   state() {
     return {
       categories: "",
@@ -18,13 +28,13 @@ export default createStore({
       value: "",
       answeredCorrect: null,
       url: "https://codejeo-7137663a4c65.herokuapp.com",
-      // url: "http://localhost:3000",
+     // url: "http://localhost:3000",
       getResponse: true,
     };
   },
   actions: {
     async fetchGameInfo({ commit }) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/games`)
         .then((res) => {
           console.log("game info from games call " + res.data);
@@ -35,7 +45,7 @@ export default createStore({
         });
     },
     async fetchAllCat({ commit }) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/game-categories`)
         .then((res) => {
           // console.log(" header categories call " + res.data);
@@ -46,7 +56,7 @@ export default createStore({
         });
     },
     async fetchAllClues({ commit }, categoryid) {
-      axios
+      apiClient
         .get(`${this.state.url}/api/category-clues/${categoryid}`)
         .then((res) => {
           // console.log(this.state.url + "fetch clues in store index js file");
@@ -57,8 +67,8 @@ export default createStore({
         });
     },
     async fetchClue({ commit }, clueid) {
-      axios
-        .get(`${this.state.url}/api/category-clue/:${clueid}`)
+      apiClient
+        .get(`${this.state.url}/api/category-clue/${clueid}`)
         .then((res) => {
           console.log(
             "This is clueid for fetchClue is " + JSON.stringify(res.data)
@@ -70,12 +80,20 @@ export default createStore({
           console.log(error);
         });
     },
-    //updateClue trying to do 2 things patch db and call a mutation method
+    //updateClue trying to do 2 things put db and call a mutation method
     async updateClue({ commit }, payload) {
       console.log("update clue payload " + JSON.stringify(payload));
-      axios
-        .patch(
-          `${this.state.url}/api/category-clue/:${payload.clueid}/:${payload.answeredCorrect}`
+      apiClient
+        .put(
+          "${this.state.url}/api/category-clue/", {
+            params: {
+              clueid: payload.clueid,
+              answeredCorrect: payload.answeredCorrect
+            },
+            headers: {
+             "Access-Control-Allow-Origin": "*",
+          }
+       }
         )
         .then((res) => {
           console.log(
@@ -90,7 +108,7 @@ export default createStore({
       // commit("refreshClues");
     },
     async resetClues() {
-      axios
+      apiClient
         .get(`${this.state.url}/api/category-clue/newgame`)
         .then((res) => {
           console.log("reset game " + JSON.stringify(res));
@@ -100,8 +118,18 @@ export default createStore({
         });
     },
     async setScore({ commit }, state) {
-      axios
-        .patch(`${this.state.url}/api/game/1/:${state.score}`)
+      apiClient
+        // .put(`${this.state.url}/api/game/1/:${state.score}`)
+        .put(
+          `${this.state.url}/api/game/1/`, {
+            params: {
+              score: state.score,
+            },
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+          }
+        }
+        )
         .then((res) => {
           commit("setScore", res);
           console.log("state score is testing " + state.score);
