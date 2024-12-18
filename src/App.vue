@@ -1,41 +1,25 @@
 <template>
   <div class="container-fluid">
 
-<CategoryHeader/>
-
+<router-view>
+</router-view>
 </div>
-  <footer>
-<strong>Made With:</strong>
-Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
-<div class="links">
-
-<a href="https://github.com/stars/KimiEatsCode/lists/code-jeopardy-workspace">
-  View on Github</a>
-
- <a href="https://tally.so/embed/n9vl6V?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1">Message Me</a>
-
- <a href="" @click="newGameReset()">Start New Game</a>
-</div>
-</footer>
 </template>
 
 <script>
-
-import CategoryHeader from './components/CategoryHeader.vue';
 import axios from "axios";
+
 
 export default {
   name: 'App',
-  components: {
-    CategoryHeader,
-  },
+
   data() {
     return {
     gameInfo: axios
       .get(`${this.$store.state.url}/api/games`)
         .then((res) => {
           this.getResponse = true;
-          // console.log("Get game info call " + JSON.stringify(res.data));
+          console.log("Get game info call " + JSON.stringify(res.data));
           return (this.gameInfo = res.data);
         })
         .catch((error) => {
@@ -90,6 +74,7 @@ footer {
 .links > a{
 padding-left:20px;
 }
+
 
 </style>
 

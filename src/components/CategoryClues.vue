@@ -1,5 +1,6 @@
 <template>
-
+<!-- <h4>Category clues</h4>
+{{  gameid }} -->
   <div v-for="(clue,index) in clues" v-bind:key="index">
       <div
         :class="[
@@ -17,6 +18,7 @@
         </button>
       </div>
     </div>
+
   <div>
     <div
       ref="modal"
@@ -107,12 +109,14 @@ export default {
   emits: ["modalToggle"],
   props: {
     categoryid: Number,
-    catname: String
+    catname: String,
+    gameid: String
   },
   data() {
     return {
       currClueId: null,
-      clue: this.$store.state.clue,
+      // clue: this.$store.state.clue,
+      clue:"",
       showMessage: false,
       selectedItem: null,
       active: "",
@@ -123,11 +127,12 @@ export default {
         .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`).then((res) => {
           if (res.data === "") {
             console.log(
-              "game clues data response is EMPTY " + this.$store.state.url
+              "Game clues data response is EMPTY " + this.$store.state.url
             );
           } else {
-            // console.log("game clues is NOT empty " + JSON.stringify(res.data))
+            // console.log("Game clues data on CategoryClues file " + JSON.stringify(res.data))
             this.$store.state.clues = res.data;
+
             return (this.clues = res.data);
           }
         })
@@ -140,19 +145,19 @@ export default {
   computed: {
 
     clueText() {
-      return this.$store.state.clueText;
+      return this.$store.state.clue.clue;
     },
     question() {
-      return this.$store.state.question;
+      return this.$store.state.clue.question;
     },
     answer() {
-      return this.$store.state.answer;
+      return this.$store.state.clue.answer;
     },
     answer_alternatives() {
-      return this.$store.state.answer_alternatives;
+      return this.$store.state.clue.answer_alternatives;
     },
     value() {
-      return this.$store.state.value;
+      return this.$store.state.clue.value;
     },
   },
   methods: {
@@ -218,7 +223,7 @@ export default {
 
         //update score on db and in state
         const score_payload = {
-          gameid: 1,
+          gameid: this.gameid,
           score: this.$store.state.score,
         };
 
@@ -250,9 +255,7 @@ export default {
 </script>
 
 <style>
-.green {
-  border:2px dotted green;
-}
+
 
 div[class^="buttonbox_"] {
   border: 1px solid #000;
