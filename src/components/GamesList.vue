@@ -4,7 +4,7 @@
       <ul class="" v-for="game in games" v-bind:key="game.game_id">
 
         <li>
-        <router-link  :to="{ name:'game', params: { gameid: game.game_id, game_score: game.game_score, game_name: game.game_name  }}"><li><h2 class="page-title">{{  game.game_name }}</h2></li></router-link>
+        <router-link :click="updateStoreGameInfo(game)" :to="{ name:'game', params: { gameid: game.game_id, game_score: game.game_score, game_name: game.game_name  }}"><li><h2 class="page-title">{{  game.game_name }}</h2></li></router-link>
 
         </li>
       </ul>
@@ -14,34 +14,43 @@
   </template>
 
   <script>
-  import axios from "axios";
+  // import axios from "axios";
 
   export default {
     name: "GamesList",
     props: {
   },
+  created () {
 
+  this.$store.dispatch("fetchAllGames");
+},
+computed: {
+    games() {
+      return this.$store.state.games;
+    }
+  },
     data() {
       return {
         getResponse: false,
-        games: axios
-        .get(`${this.$store.state.url}/api/games`)
-          .then((res) => {
-            this.getResponse = true;
-            console.log("Get games api call from gameslist file " + JSON.stringify(res.data[0]));
-            return (this.games = res.data);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.getResponse = false;
-          }),
+      //   games: axios
+      //   .get(`${this.$store.state.url}/api/games`)
+      //     .then((res) => {
+      //       this.getResponse = true;
+      //       console.log("Get games api call from gameslist file " + JSON.stringify(res.data[0]));
+      //       return (this.games = res.data);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //       this.getResponse = false;
+      //     }),
 
 
       };
     },
     methods: {
-
-
+updateStoreGameInfo(game) {
+      this.$store.commit('setGameInfo', `${game}`);
+    }
     },
 
   };

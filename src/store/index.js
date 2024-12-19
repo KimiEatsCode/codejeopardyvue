@@ -10,7 +10,7 @@ export default createStore({
     return {
       categories: "",
       gameid: null,
-      game_name:"",
+      games:"",
       clue: "",
       clueText: "",
       question: "",
@@ -28,11 +28,22 @@ export default createStore({
     };
   },
   actions: {
-    async fetchGameInfo({ commit }) {
+    async fetchAllGames({ commit }) {
       apiClient
         .get(`${this.state.url}/api/games`)
         .then((res) => {
-          console.log("game info from games call in store " + res.data);
+          console.log("all games from fetchAllGames call in store " + res.data);
+          commit("setAllGames", res.data);
+        })
+        .catch((error) => {
+          console.log(error + " fetch all game info error");
+        });
+    },
+    async fetchGameInfo({ commit }, gameid ) {
+      apiClient
+        .get(`${this.state.url}/api/games/${gameid}`)
+        .then((res) => {
+          console.log("one game info fetchGameInfo call in store " + JSON.stringify(res.data[0]));
           commit("setGameInfo", res.data);
         })
         .catch((error) => {
@@ -118,10 +129,16 @@ export default createStore({
     },
   },
   mutations: {
-    setGameInfo(state,payload) {
-    state.game_name = payload
-    return state.game_name;
+    setAllGames(state,allGamesInfo) {
+    state.games = allGamesInfo
+    console.log("setAllGames mutation in store " + allGamesInfo["game_name"])
+    return allGamesInfo;
     },
+    setGameInfo(state, gameInfo) {
+      state.game = gameInfo
+      console.log("setGameInfo mutation in store " + gameInfo)
+      return gameInfo;
+      },
     fetchCategories(state, payload) {
       state.categories = payload;
       return state.categories;

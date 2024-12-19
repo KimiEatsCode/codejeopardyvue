@@ -39,17 +39,17 @@ export default {
   data() {
     return {
       getResponse: false,
-      gameInfo: axios
-      .get(`${this.$store.state.url}/api/games/${this.gameid}`)
-        .then((res) => {
-          this.getResponse = true;
-          console.log("Get !! game info in cat head file not from store " + JSON.stringify(res.data[0]));
-          return (this.gameInfo = res.data[0]);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getResponse = false;
-        }),
+      // gameInfo: axios
+      // .get(`${this.$store.state.url}/api/games/${this.gameid}`)
+      //   .then((res) => {
+      //     this.getResponse = true;
+      //     console.log("Get !! game info in cat head file not from store " + JSON.stringify(res.data[0]));
+      //     return (this.gameInfo = res.data[0]);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     this.getResponse = false;
+      //   }),
       categories: axios
         .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
         .then((res) => {

@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
-      <h1>{{ this.$store.state.score }}</h1>
-<h2>{{  this.$store.state.game_name   }}</h2>
+      <h1>{{ this.game.game_name }}</h1>
+<h2>{{  this.game.game_score  }}</h2>
 <CategoryHeader :gameid = this.gameid></CategoryHeader>
 
 <FooterLinks></FooterLinks>
@@ -13,34 +13,44 @@
 
   // import axios from "axios";
 
+
 import CategoryHeader from "./CategoryHeader.vue";
 import FooterLinks from "./Footer.vue"
+
 
   export default {
     name: 'GameBoard',
     props: {
       gameid: String,
-      game_name: String,
-      game_score: String,
+    //   game_name: String,
+    //   game_score: String,
 
     },
 components: {
 CategoryHeader,
 FooterLinks
 },
-mounted() {
-  this.$store.commit('setGameInfo', `${this.props.game_name}`)
+created () {
+  this.$store.dispatch("fetchGameInfo",this.gameid);
 },
-    data() {
-      return {
-
+computed: {
+    game() {
+      return this.$store.state.game;
     }
   },
+    data() {
+      return {
+// gameName: this.$store.state.game[0].game_name
+// gameScore: this.game_score,
+// gameID: this.gameid
+    }
+  },
+
     methods: {
 
       newGameReset() {
         this.$store.dispatch("resetClues");
-        location.reload();
+        // location.reload();
       },
     }
   }
