@@ -1,14 +1,14 @@
 <template>
     <div>
 
-        <footer>
+        <!-- <footer>
 <strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
 <div class="links">
     <router-link :to="{ path:'/'}">Games</router-link>
  <a href="" @click="newGameReset()">Start New Game</a>
 </div>
-</footer>
+</footer> -->
     </div>
 
     </template>
@@ -17,7 +17,14 @@ Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
     export default {
         name: "FooterLinks",
 
+        methods: {
+    //     newGameReset() {
+    //   this.$store.dispatch("resetClues");
+    //   this.$store.dispatch("resetGameScore", this.$store.state.gameid);
+    //   location.reload();
+    // }
+
     }
+}
     </script>
 
-   

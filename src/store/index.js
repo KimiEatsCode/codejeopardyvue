@@ -10,7 +10,7 @@ export default createStore({
     return {
       categories: "",
       gameid: null,
-      games:"",
+      game: "",
       clue: "",
       clueText: "",
       question: "",
@@ -19,8 +19,8 @@ export default createStore({
       clues: "",
       clueid: "",
       currClueId: "",
-      score: 0,
-      value: "",
+      score: "",
+      clueValue: "",
       answeredCorrect: null,
     //  url: "https://codejeo-7137663a4c65.herokuapp.com",
       url: "http://localhost:3000",
@@ -43,7 +43,8 @@ export default createStore({
       apiClient
         .get(`${this.state.url}/api/games/${gameid}`)
         .then((res) => {
-          console.log("one game info fetchGameInfo call in store " + JSON.stringify(res.data[0]));
+          console.log("one game info fetchGameInfo call in store " + JSON.stringify(res.data));
+
           commit("setGameInfo", res.data);
         })
         .catch((error) => {
@@ -87,9 +88,7 @@ export default createStore({
         });
     },
     //updateClue trying to do 2 things put db and call a mutation method
-
     async updateClue({ commit }, payload) {
-      console.log("update clue payload " + JSON.stringify(payload));
       apiClient
         .patch(
           `${this.state.url}/api/category-clues/allclues/${payload.clueid}/${payload.answeredCorrect}`
@@ -116,12 +115,23 @@ export default createStore({
           console.log(error);
         });
     },
-    async setScore({ commit }, state) {
+    async resetGameScore(gameid) {
       apiClient
-        .patch(`${this.state.url}/api/games/${this.state.gameid}/${this.state.score}`)
+        .patch(`${this.state.url}/api/category-clues/newgame/${gameid}`)
         .then((res) => {
-          commit("setScore", res);
-          console.log("state score is testing " + state.score);
+          console.log("reset game score " + JSON.stringify(res));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async setScoreAction({ commit }, payload) {
+      apiClient
+        .patch(`${this.state.url}/api/games/${payload.gameid}/${payload.score}`)
+        .then((res) => {
+          console.log("set score patch action " + JSON.stringify(payload.score));
+          // console.log("set score patch action " + JSON.stringify(res));
+          commit("setScore", res.data);
         })
         .catch((error) => {
           console.log(error);
@@ -129,14 +139,17 @@ export default createStore({
     },
   },
   mutations: {
-    setAllGames(state,allGamesInfo) {
+    setAllGames(state, allGamesInfo) {
     state.games = allGamesInfo
-    console.log("setAllGames mutation in store " + allGamesInfo["game_name"])
-    return allGamesInfo;
+    console.log("setAllGames mutation in store " + state.games)
+    return state.games;
     },
     setGameInfo(state, gameInfo) {
       state.game = gameInfo
-      console.log("setGameInfo mutation in store " + gameInfo)
+      state.gameid = gameInfo['game_id'];
+      state.score = gameInfo['game_score'];
+      console.log("setGameInfo mutation in store " + state.score)
+      state.gameName = gameInfo['game_name'];
       return gameInfo;
       },
     fetchCategories(state, payload) {
@@ -152,20 +165,21 @@ export default createStore({
       return state.score;
     },
     setScore(state) {
-      state.score = state.score + state.value;
-      console.log("setScore total = " + state.score);
+      // state.score = state.score + state.clueValue;
+      console.log("setScore total mutation = " + state.score);
       return state.score;
     },
     setClues(state, payload) {
       console.log("From mutation clues ", payload);
       state.clues = payload;
       state.getResponse = true;
+      return state.clues
     },
     setClue(state, clue) {
       console.log("set clue in index file " + JSON.stringify(clue));
 
       state.clue = clue; //this is the whole object not just the clue text
-      // console.log("store " + clue);
+
       state.clueText = clue["clueText"];
       // state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = clue["question"];
@@ -173,7 +187,7 @@ export default createStore({
       state.answer_alternatives = clue["answer_alternatives"];
       state.clueid = clue["clueid"];
       state.answeredCorrect = clue["answered"];
-      state.value = clue["value"];
+      state.clueValue = clue["value"];
       return clue;
     },
     showModalMutation(state, payload) {

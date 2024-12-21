@@ -29,10 +29,7 @@ export default {
   }
 },
   methods: {
-    newGameReset() {
-      this.$store.dispatch("resetClues");
-      location.reload();
-    },
+
   }
 }
 

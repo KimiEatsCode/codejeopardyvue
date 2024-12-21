@@ -1,6 +1,7 @@
 <template>
   <div class="grid-body">
 <div class="grid-header">
+
     <div
       class="grid-headings"
       v-for="(category, index) in categories"
@@ -10,14 +11,14 @@
   </div>
 <div class="grid-clues-container">
     <div class="grid-clues" v-for="category in categories" v-bind:key="category.category_id">
-      <CategoryClues :categoryid="category.category_id" :catname="category.category_name" />
+      <CategoryClues gamescore="game.game_score" :categoryid="category.category_id" :catname="category.category_name" />
     </div>
   </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import CategoryClues from "./CategoryClues.vue";
 
 
@@ -30,49 +31,44 @@ export default {
   components: {
      CategoryClues
   },
-  beforeMount() {
-    this.clues,
-    this.gameid,
-    this.props
+  created() {
+    this.$store.dispatch("fetchAllCat")
+    // this.clues,
+    // this.gameid,
+    // this.props
   },
-
+computed: {
+  categories() {
+    return  this.$store.state.categories
+  }
+},
   data() {
     return {
       getResponse: false,
-      // gameInfo: axios
-      // .get(`${this.$store.state.url}/api/games/${this.gameid}`)
-      //   .then((res) => {
-      //     this.getResponse = true;
-      //     console.log("Get !! game info in cat head file not from store " + JSON.stringify(res.data[0]));
-      //     return (this.gameInfo = res.data[0]);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     this.getResponse = false;
-      //   }),
-      categories: axios
-        .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
-        .then((res) => {
-          this.getResponse = true;
-          console.log("Get categories info " + JSON.stringify(res.data));
-          return (this.categories = res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getResponse = false;
-        }),
 
-      clues: axios
-        .get(`${this.$store.state.url}/api/allclues`)
-        .then((res) => {
-          this.getResponse = true;
-          console.log("category header file call for allclues")
-          return (this.clues = res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getResponse = false;
-        }),
+  //     categories: axios
+  //       .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
+  //       .then((res) => {
+  //         this.getResponse = true;
+  //         console.log("Get categories info " + JSON.stringify(res.data));
+  //         return (this.categories = res.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         this.getResponse = false;
+  //       }),
+
+  //     clues: axios
+  //       .get(`${this.$store.state.url}/api/allclues`)
+  //       .then((res) => {
+  //         this.getResponse = true;
+  //         console.log("category header file call for allclues")
+  //         return (this.clues = res.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         this.getResponse = false;
+  //       }),
 
     };
   },

@@ -1,29 +1,32 @@
 <template>
     <div class="container-fluid">
-      <h1>{{ this.game.game_name }}</h1>
-<h2>{{  this.game.game_score  }}</h2>
+      <h1>{{ gameid }}</h1>
+<h2>{{ this.$store.state.score }}</h2>
 <CategoryHeader :gameid = this.gameid></CategoryHeader>
 
 <FooterLinks></FooterLinks>
 </div>
-
+<footer>
+<strong>Made With:</strong>
+Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
+<div class="links">
+    <router-link :to="{ path:'/'}">Games</router-link>
+ <a href="" @click="newGameReset(this.gameid)">Start New Game</a>
+</div>
+</footer>
   </template>
 
   <script>
 
   // import axios from "axios";
 
-
 import CategoryHeader from "./CategoryHeader.vue";
 import FooterLinks from "./Footer.vue"
-
 
   export default {
     name: 'GameBoard',
     props: {
       gameid: String,
-    //   game_name: String,
-    //   game_score: String,
 
     },
 components: {
@@ -36,20 +39,22 @@ created () {
 computed: {
     game() {
       return this.$store.state.game;
+    },
+    score() {
+     return this.$store.state.score;
     }
   },
     data() {
       return {
-// gameName: this.$store.state.game[0].game_name
-// gameScore: this.game_score,
-// gameID: this.gameid
+
     }
   },
 
     methods: {
 
-      newGameReset() {
+      newGameReset(gameid) {
         this.$store.dispatch("resetClues");
+        this.$store.dispatch("resetGameScore", gameid);
         // location.reload();
       },
     }

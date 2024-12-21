@@ -19,9 +19,8 @@ const routes = [
     name: 'gameslist',
     component: GamesList,
   },
-  {
-
-        path: '/games/:gameid',
+{
+       path: '/games/:gameid',
         name: 'game',
         component: GameBoard,
         props: true,

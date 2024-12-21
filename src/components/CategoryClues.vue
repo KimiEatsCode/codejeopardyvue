@@ -14,6 +14,7 @@
             getClue(clue.clue_id);
           "
         >
+
           ${{ clue.value }}
         </button>
       </div>
@@ -110,10 +111,15 @@ export default {
   props: {
     categoryid: Number,
     catname: String,
-    gameid: String
+    gameid: String,
+    gamescore: String
+  },
+  created () {
+    this.clues
   },
   data() {
     return {
+      // clues: this.$store.state.clues,
       currClueId: null,
       // clue: this.$store.state.clue,
       clue:"",
@@ -159,6 +165,7 @@ export default {
     value() {
       return this.$store.state.clue.value;
     },
+
   },
   methods: {
     getClues(catid) {
@@ -223,11 +230,12 @@ export default {
 
         //update score on db and in state
         const score_payload = {
-          gameid: this.gameid,
-          score: this.$store.state.score,
+          gameid: this.$store.state.gameid,
+          // clueValue: this.$store.state.clueValue,
+          score: this.$store.state.score + this.$store.state.clueValue
         };
 
-        this.$store.dispatch("setScore", score_payload);
+        this.$store.dispatch("setScoreAction", score_payload);
 
         const buttonCSS_payload = {
           clueid: clueID,
@@ -248,9 +256,7 @@ export default {
 
     },
   },
-  beforeMount() {
-    this.clues;
-  },
+
 };
 </script>
 
