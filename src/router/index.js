@@ -1,23 +1,21 @@
 import { createWebHistory, createRouter } from "vue-router";
-//import App from "../App.vue";
 import Home from "../components/HomePage.vue";
 import NotFound from "../components/NotFound.vue";
 import GamesList from "../components/GamesList.vue";
 import GameBoard from "../components/GameBoard.vue";
-//import CategoryHeader from "../components/CategoryHeader.vue";
-//import CategoryClues from "../components/CategoryClues.vue";
-//import FooterLinks from "../components/Footer.vue"
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Home,
+    props: true
   },
   {
     path: '/gameslist',
     name: 'gameslist',
     component: GamesList,
+    props: true
   },
 {
        path: '/games/:gameid',

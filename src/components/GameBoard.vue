@@ -1,17 +1,19 @@
 <template>
     <div class="container-fluid">
-      <h1>{{ gameid }}</h1>
-<h2>{{ this.$store.state.score }}</h2>
+<h2>{{ gameName }}</h2>
+<h2>{{ this.$store.state.gameScore }}</h2>
+
 <CategoryHeader :gameid = this.gameid></CategoryHeader>
 
 <FooterLinks></FooterLinks>
+
 </div>
 <footer>
 <strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
 <div class="links">
     <router-link :to="{ path:'/'}">Games</router-link>
- <a href="" @click="newGameReset(this.gameid)">Start New Game</a>
+ <button @click="newGameReset()">Start New Game</button>
 </div>
 </footer>
   </template>
@@ -27,7 +29,8 @@ import FooterLinks from "./Footer.vue"
     name: 'GameBoard',
     props: {
       gameid: String,
-
+      gameName: String,
+      gameScore: String
     },
 components: {
 CategoryHeader,
@@ -37,12 +40,6 @@ created () {
   this.$store.dispatch("fetchGameInfo",this.gameid);
 },
 computed: {
-    game() {
-      return this.$store.state.game;
-    },
-    score() {
-     return this.$store.state.score;
-    }
   },
     data() {
       return {
@@ -51,10 +48,10 @@ computed: {
   },
 
     methods: {
-
-      newGameReset(gameid) {
-        this.$store.dispatch("resetClues");
-        this.$store.dispatch("resetGameScore", gameid);
+      newGameReset() {
+        console.log('new game reset function gameboard clicked ' + this.gameid)
+        this.$store.dispatch("resetClues",this.$store.state.gameid);
+        this.$store.dispatch("setScoreAction", { gameid: this.gameid, score: 0 });
         // location.reload();
       },
     }

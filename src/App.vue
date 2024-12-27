@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 
 export default {
@@ -15,17 +15,7 @@ export default {
 
   data() {
     return {
-    gameInfo: axios
-      .get(`${this.$store.state.url}/api/games`)
-        .then((res) => {
-          this.getResponse = true;
-          console.log("Get game info call " + JSON.stringify(res.data));
-          return (this.gameInfo = res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getResponse = false;
-        }),
+ 
   }
 },
   methods: {

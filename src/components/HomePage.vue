@@ -1,7 +1,7 @@
 <template>
     <div>
+        
 <GamesList></GamesList>
-        <h1>Home</h1>
 
     </div>
 

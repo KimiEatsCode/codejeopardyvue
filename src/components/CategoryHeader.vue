@@ -18,7 +18,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import CategoryClues from "./CategoryClues.vue";
 
 
@@ -26,37 +26,34 @@ export default {
 
   name: "CategoryHeader",
   props: {
-    gameid: String
+    gameid: String,
+
   },
   components: {
      CategoryClues
   },
   created() {
-    this.$store.dispatch("fetchAllCat")
-    // this.clues,
-    // this.gameid,
-    // this.props
+    this.$store.dispatch("fetchAllCat", this.gameid)
+
   },
 computed: {
-  categories() {
-    return  this.$store.state.categories
-  }
+
 },
   data() {
     return {
       getResponse: false,
 
-  //     categories: axios
-  //       .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
-  //       .then((res) => {
-  //         this.getResponse = true;
-  //         console.log("Get categories info " + JSON.stringify(res.data));
-  //         return (this.categories = res.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         this.getResponse = false;
-  //       }),
+      categories: axios
+        .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
+        .then((res) => {
+          this.getResponse = true;
+          console.log("Get categories info " + JSON.stringify(res.data));
+          return (this.categories = res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.getResponse = false;
+        }),
 
   //     clues: axios
   //       .get(`${this.$store.state.url}/api/allclues`)

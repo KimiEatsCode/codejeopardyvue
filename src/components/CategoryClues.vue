@@ -114,11 +114,10 @@ export default {
     gameid: String,
     gamescore: String
   },
-  created () {
-    this.clues
-  },
+
   data() {
     return {
+      scoreData: this.gamescore,
       // clues: this.$store.state.clues,
       currClueId: null,
       // clue: this.$store.state.clue,
@@ -228,12 +227,14 @@ export default {
 
         this.$store.dispatch("updateClue", clue_payload);
 
-        //update score on db and in state
+       const newScore =this.$store.state.gameScore + this.$store.state.clueValue;
+
         const score_payload = {
           gameid: this.$store.state.gameid,
-          // clueValue: this.$store.state.clueValue,
-          score: this.$store.state.score + this.$store.state.clueValue
+          score: newScore
         };
+
+        console.log("game score in state is  " + this.$store.state.gameScore)
 
         this.$store.dispatch("setScoreAction", score_payload);
 

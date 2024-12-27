@@ -9,8 +9,9 @@ export default createStore({
   state() {
     return {
       categories: "",
-      gameid: null,
-      game: "",
+      gameid: "",
+      gameScore: "",
+      gameName:"",
       clue: "",
       clueText: "",
       question: "",
@@ -32,7 +33,7 @@ export default createStore({
       apiClient
         .get(`${this.state.url}/api/games`)
         .then((res) => {
-          console.log("all games from fetchAllGames call in store " + res.data);
+          // console.log("all games from fetchAllGames call in store " + res.data);
           commit("setAllGames", res.data);
         })
         .catch((error) => {
@@ -43,7 +44,7 @@ export default createStore({
       apiClient
         .get(`${this.state.url}/api/games/${gameid}`)
         .then((res) => {
-          console.log("one game info fetchGameInfo call in store " + JSON.stringify(res.data));
+          console.log("fetchGameInfo call in store " + JSON.stringify(res.data));
 
           commit("setGameInfo", res.data);
         })
@@ -51,9 +52,9 @@ export default createStore({
           console.log(error + " fetch game info error");
         });
     },
-    async fetchAllCat({ commit }) {
+    async fetchAllCat({ commit }, gameid) {
       apiClient
-        .get(`${this.state.url}/api/games/${this.state.gameid}/categories`)
+        .get(`${this.state.url}/api/games/${gameid}/categories`)
         .then((res) => {
           // console.log(" header categories call " + res.data);
           commit("fetchCategories", res.data);
@@ -77,9 +78,9 @@ export default createStore({
       apiClient
         .get(`${this.state.url}/api/category-clues/allclues/${clueid}`)
         .then((res) => {
-          console.log(
-            "This is clueid for fetchClue is " + JSON.stringify(res.data)
-          );
+          // console.log(
+          //   "This is clueid for fetchClue is " + JSON.stringify(res.data)
+          // );
 
           commit("setClue", res.data[0]);
         })
@@ -105,9 +106,9 @@ export default createStore({
       commit("answeredCorrect", payload);
       // commit("refreshClues");
     },
-    async resetClues() {
+    async resetClues(gameid) {
       apiClient
-        .get(`${this.state.url}/api/category-clues/newgame`)
+        .get(`${this.state.url}/api/games/newgame/${gameid}`)
         .then((res) => {
           console.log("reset game " + JSON.stringify(res));
         })
@@ -115,23 +116,24 @@ export default createStore({
           console.log(error);
         });
     },
-    async resetGameScore(gameid) {
-      apiClient
-        .patch(`${this.state.url}/api/category-clues/newgame/${gameid}`)
-        .then((res) => {
-          console.log("reset game score " + JSON.stringify(res));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    // async resetGameScore({ commit }, gameid) {
+    //   apiClient
+    //     .patch(`${this.state.url}/api/games/newgame/${gameid}`)
+    //     .then((res) => {
+    //       console.log("reset game score " + JSON.stringify(res));
+    //       commit("setGameInfo ", this.state.gameid)
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     async setScoreAction({ commit }, payload) {
       apiClient
         .patch(`${this.state.url}/api/games/${payload.gameid}/${payload.score}`)
-        .then((res) => {
-          console.log("set score patch action " + JSON.stringify(payload.score));
+        .then(() => {
+          console.log("set score patch action " + JSON.stringify(payload.gameid));
           // console.log("set score patch action " + JSON.stringify(res));
-          commit("setScore", res.data);
+          commit("setScore", payload.score);
         })
         .catch((error) => {
           console.log(error);
@@ -141,14 +143,15 @@ export default createStore({
   mutations: {
     setAllGames(state, allGamesInfo) {
     state.games = allGamesInfo
-    console.log("setAllGames mutation in store " + state.games)
+    console.log("setAllGames mutation in store " + JSON.stringify(state.games))
     return state.games;
     },
     setGameInfo(state, gameInfo) {
+      console.log("game info score " + JSON.stringify(gameInfo))
       state.game = gameInfo
       state.gameid = gameInfo['game_id'];
-      state.score = gameInfo['game_score'];
-      console.log("setGameInfo mutation in store " + state.score)
+      state.gameScore = gameInfo['game_score'];
+      console.log("setGameInfo mutation in store " + state.gameid + " and " + state.gameScore)
       state.gameName = gameInfo['game_name'];
       return gameInfo;
       },
@@ -164,10 +167,10 @@ export default createStore({
     confirmScore(state) {
       return state.score;
     },
-    setScore(state) {
-      // state.score = state.score + state.clueValue;
-      console.log("setScore total mutation = " + state.score);
-      return state.score;
+    setScore(state, score) {
+      state.gameScore = score;
+      console.log("setScore total mutation = " + state.gameScore);
+      return state.gameScore;
     },
     setClues(state, payload) {
       console.log("From mutation clues ", payload);
