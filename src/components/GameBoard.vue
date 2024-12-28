@@ -1,6 +1,6 @@
 <template>
-    <div class="container-fluid">
-<h2>{{ gameName }}</h2>
+    <div class="container-fluid mt-5">
+<h2>{{ this.$store.state.gameName }}</h2>
 <h2>{{ this.$store.state.gameScore }}</h2>
 
 <CategoryHeader :gameid = this.gameid></CategoryHeader>
@@ -8,13 +8,14 @@
 <FooterLinks></FooterLinks>
 
 </div>
+
 <footer>
 <strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
-<div class="links">
-    <router-link :to="{ path:'/'}">Games</router-link>
- <button @click="newGameReset()">Start New Game</button>
-</div>
+<ul class="links">
+  <li> <router-link :to="{ path:'/'}">Games</router-link></li>
+ <li style="cursor: pointer;text-decoration: underline; color:blue" @click="newGameReset()">Start New Game</li>
+</ul>
 </footer>
   </template>
 
@@ -49,10 +50,10 @@ computed: {
 
     methods: {
       newGameReset() {
-        console.log('new game reset function gameboard clicked ' + this.gameid)
-        this.$store.dispatch("resetClues",this.$store.state.gameid);
+        console.log('test new game reset function gameboard clicked ' + this.$store.state.gameid)
+        this.$store.dispatch("resetClues");
         this.$store.dispatch("setScoreAction", { gameid: this.gameid, score: 0 });
-        // location.reload();
+        location.reload();
       },
     }
   }

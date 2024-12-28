@@ -106,27 +106,17 @@ export default createStore({
       commit("answeredCorrect", payload);
       // commit("refreshClues");
     },
-    async resetClues(gameid) {
+    async resetClues() {
       apiClient
-        .get(`${this.state.url}/api/games/newgame/${gameid}`)
-        .then((res) => {
-          console.log("reset game " + JSON.stringify(res));
+        .patch(`${this.state.url}/api/games/newgame/${this.state.gameid}`)
+        .then(() => {
+          console.log("reset game " + JSON.stringify());
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    // async resetGameScore({ commit }, gameid) {
-    //   apiClient
-    //     .patch(`${this.state.url}/api/games/newgame/${gameid}`)
-    //     .then((res) => {
-    //       console.log("reset game score " + JSON.stringify(res));
-    //       commit("setGameInfo ", this.state.gameid)
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
+
     async setScoreAction({ commit }, payload) {
       apiClient
         .patch(`${this.state.url}/api/games/${payload.gameid}/${payload.score}`)

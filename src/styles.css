@@ -12,16 +12,13 @@ html, body {
   margin-top: 20px;
 }
 
-
-.link {
-    margin: 10px;
-  }
-
-  .link.active {
-    background-color: red;
-    color: white;
-  }
-
+.list-group  {
+  text-align:left!important;
+}
+ul.links li {
+  display: inline-block;
+  padding-left:10px;
+}
 
   .page-title {
     margin-top:10px;
@@ -40,7 +37,8 @@ html, body {
   }
 
   .grid-headings {
-    background-color: cadetblue;
+    background-color: #efffad;
+    border: 1px solid #000;
     font-weight:bold;
     font-size: 1.2em;
     padding:10px 5px;
@@ -61,7 +59,7 @@ html, body {
   }
 
   .cluecolumn {
-    background-color: rgb(65, 125, 255);
+    background-color: rgb(155, 181, 238);
   }
 
   .grid-clues button {
@@ -75,3 +73,8 @@ html, body {
     padding:5px;
     margin-bottom:5px;
   }
+
+
+footer {
+  margin-top:30px;
+}
