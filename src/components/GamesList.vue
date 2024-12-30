@@ -40,12 +40,10 @@ import axios from "axios";
   },
   created () {
   this.$store.dispatch("fetchAllGames");
-  // this.$store.commit('setGameInfo', `${this.gameid}`);
+
 },
 computed: {
-    // games() {
-    //   return this.$store.state.games;
-    // },
+
   },
     data() {
       return {
@@ -63,9 +61,7 @@ computed: {
   },
 
     methods: {
-// updateStoreGameInfo() {
-//       this.$store.commit('setGameInfo', `${this.gameid}`);
-//     }
+
     },
   };
   </script>

@@ -1,18 +1,19 @@
 <template>
     <div>
-        
-<GamesList></GamesList>
+
+<UsersProfiles></UsersProfiles>
 
     </div>
 
     </template>
 
     <script>
-    import GamesList from "./GamesList.vue";
+    import UsersProfiles from "./UsersProfiles.vue";
+
     export default {
         name: "HomePage",
         components: {
-            GamesList
+            UsersProfiles
         }
     }
     </script>

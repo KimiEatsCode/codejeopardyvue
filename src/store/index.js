@@ -8,6 +8,7 @@ const apiClient = axios.create({
 export default createStore({
   state() {
     return {
+      users:"",
       categories: "",
       gameid: "",
       gameScore: "",
@@ -29,6 +30,16 @@ export default createStore({
     };
   },
   actions: {
+    async fetchAllUsers({ commit }) {
+      apiClient
+        .get(`${this.state.url}/api/users`)
+        .then((res) => {
+          commit("setAllUsers", res.data);
+        })
+        .catch((error) => {
+          console.log(error + " fetch all users error");
+        });
+    },
     async fetchAllGames({ commit }) {
       apiClient
         .get(`${this.state.url}/api/games`)
@@ -131,6 +142,11 @@ export default createStore({
     },
   },
   mutations: {
+    setAllUsers(state, usersInfo) {
+      state.users = usersInfo
+      console.log("setAllUsers mutation in store " + JSON.stringify(state.users))
+      return state.users;
+      },
     setAllGames(state, allGamesInfo) {
     state.games = allGamesInfo
     console.log("setAllGames mutation in store " + JSON.stringify(state.games))
