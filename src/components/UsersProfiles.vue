@@ -1,7 +1,11 @@
 <template>
   <div>
     <h1>Users</h1>
-    {{ users.username }}
+
+    <div v-for="user in users" v-bind:key="user.userid">
+
+   <router-link :to="{ name:'gameslist', params: { userid: user['userid'] }}">{{user['username']}}</router-link>
+    </div>
   </div>
 </template>
 
@@ -10,13 +14,18 @@
 
 export default {
   name: "UsersProfiles",
-  created() {
+  mounted() {
     this.$store.dispatch("fetchAllUsers");
+  },
+  computed: {
+   users() {
+    return this.$store.state.users;
+   }
   },
   data() {
     return {
       getResponse: false,
-      users: this.$store.state.users[0],
+
     };
   },
 };

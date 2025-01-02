@@ -9,6 +9,7 @@ export default createStore({
   state() {
     return {
       users:"",
+      userGames:"",
       categories: "",
       gameid: "",
       gameScore: "",
@@ -44,11 +45,21 @@ export default createStore({
       apiClient
         .get(`${this.state.url}/api/games`)
         .then((res) => {
-          // console.log("all games from fetchAllGames call in store " + res.data);
           commit("setAllGames", res.data);
         })
         .catch((error) => {
           console.log(error + " fetch all game info error");
+        });
+    },
+    async fetchUserGames({ commit }, userid) {
+      apiClient
+        .get(`${this.state.url}/api/gameslist/${userid}`)
+        .then((res) => {
+          console.log("all games for user from fetchUserGames  " + JSON.stringify(res.data));
+          commit("setUserGames", res.data);
+        })
+        .catch((error) => {
+          console.log(error + " fetch all user games error");
         });
     },
     async fetchGameInfo({ commit }, gameid ) {
@@ -63,6 +74,7 @@ export default createStore({
           console.log(error + " fetch game info error");
         });
     },
+
     async fetchAllCat({ commit }, gameid) {
       apiClient
         .get(`${this.state.url}/api/games/${gameid}/categories`)
@@ -147,11 +159,16 @@ export default createStore({
       console.log("setAllUsers mutation in store " + JSON.stringify(state.users))
       return state.users;
       },
-    setAllGames(state, allGamesInfo) {
-    state.games = allGamesInfo
-    console.log("setAllGames mutation in store " + JSON.stringify(state.games))
-    return state.games;
-    },
+    // setAllGames(state, allGamesInfo) {
+    // state.games = allGamesInfo
+    // console.log("setAllGames mutation in store " + JSON.stringify(state.games))
+    // return state.games;
+    // },
+    setUserGames(state, allGamesInfo) {
+      state.userGames = allGamesInfo
+      console.log("setAllGames mutation in store " + JSON.stringify(state.userGames))
+      return state.userGames;
+      },
     setGameInfo(state, gameInfo) {
       console.log("game info score " + JSON.stringify(gameInfo))
       state.game = gameInfo
@@ -161,6 +178,7 @@ export default createStore({
       state.gameName = gameInfo['game_name'];
       return gameInfo;
       },
+
     fetchCategories(state, payload) {
       state.categories = payload;
       return state.categories;

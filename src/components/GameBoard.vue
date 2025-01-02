@@ -39,6 +39,7 @@ FooterLinks
 },
 created () {
   this.$store.dispatch("fetchGameInfo",this.gameid);
+  this.$store.dispatch("userGameInfo",this.userid_games);
 },
 computed: {
   },

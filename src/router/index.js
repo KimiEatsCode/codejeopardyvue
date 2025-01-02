@@ -6,28 +6,28 @@ import GameBoard from "../components/GameBoard.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: "/",
+    name: "home",
     component: Home,
-    props: true
+    props: true,
   },
   {
-    path: '/gameslist',
-    name: 'gameslist',
+    path: "/games/:userid",
+    name: "gameslist",
     component: GamesList,
-    props: true
+    props: true,
   },
-{
-       path: '/games/:gameid',
-        name: 'game',
-        component: GameBoard,
-        props: true,
-      },
+  {
+    path: "/games/:gameid",
+    name: "game",
+    component: GameBoard,
+    props: true,
+  },
 
   {
-    path: '/:catchAll(.*)',
+    path: "/:catchAll(.*)",
     component: NotFound,
-  }
+  },
 ];
 
 const router = createRouter({
