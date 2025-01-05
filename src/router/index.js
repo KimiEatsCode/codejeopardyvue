@@ -12,13 +12,13 @@ const routes = [
     props: true,
   },
   {
-    path: "/games/:userid",
+    path: "/gameslist/:userid",
     name: "gameslist",
     component: GamesList,
     props: true,
   },
   {
-    path: "/games/:gameid/:userid/",
+    path: "/gamelist/:userid/:gameid",
     name: "gameboard",
     component: GameBoard,
     props: true,

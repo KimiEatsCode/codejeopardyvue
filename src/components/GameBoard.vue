@@ -1,27 +1,17 @@
 <template>
     <div class="container-fluid mt-5">
-<h2>{{ this.$store.state.gameName }}</h2>
-<h2>{{ this.$store.state.gameScore }}</h2>
 
+ <h4>  {{ userGameInfo }}</h4>
 <CategoryHeader :gameid = this.gameid></CategoryHeader>
 
 <FooterLinks></FooterLinks>
 
 </div>
-
-<footer>
-<strong>Made With:</strong>
-Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
-<ul class="links">
-  <li> <router-link :to="{ path:'/'}">Games</router-link></li>
- <li style="cursor: pointer;text-decoration: underline; color:blue" @click="newGameReset()">Start New Game</li>
-</ul>
-</footer>
   </template>
 
   <script>
 
-  // import axios from "axios";
+import axios from "axios";
 
 import CategoryHeader from "./CategoryHeader.vue";
 import FooterLinks from "./Footer.vue"
@@ -29,25 +19,42 @@ import FooterLinks from "./Footer.vue"
   export default {
     name: 'GameBoard',
     props: {
-      gameid: String,
-      gameName: String,
-      gameScore: String
+     gameid: String,
+      userid: String
     },
 components: {
 CategoryHeader,
 FooterLinks
 },
-created () {
-  this.$store.dispatch("fetchGameInfo",this.gameid);
-  this.$store.dispatch("userGameInfo",this.userid_games);
-},
-computed: {
-  },
+// this.$store.dispatch('yourActionName', {
+//   param1: value1,
+//   param2: value2
+// });
+//then in actions in the indexjs store file
+//use pass payload and get params from payload as payload.param1, payload.param2
+
     data() {
       return {
+        userGameInfo: axios
+        .get(`${this.$store.state.url}/api/games/${this.userid}/${this.gameid}`)
+        .then((res) => {
+          // console.log("clues on category clues file " + JSON.stringify(res.data));
+          if (res.data === "") {
+            console.log(
+              "Game clues data response is EMPTY "
+            );
+          } else {
+            this.$store.state.userGameInfo = res.data;
 
-    }
-  },
+            return (this.userGameInfo = res.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        }),
+
+      }
+    },
 
     methods: {
       newGameReset() {
@@ -55,7 +62,7 @@ computed: {
         this.$store.dispatch("resetClues");
         this.$store.dispatch("setScoreAction", { gameid: this.gameid, score: 0 });
         location.reload();
-      },
+      }
     }
   }
 
