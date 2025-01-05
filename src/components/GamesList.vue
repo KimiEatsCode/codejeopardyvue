@@ -6,7 +6,7 @@
 
     <div v-for="game in userComputedGames" v-bind:key="game.game_id">
       {{  game }}
-    <router-link :to="{ name:'gameboard', params: {  gameid: game.game_id, userid: this.userid }}">
+    <router-link :to="{ name:'gameboard', params: { userid: this.userid ,  gameid: game.game_id}}">
 
 
         <div class=" gap-2 w-100 justify-content-between list-group-item-action gap-3 py-3" aria-current="true">
