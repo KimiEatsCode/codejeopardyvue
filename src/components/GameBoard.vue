@@ -1,7 +1,9 @@
 <template>
     <div class="container-fluid mt-5">
 
- <h4>  {{ userGameInfo }}</h4>
+ <h4>  {{ userComputedGame.game_name }}</h4>
+ <h4>  {{ userComputedGame.userid_games}}</h4>
+ <h4>  {{ userComputedGame.game_score }}</h4>
 <CategoryHeader :gameid = this.gameid></CategoryHeader>
 
 <FooterLinks></FooterLinks>
@@ -11,7 +13,7 @@
 
   <script>
 
-import axios from "axios";
+//import axios from "axios";
 
 import CategoryHeader from "./CategoryHeader.vue";
 import FooterLinks from "./Footer.vue"
@@ -20,7 +22,7 @@ import FooterLinks from "./Footer.vue"
     name: 'GameBoard',
     props: {
      gameid: String,
-      userid: String
+     userid: String
     },
 components: {
 CategoryHeader,
@@ -32,27 +34,20 @@ FooterLinks
 // });
 //then in actions in the indexjs store file
 //use pass payload and get params from payload as payload.param1, payload.param2
-
+//this is how you pass multiple params to an action
+mounted() {
+  this.$store.dispatch("fetchUserGameInfo", { userid: this.userid , gameid: this.gameid});
+  console.log('gameboard mounted ' + this.gameid)
+},
+computed: {
+userComputedGame() {
+  return this.$store.state.userGameInfo
+}
+  },
     data() {
       return {
-        userGameInfo: axios
-        .get(`${this.$store.state.url}/api/games/${this.userid}/${this.gameid}`)
-        .then((res) => {
-          // console.log("clues on category clues file " + JSON.stringify(res.data));
-          if (res.data === "") {
-            console.log(
-              "Game clues data response is EMPTY "
-            );
-          } else {
-            this.$store.state.userGameInfo = res.data;
-
-            return (this.userGameInfo = res.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        }),
-
+        game_name:"",
+        user_score:0
       }
     },
 

@@ -5,7 +5,7 @@
   <div class="list-group">
 
     <div v-for="game in userComputedGames" v-bind:key="game.game_id">
-      {{  game }}
+  
     <router-link :to="{ name:'gameboard', params: { userid: this.userid ,  gameid: game.game_id}}">
 
 

@@ -227,16 +227,6 @@ export default createStore({
       return state.userGameInfo;
     },
 
-    // setGameInfo(state, gameInfo) {
-    //   console.log("game info score " + JSON.stringify(gameInfo))
-    //   state.game = gameInfo
-    //   state.gameid = gameInfo['game_id'];
-    //   state.gameScore = gameInfo['game_score'];
-    //   console.log("setGameInfo mutation in store " + state.gameid + " and " + state.gameScore)
-    //   state.gameName = gameInfo['game_name'];
-    //   return state.gameInfo;
-    //   },
-
     fetchCategories(state, payload) {
       state.categories = payload;
       return state.categories;
