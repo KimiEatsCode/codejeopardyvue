@@ -18,8 +18,8 @@ const routes = [
     props: true,
   },
   {
-    path: "/games/:gameid",
-    name: "game",
+    path: "/games/:gameid/:userid/",
+    name: "gameboard",
     component: GameBoard,
     props: true,
   },
