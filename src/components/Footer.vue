@@ -1,14 +1,14 @@
 <template>
     <div>
 
-        <!-- <footer>
-<strong>Made With:</strong>
-Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
+        <footer>
+            <p><strong>Made With:</strong>
+Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API</p>
 <div class="links">
     <router-link :to="{ path:'/'}">Games</router-link>
- <a href="" @click="newGameReset()">Start New Game</a>
+ <p><a href="" @click="newGameReset()">Start New Game</a></p>
 </div>
-</footer> -->
+</footer>
     </div>
 
     </template>
@@ -18,11 +18,11 @@ Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API
         name: "FooterLinks",
 
         methods: {
-    //     newGameReset() {
-    //   this.$store.dispatch("resetClues");
-    //   this.$store.dispatch("resetGameScore", this.$store.state.gameid);
-    //   location.reload();
-    // }
+        newGameReset() {
+      this.$store.dispatch("resetClues");
+      this.$store.dispatch("resetGameScore", this.$store.state.gameid);
+      location.reload();
+    }
 
     }
 }
