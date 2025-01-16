@@ -72,29 +72,13 @@ export default createStore({
             "fetchGameInfo call in store " + JSON.stringify(res.data)
           );
 
-          commit("setGameInfo", res.data);
+          commit("setUserGame", res.data[0]);
         })
         .catch((error) => {
           console.log(error + " fetch game info error");
         });
     },
-    //wrong below because can't pass params this way need to put
-    //params in an object and parse it out in the api call
 
-    // async fetchUserGameInfo({ commit }, gameid, userid) {
-    //   apiClient
-    //     .get(`${this.state.url}/api/gameslist/${gameid}/${userid}`)
-    //     .then((res) => {
-    //       console.log(
-    //         "fetch User GameInfo call in store " + JSON.stringify(res.data)
-    //       );
-
-    //       commit("setUserGame", res.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error + " fetch game for a user info error");
-    //     });
-    // },
     async fetchUserGameInfo({ commit }, payload) {
       apiClient
         .get(
@@ -137,9 +121,6 @@ export default createStore({
       apiClient
         .get(`${this.state.url}/api/category-clues/allclues/${clueid}`)
         .then((res) => {
-          // console.log(
-          //   "This is clueid for fetchClue is " + JSON.stringify(res.data)
-          // );
 
           commit("setClue", res.data[0]);
         })
@@ -147,29 +128,40 @@ export default createStore({
           console.log(error);
         });
     },
-    //updateClue trying to do 2 things put db and call a mutation method
-    async updateClue({ commit }, payload) {
+    async fetchUserClue({ commit }, payload) {
+      apiClient
+        .get(`${this.state.url}/api/category-clues/user/${payload.userid}/${payload.catid}`)
+        .then((res) => {
+          // console.log("Fetch USER CLUE in index store file " + JSON.stringify(res.data[0]));
+          commit("setClue", res.data[0]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async updateUserClue({ commit }, payload) {
       apiClient
         .patch(
-          `${this.state.url}/api/category-clues/allclues/${payload.clueid}/${payload.answeredCorrect}`
+          `${this.state.url}/api/category-clues/users/${payload.userid}/${payload.clueid}/${payload.answeredCorrect}/${payload.catid}/${payload.gameid}`
         )
         .then((res) => {
+          commit("answeredCorrect", res.data[0]);
           console.log(
-            "update clue " + payload.answeredCorrect + " " + payload.clueid
+            "Update clue for user " + payload.userid + " " + payload.clueid + " " + payload.answeredCorrect + " " + payload.catid + " " + payload.gameid
           );
           return res;
         })
         .catch((error) => {
           console.log(error);
         });
-      commit("answeredCorrect", payload);
-      // commit("refreshClues");
     },
-    async resetClues() {
+    async resetUserClues({ commit }, payload) {
       apiClient
-        .patch(`${this.state.url}/api/games/newgame/${this.state.gameid}`)
-        .then(() => {
-          console.log("reset game " + JSON.stringify());
+        .patch(`${this.state.url}/api/category-clues/user/${payload.userid}/${payload.gameid}`)
+        .then((res) => {
+          commit("answeredCorrect", res.data[0]);
+          console.log("reset users clues " + JSON.stringify(res.data[0]));
         })
         .catch((error) => {
           console.log(error);
@@ -178,19 +170,22 @@ export default createStore({
 
     async setScoreAction({ commit }, payload) {
       apiClient
-        .patch(`${this.state.url}/api/games/${payload.gameid}/${payload.score}`)
+        .patch(`${this.state.url}/api/users/${payload.userid}/${payload.gameid}/${payload.score}`)
         .then(() => {
           console.log(
             "set score patch action " + JSON.stringify(payload.gameid)
           );
-          // console.log("set score patch action " + JSON.stringify(res));
+
           commit("setScore", payload.score);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-  },
+
+},
+
+
   mutations: {
     setAllUsers(state, usersInfo) {
       state.users = usersInfo;
@@ -231,9 +226,9 @@ export default createStore({
       state.categories = payload;
       return state.categories;
     },
-    answeredCorrect(state, payload) {
-      console.log("commit answeredCorrect store " + payload.answeredCorrect);
-      state.answeredCorrect = payload.answeredCorrect;
+    answeredCorrect(state, data) {
+      console.log("commit answeredCorrect store returns " + JSON.stringify(data));
+      state.answeredCorrect = data.answeredCorrect;
       return state.answeredCorrect;
     },
     confirmScore(state) {
@@ -251,10 +246,8 @@ export default createStore({
       return state.clues;
     },
     setClue(state, clue) {
-      console.log("set clue in index file " + JSON.stringify(clue));
-
+      // console.log("set clue in index file " + JSON.stringify(clue));
       state.clue = clue; //this is the whole object not just the clue text
-
       state.clueText = clue["clueText"];
       // state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
       state.question = clue["question"];
@@ -262,6 +255,21 @@ export default createStore({
       state.answer_alternatives = clue["answer_alternatives"];
       state.clueid = clue["clueid"];
       state.answeredCorrect = clue["answered"];
+      state.clueValue = clue["value"];
+      return clue;
+    },
+    setUserClue(state, clue) {
+      // console.log("set USER clue in index file " + JSON.stringify(clue));
+
+      state.clue = clue; //this is the whole object not just the clue text
+
+      state.clueText = clue["clue"];
+      // state.clueText = clueText.charAt(0).toUpperCase() + clueText.slice(1);
+      state.question = clue["question"];
+      state.answer = clue["answer"];
+      state.answer_alternatives = clue["answer_alternatives"];
+      state.clueid = clue["clue_id"];
+      state.answeredCorrect = clue["answeredCorrect"];
       state.clueValue = clue["value"];
       return clue;
     },

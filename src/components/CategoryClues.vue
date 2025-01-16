@@ -5,11 +5,11 @@
        <div :class="`buttonbox_${clue.clue_id}`">
         <div :class="`answeredCorrect_${clue.answered}`">
 
-      <button :disabled="clue.answered === 1" :class=" `button_${clue.clue_id}`" @click="
+      <button :disabled="clue.answeredcorrect === '1'" :class=" `button_${clue.clue_id}`" @click="
         modalToggle(clue.clue_id);
       getClue(clue.clue_id);
       ">
-        {{ clue.value }}
+        {{ clue['value'] }}
       </button>
 
   </div>
@@ -78,7 +78,8 @@
                 form.name,
                 answer,
                 answer_alternatives,
-                currClueId
+                currClueId,
+                categoryid
               )
               ">
               <label class="label">{{ question }} </label>
@@ -94,11 +95,12 @@
       </div>
     </div>
     <div v-if="active" class="modal-backdrop fade show"></div>
+
   </div>
 </template>
 
 <script>
-import axios from "axios";
+ import axios from "axios";
 
 export default {
   name: "CategoryClues",
@@ -107,23 +109,52 @@ export default {
     categoryid: Number,
     catname: String,
     gameid: String,
-    gamescore: String,
+    gameScore: String,
+    userid: String
+  },
+ created() {
+  this.$store.dispatch("fetchUserClue", { userid: this.userid , catid: this.categoryid});
+},
+  computed: {
+    gamescore() {
+      return this.gamescore;
+    },
+    clueText() {
+      return this.$store.state.clue.clue;
+    },
+    question() {
+      return this.$store.state.clue.question;
+    },
+    answer() {
+      return this.$store.state.clue.answer;
+    },
+
+    answer_alternatives() {
+      return this.$store.state.clue.answer_alternatives;
+    },
+    value() {
+      return this.$store.state.clue.value;
+    },
+    answeredCorrectStatus() {
+      return this.$store.state.clue.answeredcorrect;
+    },
+
   },
   data() {
     return {
+      game_id: this.gameid,
       currClueId: null,
       clue: "",
       showMessage: false,
       selectedItem: null,
       active: "",
-      answeredCorrectTest: false,
       form: {
         name: "",
       },
       clues: axios
-        .get(`${this.$store.state.url}/api/category-clues/${this.categoryid}`)
+        .get(`${this.$store.state.url}/api/category-clues/user/${this.userid}/${this.categoryid}`)
         .then((res) => {
-          // console.log("clues on category clues file " + JSON.stringify(res.data));
+
           if (res.data === "") {
             console.log(
               "Game clues data response is EMPTY " + this.$store.state.url
@@ -137,40 +168,10 @@ export default {
         .catch((error) => {
           console.log(error);
         }),
-    };
-  },
-mounted() {
-
-},
-  computed: {
-    clueText() {
-      return this.$store.state.clue.clue;
-    },
-    question() {
-      return this.$store.state.clue.question;
-    },
-    answer() {
-      return this.$store.state.clue.answer;
-    },
-    answer_alternatives() {
-      return this.$store.state.clue.answer_alternatives;
-    },
-    value() {
-      return this.$store.state.clue.value;
-    },
-    answered() {
-      return this.$store.state.clue.answered;
-    },
+};
   },
   methods: {
-    getClues(catid) {
-      console.log("getClues method in CatClues file");
-      this.clues = this.$store.dispatch("fetchAllClues", catid);
-
-      document.querySelector(
-        `.button_${this.$store.state.currClueId}`
-      ).disabled = true;
-    },
+  
     getClue(clueid) {
       this.currClueId = clueid;
       this.clue = this.$store.dispatch("fetchClue", clueid);
@@ -185,7 +186,7 @@ mounted() {
       this.showMessage = false;
     },
 
-    updateScoreAndClue(input, answer, answer_alternatives, clueID) {
+    updateScoreAndClue(input, answer, answer_alternatives, clueID, catid) {
       answer = answer.replace(/^ +/, "").toLowerCase();
       input = input.toLowerCase();
 
@@ -194,15 +195,21 @@ mounted() {
       if (answer_alternatives !== null) {
         console.log("what the " + answer_alternatives);
       }
+      //if answer is wrong
       if (answer.includes(input) === false) {
+
         this.answeredCorrect = 0;
 
         const clue_payload = {
+          userid: this.$store.state.userid,
           clueid: clueID,
           answeredCorrect: this.answeredCorrect,
+          catid: catid,
+          gameid: this.gameid,
         };
 
-        this.$store.dispatch("updateClue", clue_payload);
+
+        this.$store.dispatch("updateUserClue", clue_payload);
 
         const buttonCSS_payload = {
           clueid: clueID,
@@ -210,27 +217,32 @@ mounted() {
         };
 
         this.$store.commit("showModalMutation", buttonCSS_payload);
-        // console.log("clue id after mutation method runs = " + clueID)
+
+      //if answer is correct
       } else if (answer.includes(input) && input !== "") {
+
         this.answeredCorrect = 1;
 
         const clue_payload = {
+          userid: this.$store.state.userid,
           clueid: clueID,
           answeredCorrect: this.answeredCorrect,
+          catid: catid,
+          gameid: this.gameid,
         };
 
         //update clue answered value and answeredCorrect state
 
-        this.$store.dispatch("updateClue", clue_payload);
-
-       const newScore =this.$store.state.gameScore + this.$store.state.clueValue;
-
+        this.$store.dispatch("updateUserClue", clue_payload);
+const total = parseInt(this.gameScore + this.$store.state.clueValue);
+console.log("TOTAL " + this.gameScore)
         const score_payload = {
-          gameid: this.$store.state.gameid,
-          score: newScore
+          userid: this.$store.state.userid,
+          gameid: this.gameid,
+          score: total
         };
 
-        console.log("game score in state is  " + this.$store.state.gameScore)
+        this.$store.commit("setScore", score_payload.score);
 
         this.$store.dispatch("setScoreAction", score_payload);
 
@@ -258,7 +270,6 @@ mounted() {
 </script>
 
 <style>
-
 
 div[class^="buttonbox_"] {
   border: 1px solid #000;

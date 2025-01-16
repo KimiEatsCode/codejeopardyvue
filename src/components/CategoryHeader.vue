@@ -11,7 +11,7 @@
   </div>
 <div class="grid-clues-container">
     <div class="grid-clues" v-for="category in categories" v-bind:key="category.category_id">
-      <CategoryClues gamescore="game.game_score" :categoryid="category.category_id" :catname="category.category_name" />
+      <CategoryClues :userid = "this.userid" :gameid = "this.gameid" :gameScore="this.gamescore" :categoryid="category.category_id" :catname="category.category_name" />
     </div>
   </div>
   </div>
@@ -21,13 +21,13 @@
 import axios from "axios";
 import CategoryClues from "./CategoryClues.vue";
 
-
 export default {
 
   name: "CategoryHeader",
   props: {
     gameid: String,
-
+    gamescore: String,
+    userid: Number
   },
   components: {
      CategoryClues
@@ -42,7 +42,7 @@ computed: {
   data() {
     return {
       getResponse: false,
-
+      gameScore: this.$store.state.gamescore,
       categories: axios
         .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
         .then((res) => {
@@ -55,22 +55,9 @@ computed: {
           this.getResponse = false;
         }),
 
-  //     clues: axios
-  //       .get(`${this.$store.state.url}/api/allclues`)
-  //       .then((res) => {
-  //         this.getResponse = true;
-  //         console.log("category header file call for allclues")
-  //         return (this.clues = res.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         this.getResponse = false;
-  //       }),
-
     };
   },
   methods: {
-
     modalToggle() {
       const body = document.querySelector("body");
       this.active = !this.active;
@@ -83,7 +70,3 @@ computed: {
 
 };
 </script>
-
-<style>
-
-</style>

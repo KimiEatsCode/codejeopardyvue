@@ -1,64 +1,66 @@
 <template>
 
-      <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+      <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-2 align-items-center justify-content-center">
 
-  <div class="list-group">
-
+  <div class="list-group p-5">
+  <div class=" gap-2 w-200 justify-content-between list-group-item-action gap-3" aria-current="true">
+      <h4 class="page-title">User Id: {{ this.userid}}</h4>
+  </div>
     <div v-for="game in userComputedGames" v-bind:key="game.game_id">
-  
-    <router-link :to="{ name:'gameboard', params: { userid: this.userid ,  gameid: game.game_id}}">
+<!-- {{ game }} -->
+ <router-link :to="{ name:'gameboard', params: { userid: this.userid ,  gameid:game.game_id, gamename: game.game_name, gamescore:game.game_score}}">
 
-
-        <div class=" gap-2 w-100 justify-content-between list-group-item-action gap-3 py-3" aria-current="true">
+        <div class="gap-2 w-100 justify-content-between list-group-item-action gap-3 py-3" aria-current="true">
         <div>
-          <h4 class="page-title">{{  game.game_name }}</h4>
+          <h3 class="page-title py-3">{{  game.game_name }}</h3>
 
         </div>
 
-        <h6 class="text-bold opacity-50 text-nowrap rounded-circle">{{ game.game_score}}</h6>
+        <h5 class="text-bold opacity-70 text-nowrap rounded-circle">Score: {{ game.game_score}}</h5>
 
    <div class="col-8">
-   <h6 class="description">
+   <h5 class="description">
       {{  game.game_description }}
-    </h6>
+    </h5>
   </div>
 
   </div>
 </router-link>
+
 <hr>
 </div>
 
   </div>
 
     </div>
-    <FooterLinks></FooterLinks>
+    <!-- <FooterLinks></FooterLinks> -->
   </template>
 
   <script>
 // import axios from "axios";
-import FooterLinks from "./Footer.vue"
+// import FooterLinks from "./Footer.vue"
 
   export default {
     name: "GamesList",
     props: {
-      userid: Number
+       userid:String
   },
   mounted() {
-  this.$store.dispatch("fetchUserGames", this.userid);
+
+  this.$store.dispatch("fetchUserGames", this.id);
 },
 
-components: {
-  FooterLinks
-},
 computed: {
 userComputedGames() {
   return this.$store.state.userGames
+},
+id() {
+  return this.userid
 }
   },
     data() {
       return {
         getResponse: false,
-        id: this.userid,
 
     };
   },

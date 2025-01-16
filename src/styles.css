@@ -14,6 +14,7 @@ html, body {
 
 .list-group  {
   text-align:left!important;
+  border: 2px solid #ccc;
 }
 ul.links li {
   display: inline-block;
@@ -33,7 +34,8 @@ ul.links li {
 
   .grid-header {
     display:inline-grid;
-    grid-template-columns: auto auto auto auto;
+    /* grid-template-columns: auto auto auto auto; */
+    grid-template-columns: repeat(4,1fr);
   }
 
   .grid-headings {
@@ -43,10 +45,9 @@ ul.links li {
     font-size: 1.2em;
     padding:10px 5px;
   }
-
   .grid-clues-container {
     display:grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: fit-content;
     overflow:none;
   }
