@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 // const port = process.env.PORT || 8080;
 // app.listen(port);
 
-const server = app.listen(process.env.PORT || 8080, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
   const port = server.address().port;
   console.log(`Express is working on port ${port}`);
 });
