@@ -74,7 +74,7 @@ return this.$store.state.gameScore;
 
       this.$store.dispatch("resetUserClues",{ userid: this.userid, gameid: this.gameid });
 
-      location.reload();
+      // location.reload(); not work in vue app deployed on heroku
     }
   }
 }
