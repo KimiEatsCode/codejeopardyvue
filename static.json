@@ -1,7 +1,11 @@
-{
+
+  {
     "root": "dist",
-    "clean_urls": true,
-    "routes": {
-      "/**": "index.html"
-    }
+    "routes": [
+      {
+        "handle": "rewrite",
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
