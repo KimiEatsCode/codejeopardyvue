@@ -129,3 +129,4 @@ out
 #firestore db
 serviceAccount.json
 firebase.js
+src/components/test.js/test.js
