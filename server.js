@@ -9,7 +9,6 @@ app.use(
   })
 );
 app.use(cors({ origin: true })); // enable origin cors
-
 app.use(serveStatic(path.join(__dirname, "dist")));
 app.options("*", cors());
 app.use(
