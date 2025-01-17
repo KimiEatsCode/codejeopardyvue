@@ -3,8 +3,8 @@
 
  <h4>  {{ userComputedGame.game_name }}</h4>
  <h4>  {{ userComputedGame.userid_games }}</h4>
- <!-- <h4>  {{ userComputedGame.game_score}}</h4> -->
- <h4>{{ gameScore }}</h4>
+ <h4>  {{ userComputedGame.game_score}}</h4>
+
 
 <CategoryHeader :userid = "this.userid" :gameid = "this.gameid"  :gamescore = "userComputedGame.game_score"></CategoryHeader>
 
@@ -74,7 +74,7 @@ return this.$store.state.gameScore;
 
       this.$store.dispatch("resetUserClues",{ userid: this.userid, gameid: this.gameid });
 
-      location.reload(); 
+      location.reload();
     }
   }
 }
