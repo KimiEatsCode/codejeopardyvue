@@ -1,8 +1,7 @@
 <template>
   <div class="grid-body">
-    <h2 class="page-title">{{  this.gameInfo.game_name }}</h2>
-    <div class="scorebox">Score: ${{ $store.state.score }}</div>
 <div class="grid-header">
+
     <div
       class="grid-headings"
       v-for="(category, index) in categories"
@@ -12,7 +11,7 @@
   </div>
 <div class="grid-clues-container">
     <div class="grid-clues" v-for="category in categories" v-bind:key="category.category_id">
-      <clue-column :categoryid="category.category_id" :catname="category.category_name" />
+      <CategoryClues :userid = "this.userid" :gameid = "this.gameid" :gameScore="this.gamescore" :categoryid="category.category_id" :catname="category.category_name" />
     </div>
   </div>
   </div>
@@ -20,48 +19,36 @@
 
 <script>
 import axios from "axios";
-import ClueColumn from "./CategoryClues.vue";
+import CategoryClues from "./CategoryClues.vue";
 
 export default {
+
   name: "CategoryHeader",
+  props: {
+    gameid: String,
+    gamescore: String,
+    userid: Number
+  },
   components: {
-    "clue-column": ClueColumn,
+     CategoryClues
   },
-  beforeMount() {
-    this.clues;
+  created() {
+    this.$store.dispatch("fetchAllCat", this.gameid)
+
   },
+computed: {
+
+},
   data() {
     return {
       getResponse: false,
-      gameInfo: axios
-      .get(`${this.$store.state.url}/api/games`)
-        .then((res) => {
-          this.getResponse = true;
-          console.log("Get game info in cat head file not from store " + JSON.stringify(res.data[0]));
-          return (this.gameInfo = res.data[0]);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getResponse = false;
-        }),
+      gameScore: this.$store.state.gamescore,
       categories: axios
-        .get(`${this.$store.state.url}/api/game-categories`)
+        .get(`${this.$store.state.url}/api/games/${this.gameid}/categories`)
         .then((res) => {
           this.getResponse = true;
           console.log("Get categories info " + JSON.stringify(res.data));
           return (this.categories = res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getResponse = false;
-        }),
-      clues: axios
-        .get(`${this.$store.state.url}/api/allclues`)
-        .then((res) => {
-          this.getResponse = true;
-          // this.$store.dispatch("resetClues")
-
-          return (this.clues = res.data);
         })
         .catch((error) => {
           console.log(error);
@@ -83,60 +70,3 @@ export default {
 
 };
 </script>
-
-<style>
-
-.page-title {
-  margin-top:10px;
-}
-
-.grid-body {
-  min-height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: 100%;
-}
-
-.grid-header {
-  display:inline-grid;
-  grid-template-columns: auto auto auto auto;
-}
-
-.grid-headings {
-  background-color: cadetblue;
-  font-weight:bold;
-  font-size: 1.2em;
-  padding:10px 5px;
-}
-
-.grid-clues-container {
-  display:grid;
-  grid-template-columns: auto auto auto auto;
-  grid-template-rows: fit-content;
-  overflow:none;
-
-}
-
-.grid-clues {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr); /*make 1 column responsive*/
-  grid-template-rows: repeat(3,1fr); /*make rows responsive*/
-  font-size: 1.2em;
-}
-
-.cluecolumn {
-  background-color: rgb(65, 125, 255);
-}
-
-.grid-clues button {
-  height:100%;
-}
-
-.scorebox {
-  font-weight: bold;
-  font-size:1.3em;
-  background-color:rgb(255, 214, 112);
-  padding:5px;
-  margin-bottom:5px;
-}
-</style>
