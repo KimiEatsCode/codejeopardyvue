@@ -31,7 +31,7 @@
           <i class="bi bi-emoji-smile-fill"></i>
           <p></p>
           <div v-if="showMessage === true">
-            <div v-if="answeredCorrect">
+            <div v-if="answeredCorrectStatus">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                 class="bi bi-emoji-smile-fill msg_text_correct" viewBox="0 0 16 16">
                 <path
@@ -48,7 +48,7 @@
                 </strong>
               </p>
             </div>
-            <div v-if="!answeredCorrect">
+            <div v-if="!answeredCorrectStatus">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                 class="bi bi-slash-circle-fill msg_text_incorrect" viewBox="0 0 16 16">
                 <path
