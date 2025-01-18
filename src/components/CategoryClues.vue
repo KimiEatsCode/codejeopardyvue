@@ -142,6 +142,7 @@ export default {
   },
   data() {
     return {
+      answercorrect:"",
       game_id: this.gameid,
       currClueId: null,
       clue: "",
@@ -171,7 +172,7 @@ export default {
 };
   },
   methods: {
-  
+
     getClue(clueid) {
       this.currClueId = clueid;
       this.clue = this.$store.dispatch("fetchClue", clueid);
