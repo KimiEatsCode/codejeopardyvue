@@ -5,7 +5,7 @@
        <div :class="`buttonbox_${clue.clue_id}`">
         <div :class="`answeredCorrect_${clue.answeredcorrect}`">
 
-      <button :disabled="clue.answeredcorrect === '1'" :class=" `button_${clue.clue_id}`" @click="
+      <button :disabled="clue.answeredcorrect === 1" :class=" `button_${clue.clue_id}`" @click="
         modalToggle(clue.clue_id);
       getClue(clue.clue_id);
       ">
