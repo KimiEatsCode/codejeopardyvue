@@ -9,7 +9,13 @@ app.use(
   })
 );
 app.use(cors({ origin: true })); // enable origin cors
+
 app.use(serveStatic(path.join(__dirname, "dist")));
+
+app.get(/.*/, function (req, res) {
+  res.sendFile(__dirname + "/dist/index.html");
+});
+
 app.options("*", cors());
 app.use(
   cors({
