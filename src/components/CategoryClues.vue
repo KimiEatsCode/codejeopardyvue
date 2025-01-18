@@ -142,7 +142,7 @@ export default {
   },
   data() {
     return {
-      answercorrect:"",
+      answeredcorrect:"",
       game_id: this.gameid,
       currClueId: null,
       clue: "",
