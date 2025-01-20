@@ -13,8 +13,9 @@
             <p><strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API</p>
 <div class="links">
-    <router-link :to="{ path:'/'}">Users</router-link>
+  <button type="button" class="btn btn-success mb-2"><router-link :to="{ path:'/'}">Users</router-link></button>
  <p><button type="button" class="btn btn-info" @click="newGameReset()">Reset Game Score</button></p>
+ <p>Copyright (c) Sarah Kimi Rettig 2025</p>
 </div>
 </footer>
 </div>
