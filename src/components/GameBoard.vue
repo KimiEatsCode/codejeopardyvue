@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-2">
 
  <h4>  {{ userComputedGame.game_name }}</h4>
  <h4>  {{ userComputedGame.userid_games }}</h4>
@@ -13,7 +13,7 @@
             <p><strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API</p>
 <div class="links">
-  <button type="button" class="btn btn-success mb-2"><router-link :to="{ path:'/'}">Users</router-link></button>
+  <button type="button" class="btn btn-light btn-outline-secondary mb-3"><router-link :to="{ path:'/'}">Users</router-link></button>
  <p><button type="button" class="btn btn-info" @click="newGameReset()">Reset Game Score</button></p>
  <p>Copyright (c) Sarah Kimi Rettig 2025</p>
 </div>
