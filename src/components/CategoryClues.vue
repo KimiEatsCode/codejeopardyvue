@@ -193,18 +193,16 @@ export default {
 
       this.showMessage = true;
 
-      if (answer_alternatives !== null) {
-        console.log("what the " + answer_alternatives);
-      }
       //if answer is wrong
       if (answer.includes(input) === false) {
 
-        this.answeredCorrect = 0;
+        // this.answeredCorrect = 0;
+        this.answeredCorrectStatus = 0;
 
         const clue_payload = {
           userid: this.$store.state.userid,
           clueid: clueID,
-          answeredCorrect: this.answeredCorrect,
+          answeredCorrect: this.answeredCorrectStatus,
           catid: catid,
           gameid: this.gameid,
         };
@@ -214,7 +212,7 @@ export default {
 
         const buttonCSS_payload = {
           clueid: clueID,
-          answeredCorrect: this.answeredCorrect,
+          answeredCorrect: this.answeredCorrectStatus,
         };
 
         this.$store.commit("showModalMutation", buttonCSS_payload);
@@ -222,12 +220,14 @@ export default {
       //if answer is correct
       } else if (answer.includes(input) && input !== "") {
 
-        this.answeredCorrect = 1;
+        // this.answeredCorrect = 1;
+        this.answeredCorrectStatus = 1;
+
 
         const clue_payload = {
           userid: this.$store.state.userid,
           clueid: clueID,
-          answeredCorrect: this.answeredCorrect,
+          answeredCorrect: this.answeredCorrectStatus,
           catid: catid,
           gameid: this.gameid,
         };
@@ -235,8 +235,8 @@ export default {
         //update clue answered value and answeredCorrect state
 
         this.$store.dispatch("updateUserClue", clue_payload);
-const total = parseInt(this.gameScore + this.$store.state.clueValue);
-console.log("TOTAL " + this.gameScore)
+        const total = parseInt(this.gameScore + this.$store.state.clueValue);
+
         const score_payload = {
           userid: this.$store.state.userid,
           gameid: this.gameid,
