@@ -1,19 +1,18 @@
 <template>
     <div>
-
-<UsersProfiles></UsersProfiles>
-
+    <UserFormLogin></UserFormLogin>
     </div>
 
     </template>
 
     <script>
-    import UsersProfiles from "./UsersProfiles.vue";
+    // import UsersProfiles from "./UsersProfiles.vue";
+    import UserFormLogin from "./UserFormLogin.vue";
 
     export default {
         name: "HomePage",
         components: {
-            UsersProfiles
+            UserFormLogin
         }
     }
     </script>

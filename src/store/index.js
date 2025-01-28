@@ -28,7 +28,7 @@ export default createStore({
       score: "",
       clueValue: "",
       answeredCorrect: null,
-      url: "https://codejeo-7137663a4c65.herokuapp.com",
+      url: "https://gbcykwzigqbumpskpntm.supabase.co",
       // url: "http://localhost:3000",
       getResponse: true,
     };
