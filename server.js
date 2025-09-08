@@ -11,11 +11,6 @@ app.use(
 app.use(cors({ origin: true })); // enable origin cors
 
 app.use(serveStatic(path.join(__dirname, "dist")));
-
-app.get(/.*/, function (req, res) {
-  res.sendFile(__dirname + "/dist/index.html");
-});
-
 app.options("*", cors());
 app.use(
   cors({
@@ -32,10 +27,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// const port = process.env.PORT || 8080;
-// app.listen(port);
+const port = process.env.PORT || 8080;
+app.listen(port);
 
-const server = app.listen(process.env.PORT || 8080, () => {
-  const port = server.address().port;
-  console.log(`Express is working on port ${port}`);
-});
+console.log(
+  `Message from server.js file - App is listening on port: ${port}`
+);
