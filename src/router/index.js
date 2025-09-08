@@ -1,14 +1,14 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "../components/HomePage.vue";
 import NotFound from "../components/NotFound.vue";
 import GamesList from "../components/GamesList.vue";
 import GameBoard from "../components/GameBoard.vue";
+import UsersProfiles from "../components/UsersProfiles.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: Home,
+    component: UsersProfiles,
     props: true,
   },
   {
