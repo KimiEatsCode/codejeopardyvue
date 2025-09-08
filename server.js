@@ -31,5 +31,5 @@ const port = process.env.PORT || 8080;
 app.listen(port);
 
 console.log(
-  `Message from server js on front end for heroku deploy - App is listening on port: ${port}`
+  `Message from server.js file - App is listening on port: ${port}`
 );
