@@ -1,8 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "bootstrap";
+import "./style-overrides.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import store from "./store";
 import router from "./router/index";
 
