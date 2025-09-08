@@ -23,7 +23,7 @@ export default createStore({
       score: "",
       clueValue: "",
       answeredCorrect: null,
-    //  url: "https://codejeo-7137663a4c65.herokuapp.com",
+    // url: "https://codejeopardy-api-service-pjoy.vercel.app/",
       url: "http://localhost:3000",
       getResponse: true,
     };
