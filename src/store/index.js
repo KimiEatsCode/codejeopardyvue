@@ -28,8 +28,8 @@ export default createStore({
       score: "",
       clueValue: "",
       answeredCorrect: null,
-      // url: "https://codejeopardy-api-service-pjoy.vercel.app/",
-      url: "http://localhost:3000",
+      url: "https://codejeopardy-api-service-pjoy.vercel.app/",
+    //   url: "http://localhost:3000",
       getResponse: true,
     };
   },
