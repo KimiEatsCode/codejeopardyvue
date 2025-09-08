@@ -5,7 +5,7 @@
  <h4>  {{ userComputedGame.userid_games }}</h4>
  <h4>  {{ userComputedGame.game_score}}</h4>
 
-
+  <router-link :to="{ path:'/'}"><button type="button" class="btn btn-info mb-3">View List of Users</button></router-link>
 <CategoryHeader :userid = "this.userid" :gameid = "this.gameid"  :gamescore = "userComputedGame.game_score"></CategoryHeader>
 
 <!-- <FooterLinks :userid = "this.userid" :gameid = "this.gameid" ></FooterLinks> -->
@@ -13,8 +13,8 @@
             <p><strong>Made With:</strong>
 Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API</p>
 <div class="links">
-  <button type="button" class="btn btn-light btn-outline-secondary mb-3"><router-link :to="{ path:'/'}">Users</router-link></button>
- <p><button type="button" class="btn btn-info" @click="newGameReset()">Reset Game Score</button></p>
+
+ <!-- <p><button type="button" class="btn btn-info" @click="newGameReset()">Reset Game Score</button></p> -->
  <p>Copyright (c) Sarah Kimi Rettig 2025</p>
 </div>
 </footer>
