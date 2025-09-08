@@ -1,0 +1,9 @@
+.gameslist.gap-2.w-100.justify-content-between.list-group-item-action.gap-3.py-3 {
+    background-color: #efffad!important;
+}
+
+
+.list-group  {
+  text-align:left!important;
+  border: 2px solid #ccc;
+}
