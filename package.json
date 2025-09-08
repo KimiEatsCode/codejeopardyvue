@@ -3,15 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
-    "devstart": "NODE_ENV=development vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli": "^5.0.9",
     "@vue/cli-service": "~5.0.0",
     "audit": "^0.0.6",
     "axios": "^1.4.0",
@@ -20,7 +18,7 @@
     "cors": "^2.8.5",
     "json": "^11.0.0",
     "json-server": "^1.0.0-beta.3",
-    "server": "^1.0.41",
+    "server": "^0.0.3",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
   },
