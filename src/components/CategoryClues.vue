@@ -1,6 +1,6 @@
 <template>
 
-  <div v-for="(clue, index) in clues" v-bind:key="index">
+  <div class="cluebox" v-for="(clue, index) in clues" v-bind:key="index">
 
        <div :class="`buttonbox_${clue.clue_id}`">
         <div :class="`answeredCorrect_${clue.answeredcorrect}`">
