@@ -1,35 +1,23 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid mt-4">
 
-<router-view>
-</router-view>
-</div>
+    <router-view> </router-view>
+
+  </div>
 </template>
 
 <script>
-// import axios from "axios";
-
-
 export default {
   name: 'App',
 
   data() {
     return {
 
-  }
-},
+    }
+  },
   methods: {
 
   }
 }
 
 </script>
-
-
-<style>
-
-
-</style>
-
-
-

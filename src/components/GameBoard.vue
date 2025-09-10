@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid mt-2">
+     
 
  <h4>  {{ userComputedGame.game_name }}</h4>
  <h4>  {{ userComputedGame.userid_games }}</h4>
@@ -18,7 +18,7 @@ Vue JS, HTML, CSS Grid, Flexbox, Bootstrap, PostgreSQL, Node/Express API</p>
  <p>Copyright (c) Sarah Kimi Rettig 2025</p>
 </div>
 </footer>
-</div>
+ 
   </template>
 
   <script>
